@@ -105,149 +105,231 @@
 
 <style>
   :root {
-    --ink:     #14171A;
-    --paper:   #E9E7E0;
-    --paper-2: #DCD9D0;
-    --rule:    #B8B4A8;
-    --signal:  #2E5A4E;
-    --muted:   #6B6B63;
-    --sans: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", sans-serif;
-    --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+    --ink:    #1B1C1E;
+    --muted:  rgba(60,60,67,.62);
+    --hairline: rgba(60,60,67,.14);
+    --tint:   #007AFF;
+    --green:  #1E8A3C;
+    --green-bg: rgba(52,199,89,.16);
+    --amber:  #C93400;
+    --amber-bg: rgba(255,159,10,.14);
+    --bg:     #F2F3F8;
+    --glass:       rgba(255,255,255,.55);
+    --glass-drill: rgba(255,255,255,.68);
+    --glass-thick: rgba(255,255,255,.82);
+    --glass-line:  rgba(255,255,255,.62);
+    --specular: inset 0 1px 0 rgba(255,255,255,.65);
+    --shadow:    0 16px 40px rgba(24,39,75,.10), 0 2px 8px rgba(24,39,75,.05);
+    --shadow-sm: 0 6px 16px rgba(24,39,75,.08), 0 1px 3px rgba(24,39,75,.05);
+    --sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "PingFang SC", "Helvetica Neue", sans-serif;
+    --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, monospace;
+    --ease-out: cubic-bezier(.23,1,.32,1);
+    --ease-ios: cubic-bezier(.32,.72,0,1);
     color-scheme: light dark;
   }
   @media (prefers-color-scheme: dark) {
     :root {
-      --ink:     #E6E4DC;
-      --paper:   #16181A;
-      --paper-2: #1E2124;
-      --rule:    #383C40;
-      --signal:  #7FB8A4;
-      --muted:   #8A8E8C;
+      --ink:    #F2F2F7;
+      --muted:  rgba(235,235,245,.62);
+      --hairline: rgba(255,255,255,.14);
+      --tint:   #0A84FF;
+      --green:  #30D158;
+      --green-bg: rgba(48,209,88,.18);
+      --amber:  #FF9F0A;
+      --amber-bg: rgba(255,159,10,.16);
+      --bg:     #0B0C10;
+      --glass:       rgba(30,32,38,.62);
+      --glass-drill: rgba(32,34,40,.78);
+      --glass-thick: rgba(62,64,72,.85);
+      --glass-line:  rgba(255,255,255,.12);
+      --specular: inset 0 1px 0 rgba(255,255,255,.09);
+      --shadow:    0 16px 40px rgba(0,0,0,.55), 0 2px 8px rgba(0,0,0,.35);
+      --shadow-sm: 0 6px 16px rgba(0,0,0,.40), 0 1px 3px rgba(0,0,0,.30);
     }
   }
 
   * { box-sizing: border-box; }
   body {
-    margin: 0; background: var(--paper); color: var(--ink);
-    font: 16px/1.75 var(--sans);
+    margin: 0; background: var(--bg); color: var(--ink);
+    font: 16px/1.7 var(--sans);
     -webkit-text-size-adjust: 100%;
   }
-  .sheet { max-width: 44rem; margin: 0 auto; padding: 0 1.25rem 5rem; }
+  /* 液态玻璃需要「环境」：玻璃背后得有颜色可折射。用固定伪元素而不是
+     background-attachment:fixed——后者在 iOS 上不生效 */
+  body::before {
+    content: ""; position: fixed; inset: 0; z-index: -1;
+    background:
+      radial-gradient(48% 36% at 10% 6%,   rgba(10,132,255,.20), transparent 70%),
+      radial-gradient(40% 32% at 92% 16%,  rgba(191,90,242,.15), transparent 70%),
+      radial-gradient(52% 40% at 46% 100%, rgba(100,210,255,.18), transparent 70%),
+      var(--bg);
+  }
+  .sheet {
+    max-width: 44rem; margin: 0 auto; padding: 0 1rem 5rem;
+    animation: rise .5s var(--ease-out);
+  }
+  @keyframes rise    { from { opacity: 0; transform: translateY(10px); } }
+  @keyframes pane-in { from { opacity: 0; transform: translateY(8px); } }
+  @keyframes card-in { from { opacity: 0; transform: translateY(14px) scale(.98); } }
+  @keyframes more-in { from { opacity: 0; transform: translateY(10px); } }
+  @keyframes unveil  { from { filter: blur(7px); } }
+
+  code {
+    font: .85em var(--mono);
+    background: var(--hairline);
+    padding: .08em .38em; border-radius: 6px;
+  }
 
   /* ── 报头 ───────────────────────────── */
-  .masthead { padding: 2.5rem 0 1rem; }
+  .masthead { padding: 2.75rem .25rem 1rem; }
   .wordmark {
-    margin: 0; font-size: clamp(1.75rem, 7vw, 2.5rem);
-    font-weight: 800; letter-spacing: -.04em; line-height: 1;
+    margin: 0; font-size: clamp(1.9rem, 7vw, 2.5rem);
+    font-weight: 700; letter-spacing: -.03em; line-height: 1.05;
   }
   .issueline {
-    margin: .6rem 0 0; font: 400 .75rem/1.6 var(--mono);
-    color: var(--muted); letter-spacing: .02em;
+    margin: .5rem 0 0; font: 400 .8125rem/1.6 var(--sans);
+    color: var(--muted); font-variant-numeric: tabular-nums;
   }
   .fault {
-    margin: 1rem 0 0; padding: .6rem .8rem;
-    border-left: 3px solid var(--signal); background: var(--paper-2);
-    font: 400 .8rem/1.6 var(--mono);
+    margin: 1rem 0 0; padding: .7rem .9rem;
+    border-radius: 14px; background: var(--amber-bg); color: var(--amber);
+    font: 400 .8125rem/1.6 var(--sans);
   }
 
-  /* ── 标签页：两件无关的事，平级 ─────── */
+  /* ── 标签页：iOS 分段控件，sticky 悬浮玻璃 ─────── */
   .tab-in { position: absolute; width: 1px; height: 1px; opacity: 0; }
   .tabs {
-    display: flex; gap: 1.5rem;
-    margin: 1.5rem 0 1.5rem;
-    border-bottom: 1px solid var(--rule);
+    position: sticky; top: .75rem; z-index: 10;
+    display: flex; margin: 1.25rem 0 1.5rem; padding: 3px;
+    border-radius: 999px;
+    background: var(--glass);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid var(--glass-line);
+    box-shadow: var(--shadow-sm), var(--specular);
   }
+  .tabs .thumb {
+    position: absolute; top: 3px; bottom: 3px; left: 3px;
+    width: calc(50% - 3px);
+    border-radius: 999px;
+    background: var(--glass-thick);
+    box-shadow: 0 3px 10px rgba(24,39,75,.16), var(--specular);
+    transition: transform .4s var(--ease-ios);
+  }
+  #tab-gh:checked ~ .tabs .thumb { transform: translateX(100%); }
   .tabs label {
-    padding: .5rem 0; margin-bottom: -1px;
-    border-bottom: 2px solid transparent;
-    font: 600 .75rem/1.4 var(--mono);
-    letter-spacing: .1em; text-transform: uppercase;
+    flex: 1; position: relative; z-index: 1;
+    padding: .55rem .5rem; text-align: center; border-radius: 999px;
+    font: 600 .8125rem/1.3 var(--sans); letter-spacing: .01em;
     color: var(--muted); cursor: pointer;
     -webkit-tap-highlight-color: transparent;
+    transition: color .25s ease, transform .3s var(--ease-out);
   }
-  .tabs label:hover { color: var(--ink); }
-  .tabs .n { font-weight: 400; opacity: .7; }
-  .pane { display: none; }
+  .tabs label:active { transform: scale(.96); }
+  .tabs .n { font-weight: 400; opacity: .65; font-variant-numeric: tabular-nums; }
   #tab-ph:checked ~ .tabs label[for="tab-ph"],
-  #tab-gh:checked ~ .tabs label[for="tab-gh"] {
-    color: var(--ink); border-bottom-color: var(--signal);
-  }
-  #tab-ph:checked ~ .pane-ph, #tab-gh:checked ~ .pane-gh { display: block; }
+  #tab-gh:checked ~ .tabs label[for="tab-gh"] { color: var(--ink); }
   #tab-ph:focus-visible ~ .tabs label[for="tab-ph"],
   #tab-gh:focus-visible ~ .tabs label[for="tab-gh"] {
-    outline: 2px solid var(--signal); outline-offset: 2px;
+    outline: 2px solid var(--tint); outline-offset: 2px;
+  }
+  .pane { display: none; }
+  #tab-ph:checked ~ .pane-ph, #tab-gh:checked ~ .pane-gh {
+    display: block; animation: pane-in .32s var(--ease-out);
   }
   .pane-head {
-    margin: 0 0 1.25rem;
-    font: 400 .8125rem/1.6 var(--sans); color: var(--muted);
+    margin: 0 .25rem 1rem;
+    font: 400 .8125rem/1.7 var(--sans); color: var(--muted);
   }
 
-  /* ── GitHub Trending ────────────────── */
-  .repo { padding: 1rem 0; border-bottom: 1px solid var(--rule); }
-  .repo:last-child { border-bottom: 0; }
-  .repo-top { display: flex; align-items: baseline; gap: .75rem; }
+  /* ── GitHub Trending：玻璃卡片 ────────────────── */
+  .repo {
+    margin: 0 0 .85rem; padding: 1.05rem 1.15rem 1.15rem;
+    border-radius: 22px;
+    background: var(--glass);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid var(--glass-line);
+    box-shadow: var(--shadow), var(--specular);
+    animation: card-in .45s var(--ease-out) backwards;
+  }
+  .pane-gh .repo:nth-of-type(1) { animation-delay: .04s; }
+  .pane-gh .repo:nth-of-type(2) { animation-delay: .09s; }
+  .pane-gh .repo:nth-of-type(3) { animation-delay: .14s; }
+  .pane-gh .repo:nth-of-type(4) { animation-delay: .19s; }
+  .pane-gh .repo:nth-of-type(n+5) { animation-delay: .24s; }
+  .repo-top { display: flex; align-items: center; gap: .75rem; }
   .repo-name {
-    font: 600 1.0625rem/1.4 var(--mono);
+    font: 600 1.04rem/1.35 var(--mono); letter-spacing: -.01em;
     color: var(--ink); text-decoration: none; word-break: break-all;
   }
-  .repo-name:hover { color: var(--signal); text-decoration: underline; }
+  .repo-name:active { opacity: .5; }
   .delta {
     margin-left: auto; flex: none;
-    font: 600 1rem/1.4 var(--mono); color: var(--signal);
-    font-variant-numeric: tabular-nums;
+    padding: .18rem .62rem; border-radius: 999px;
+    background: var(--green-bg); color: var(--green);
+    font: 600 .8125rem/1.4 var(--mono); font-variant-numeric: tabular-nums;
   }
-  .repo-meta { margin: .2rem 0 0; font: 400 .75rem/1.6 var(--mono); color: var(--muted); }
-  .streak { color: var(--signal); }
-  .repo-note { margin: .6rem 0 0; font-size: .9375rem; }
+  .repo-meta { margin: .45rem 0 0; font: 400 .78rem/1.6 var(--sans); color: var(--muted); }
+  .streak { color: var(--green); font-weight: 600; }
+  .repo-note { margin: .35rem 0 0; font-size: .9375rem; }
   .repo-note dt {
-    font: 600 .7rem/1.8 var(--mono);
-    letter-spacing: .1em; color: var(--muted);
+    margin-top: .55rem;
+    font: 600 .6875rem/1.6 var(--sans);
+    letter-spacing: .07em; color: var(--muted);
     text-transform: uppercase;
   }
-  .repo-note dd { margin: 0 0 .5rem; }
-  .repo-note dd:last-child { margin-bottom: 0; }
+  .repo-note dd { margin: .1rem 0 0; }
 
-  /* ── Product Hunt ───────────────────── */
+  /* ── Product Hunt：一整块玻璃 ───────────────────── */
+  /* .drill 不能用 backdrop-filter：它会给 fixed 后代建立 containing block，
+     里面的浮层 inset:0 就不再相对视口。背景是平滑固定渐变，提高不透明度即可乱真 */
   .drill {
-    padding: 1.5rem 1.25rem 2rem;
-    background: var(--paper-2); border-radius: 2px;
+    padding: 1.4rem 1.15rem 1.6rem;
+    border-radius: 26px;
+    background: var(--glass-drill);
+    border: 1px solid var(--glass-line);
+    box-shadow: var(--shadow), var(--specular);
   }
   .sub {
-    margin: 2rem 0 1rem;
-    font: 600 .7rem/1 var(--mono);
-    letter-spacing: .16em; text-transform: uppercase;
-    color: var(--signal);
+    margin: 2.25rem 0 1rem;
+    font: 700 .6875rem/1 var(--sans);
+    letter-spacing: .12em; text-transform: uppercase;
+    color: var(--tint);
   }
   .sub:first-child { margin-top: 0; }
 
   .brief { margin: 0 0 1.25rem; }
-  .brief p { margin: 0 0 .6rem; font-size: .9375rem; }
+  .brief p { margin: 0 0 .65rem; font-size: .9375rem; }
   .brief .k {
     display: block;
-    font: 600 .7rem/1.8 var(--mono);
-    letter-spacing: .1em; color: var(--muted);
+    font: 600 .6875rem/1.9 var(--sans);
+    letter-spacing: .07em; color: var(--muted);
     text-transform: uppercase;
   }
 
   /* 竖排满宽，不做横向 carousel：横滑容器里的点击在触屏上常被判成拖动手势，
      而且每张图只剩 82% 宽度，控制台截图的小字更读不清 */
   .gallery { margin: 0; }
-  .gallery figure { margin: 0 0 1.5rem; }
+  .gallery figure { margin: 0 0 1.4rem; }
   .gallery img {
     display: block; width: 100%; height: auto;
-    border: 1px solid var(--rule); border-radius: 2px;
+    border-radius: 16px; border: 1px solid var(--hairline);
+    box-shadow: var(--shadow-sm);
+    transition: transform .25s var(--ease-out);
   }
   .gallery figcaption {
-    margin-top: .4rem; font: 400 .75rem/1.5 var(--mono); color: var(--muted);
+    margin-top: .5rem; font: 400 .78rem/1.55 var(--sans); color: var(--muted);
   }
   .ph-meta {
-    display: flex; gap: 1rem; align-items: baseline;
-    margin: .75rem 0 0; font: 400 .75rem/1.6 var(--mono); color: var(--muted);
+    display: flex; gap: 1rem; align-items: center;
+    margin: .85rem 0 0; font: 400 .78rem/1.6 var(--sans); color: var(--muted);
   }
   .ph-meta .votes {
     margin-left: auto; flex: none;
-    color: var(--signal); font-weight: 600;
-    font-variant-numeric: tabular-nums;
+    padding: .18rem .62rem; border-radius: 999px;
+    background: var(--green-bg); color: var(--green);
+    font-weight: 600; font-variant-numeric: tabular-nums;
   }
 
   /* 点图开站内浮层，不跳走——跳走会丢掉滚动位置和已解密的状态 */
@@ -255,105 +337,157 @@
     display: block; cursor: zoom-in;
     -webkit-tap-highlight-color: transparent;
   }
+  label.zoom:active img { transform: scale(.985); }
   .lb-toggle { position: absolute; width: 1px; height: 1px; opacity: 0; }
-  .lb { display: none; }
-  /* 必须用相邻兄弟 + 而不是 ~：.lb 全都是 .gallery 的同级子元素，
+  /* 浮层常驻 DOM 用 opacity/visibility 切换（display 切换没法过渡）。
+     必须用相邻兄弟 + 而不是 ~：.lb 全都是 .gallery 的同级子元素，
      用 ~ 会一次显示后面所有浮层，最后一个盖在最上面，点第一张却看到第三张 */
-  .lb-toggle:checked + .lb {
-    display: block;
+  .lb {
     position: fixed; inset: 0; z-index: 50;
-    background: #0B0D0EF2;
+    visibility: hidden; opacity: 0; pointer-events: none;
+    background: rgba(12,14,18,.52);
+    -webkit-backdrop-filter: blur(22px) saturate(160%);
+    backdrop-filter: blur(22px) saturate(160%);
+    transition: opacity .22s var(--ease-out), visibility 0s linear .22s;
+  }
+  .lb-toggle:checked + .lb {
+    visibility: visible; opacity: 1; pointer-events: auto;
+    transition: opacity .32s var(--ease-out), visibility 0s;
   }
   /* 整张放得下、不用拖：fit-to-screen 居中。
      真要逐像素看走顶栏的「原图 ↗」，手机上那条给的是原生捏合缩放 */
   .lb-scroll {
-    position: absolute; inset: 3rem 0 0;
+    position: absolute; inset: 3.4rem 0 0;
     display: flex; align-items: center; justify-content: center;
     padding: 1rem; overflow: auto;
     -webkit-overflow-scrolling: touch;
   }
   .lb-scroll img {
     display: block; width: auto; height: auto;
-    max-width: 100%; max-height: calc(100vh - 5rem);
-    object-fit: contain;
+    max-width: 100%; max-height: calc(100vh - 5.5rem);
+    object-fit: contain; border-radius: 12px;
+    transform: scale(.94);
+    transition: transform .22s var(--ease-out);
+  }
+  .lb-toggle:checked + .lb .lb-scroll img {
+    transform: scale(1);
+    transition: transform .34s var(--ease-ios);
   }
   .lb-bar {
-    position: absolute; top: 0; left: 0; right: 0; height: 3rem;
+    position: absolute; top: .6rem; left: .6rem; right: .6rem; height: 2.8rem;
     display: flex; align-items: center; justify-content: space-between;
-    padding: 0 1rem; gap: 1rem;
-    background: #0B0D0E; color: #E6E4DC;
-    font: 600 .75rem/1 var(--mono); letter-spacing: .06em;
+    padding: 0 .5rem 0 .9rem; gap: .75rem;
+    border-radius: 999px;
+    background: rgba(28,30,36,.55);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    backdrop-filter: blur(20px) saturate(160%);
+    border: 1px solid rgba(255,255,255,.14);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.10);
+    color: #F2F2F7;
+    font: 600 .78rem/1 var(--sans);
   }
-  .lb-bar .x { cursor: pointer; -webkit-tap-highlight-color: transparent; }
-  .lb-bar .tip { font-weight: 400; opacity: .6; letter-spacing: 0; }
-  .lb-bar a { color: #7FB8A4; text-decoration: none; border-bottom: 1px solid #7FB8A4; }
+  .lb-bar .x {
+    cursor: pointer; -webkit-tap-highlight-color: transparent;
+    padding: .5rem .8rem; border-radius: 999px;
+  }
+  .lb-bar .x:active { background: rgba(255,255,255,.12); }
+  .lb-bar .tip { font-weight: 400; opacity: .6; }
+  .lb-bar a { color: #6CB8FF; text-decoration: none; padding: .5rem .8rem; border-radius: 999px; }
+  .lb-bar a:active { background: rgba(255,255,255,.12); }
   body:has(.lb-toggle:checked) { overflow: hidden; }
   /* 键盘走 caption 里的 .zoomlink（真 <a>，原生可聚焦）；
      图片上的 label 是鼠标/触屏入口，不做焦点样式 */
-  .zoomlink {
-    white-space: nowrap; color: var(--signal); text-decoration: none;
-    border-bottom: 1px solid var(--signal);
-  }
-  .zoomlink:hover { background: var(--signal); color: var(--paper-2); }
+  .zoomlink { white-space: nowrap; color: var(--tint); text-decoration: none; font-weight: 600; }
 
   /* 四问 */
   .q { margin: 0 0 2rem; }
   .q-text { margin: 0 0 .6rem; font-weight: 600; }
-  .q-n { color: var(--signal); margin-right: .4rem; }
+  .q-n { color: var(--tint); margin-right: .4rem; font-variant-numeric: tabular-nums; }
   .given { font-size: .9375rem; }
   .given p { margin: 0 0 .5rem; }
+  .evidence {
+    display: block; width: 100%; height: auto; margin: .6rem 0;
+    border-radius: 14px; border: 1px solid var(--hairline);
+    box-shadow: var(--shadow-sm);
+    transition: transform .25s var(--ease-out);
+  }
   /* 题面里的图只需认得出；用 min() 兜住窄屏，写死 26rem 在 390 屏上比容器还宽 */
   .given .evidence { max-width: min(26rem, 100%); }
   .quote {
-    margin: .5rem 0; padding-left: .75rem;
-    border-left: 2px solid var(--rule); color: var(--muted);
+    margin: .5rem 0; padding: .05rem 0 .05rem .8rem;
+    border-left: 2.5px solid var(--hairline); color: var(--muted);
   }
 
   .reveal { position: absolute; width: 1px; height: 1px; opacity: 0; }
   .answer { margin-top: .75rem; font-size: .9375rem; }
   .answer p { margin: 0 0 .5rem; }
   .answer p:last-child { margin-bottom: 0; }
-  .answer .evidence {
-    display: block; width: 100%; height: auto; margin: .6rem 0;
-    border: 1px solid var(--rule); border-radius: 2px;
-  }
   /* 展开层：解密前整块不存在。只涂黑判定不够——理由和图片本身会指向答案 */
   .answer .more { display: none; }
-  .reveal:checked ~ .answer .more { display: block; }
+  .reveal:checked ~ .answer .more { display: block; animation: more-in .4s var(--ease-out); }
   .redact .w {
-    background: var(--ink); color: transparent; border-radius: 1px;
+    background: var(--ink); color: transparent; border-radius: .3em;
     /* 文字仍在 DOM 里，只是看不见——禁掉选中，免得全选或长按把答案抹出来 */
     user-select: none; -webkit-user-select: none;
-    transition: background-color .18s ease, color .18s ease;
+    transition: background-color .3s ease, color .3s ease;
   }
   .reveal:checked ~ .answer .redact .w {
     background: transparent; color: inherit;
     user-select: auto; -webkit-user-select: auto;
+    animation: unveil .55s var(--ease-out);
   }
   .reveal-btn {
-    display: inline-block; margin-top: .75rem;
-    padding: .3rem .8rem;
-    border: 1px solid var(--ink); border-radius: 2px;
-    font: 600 .75rem/1.6 var(--mono); letter-spacing: .08em;
-    cursor: pointer; user-select: none;
+    display: inline-block; margin-top: .85rem;
+    padding: .5rem 1.15rem; border-radius: 999px;
+    background: var(--tint); color: #fff;
+    font: 600 .8125rem/1.4 var(--sans); letter-spacing: .01em;
+    box-shadow: 0 6px 18px rgba(0,122,255,.32), inset 0 1px 0 rgba(255,255,255,.32);
+    cursor: pointer; user-select: none; -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    transition: transform .18s var(--ease-out), box-shadow .18s var(--ease-out);
   }
-  .reveal-btn:hover { background: var(--ink); color: var(--paper-2); }
-  .reveal:focus-visible ~ .reveal-btn { outline: 2px solid var(--signal); outline-offset: 2px; }
+  .reveal-btn:active {
+    transform: scale(.95);
+    box-shadow: 0 3px 10px rgba(0,122,255,.28), inset 0 1px 0 rgba(255,255,255,.32);
+  }
+  .reveal:focus-visible ~ .reveal-btn { outline: 2px solid var(--tint); outline-offset: 2px; }
   .reveal:checked ~ .reveal-btn { display: none; }
 
   /* ── 页脚 ───────────────────────────── */
   .foot {
-    margin-top: 3rem; padding-top: 1.5rem;
-    border-top: 1px solid var(--rule);
+    margin-top: 2.5rem; padding-top: 1.4rem;
+    border-top: 1px solid var(--hairline);
     font-size: .875rem; color: var(--muted);
   }
   .foot p { margin: 0 0 .5rem; }
-  .archive { font: 400 .75rem/2 var(--mono); }
-  .archive a { color: var(--muted); text-decoration: none; margin-right: .6rem; }
-  .archive a:hover { color: var(--signal); text-decoration: underline; }
+  .archive { font: 400 .78rem/1.6 var(--sans); }
+  .archive a {
+    display: inline-block; margin: 0 .35rem .45rem 0; padding: .22rem .75rem;
+    border-radius: 999px; color: var(--muted); text-decoration: none;
+    background: var(--glass); border: 1px solid var(--glass-line);
+    -webkit-backdrop-filter: blur(16px) saturate(160%);
+    backdrop-filter: blur(16px) saturate(160%);
+    box-shadow: var(--specular);
+    font-variant-numeric: tabular-nums;
+    transition: transform .18s var(--ease-out);
+  }
+  .archive a:active { transform: scale(.94); }
+
+  @media (hover: hover) and (pointer: fine) {
+    .tabs label:hover { color: var(--ink); }
+    .repo-name:hover { color: var(--tint); }
+    .zoomlink:hover { text-decoration: underline; }
+    .archive a:hover { color: var(--ink); }
+    .lb-bar .x:hover, .lb-bar a:hover { background: rgba(255,255,255,.12); }
+  }
 
   @media (prefers-reduced-motion: reduce) {
-    .redact .w { transition: none; }
+    *, *::before, *::after {
+      animation-duration: .01ms !important;
+      animation-delay: 0ms !important;
+      transition-duration: .01ms !important;
+      transition-delay: 0ms !important;
+    }
   }
 </style>
 </head>
@@ -361,7 +495,7 @@
 <div class="sheet">
 
   <header class="masthead">
-    <h1 class="wordmark">DAILY RADAR</h1>
+    <h1 class="wordmark">Daily Radar</h1>
     <p class="issueline">№ {{ISSUE}}　·　{{DATE}}　·　PH 榜单日 {{PH_DAY}} (PT)</p>
     {{FAULT}}
   </header>
@@ -370,6 +504,7 @@
   <input type="radio" name="tab" id="tab-gh" class="tab-in">
 
   <nav class="tabs">
+    <span class="thumb" aria-hidden="true"></span>
     <label for="tab-ph">Product Hunt <span class="n">1</span></label>
     <label for="tab-gh">GitHub Trending <span class="n">5</span></label>
   </nav>
