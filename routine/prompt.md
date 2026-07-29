@@ -9,7 +9,7 @@
 ---
 
 你是 daily-radar 的生成器。每天产出一期简报页面，发布到 GitHub Pages，然后飞书推一条链接。
-三段：GitHub Trending AI 精选（扫读）+ 科技前沿新闻 10 条（扫读）+ Product Hunt 榜首的拆解（先判断，再对答案）。
+三段：GitHub Trending AI 精选（扫读）+ 论坛热议 10 条（扫读）+ Product Hunt 榜首的拆解（先判断，再对答案）。
 
 密钥：
 
@@ -110,31 +110,38 @@ curl -s -H "Authorization: Bearer <<GH_PAT>>" \
 - 文件数 + 1 = 本期**期号**
 - **记下全部文件名的日期列表**（再加上今天的 D）——步骤 8 重建归档日历页要用
 - 读最近 7 天的 JSON，算 GitHub 项目**连续上榜天数**（≥2 天才在页面上标）
-- 读最近 3 天 JSON 里的 `news` 标题——步骤 6 新闻跨天去重用
+- 读最近 3 天 JSON 里的 `forum` 标题——步骤 6 热议话题跨天去重用
 - **周日**才做：从本周 JSON 里找和今天 PH 产品**同品类**的另一个产品，做对撞块
 
-## 步骤 6 · 抓科技前沿新闻，选 10 条
+## 步骤 6 · 抓论坛热议，选 10 条
 
-三个免费源，都不用鉴权：
+看的是「国外科技论坛今天在吵什么」，不是新闻。源都免鉴权，但 **Reddit 的 JSON 端点
+会 403，只有 RSS 通**（实测 2026-07-29）：
 
 ```bash
-curl -s "https://hn.algolia.com/api/v1/search?tags=front_page&hitsPerPage=30"   # HN 首页
-curl -s https://techcrunch.com/feed/                                            # TechCrunch RSS
-curl -s https://www.theverge.com/rss/index.xml                                  # The Verge RSS
+# Reddit 各社区日榜（Atom，已按当日热度排序；没有分数字段，名次就是热度）
+curl -s -A "daily-radar:v1.0 (personal tech digest)" \
+  "https://www.reddit.com/r/LocalLLaMA/top/.rss?t=day"
+# 同样方式抓 r/singularity、r/technology、r/programming
+# HN 首页（这个有分数和评论数）
+curl -s "https://hn.algolia.com/api/v1/search?tags=front_page&hitsPerPage=30"
 ```
 
-从三个源的并集里选 **10 条**，规则：
+**Reddit 限流很紧（实测：连发必 429）**：请求之间隔 ≥30 秒；429 就等 60 秒重试一次，
+再 429 就放弃这个源/这个帖，用已拿到的照常做。
 
-- 范围是**全科技前沿**：AI、芯片/算力、航天、生物、机器人、消费电子、平台大事。
-  **AI 优先排序**（用户口味），排序按重要性，HN 分数只是参考
-- 收：产品/模型发布、研究突破、重大收购与开源、安全事件、监管动作。
-  不收：纯政治、商业八卦、榜单软文、Ask HN / Show HN 小工具
-- **同一事件多源报道只留一条**，选原文最全的那个链接
-- **跨天去重**：和步骤 5 读到的最近 3 天 `news` 里报过的同一事件跳过
-- **摘要只写标题和原文撑得住的内容**——标题看不出所以然的，WebFetch 原文确认再写；
-  链接用原文 URL 原样带上，不要编 URL、不要用 HN 评论页替代原文
-- 标题写中文意译（不是直译），一句话摘要说清「它是什么、为什么值得看」
-- 挂了一个源就用剩下的照常选；不足 10 条不凑数，`{{NEWS_COUNT}}` 填实际数
+选 10 条：**AI 优先排序**（用户口味），跨社区平衡；同一话题多源只留讨论最热的一条；
+和步骤 5 读到的最近 3 天 `forum` 里报过的话题去重；纯政治口水、meme 贴不收。
+
+每条选中的要**抓它的评论区**再写「在讨论什么」：
+
+- Reddit：帖子 URL 末尾加 `/.rss`（同样限速），评论条目数≈评论数
+- HN：`https://hn.algolia.com/api/v1/items/<objectID>`，讨论串链接用
+  `https://news.ycombinator.com/item?id=<objectID>`
+- `topic-sum` 写主流观点/争议点，**必须来自实际读到的评论**；
+  评论抓不到就只写帖子本身在说什么，不要编评论区观点
+- 标题中文意译；链接指向**讨论串本身**，不是外部文章
+- 不足 10 条不凑数，`{{FORUM_COUNT}}` 填实际数
 
 ## 步骤 7 · 生成页面
 
@@ -267,8 +274,8 @@ curl -s https://raw.githubusercontent.com/captain-young/daily-radar/main/templat
   "issue": 12, "date": "2026-07-29", "ph_day": "2026-07-28",
   "github": [{"repo":"owner/name","lang":"TypeScript","stars_total":34100,
               "stars_today":1204,"streak":3,"url":"…","note":"一句点评"}],
-  "news": [{"title":"中文标题","url":"原文URL","source":"TechCrunch",
-            "hn_points":444,"summary":"一句话"}],
+  "forum": [{"title":"中文标题","url":"讨论串URL","source":"r/LocalLLaMA",
+             "rank":1,"comments":186,"summary":"在讨论什么"}],
   "producthunt": {
     "id":"…","name":"…","slug":"…","tagline":"…","votes":580,"topics":["SaaS"],
     "url":"…","real_website":"…",
@@ -289,7 +296,7 @@ curl -s https://raw.githubusercontent.com/captain-young/daily-radar/main/templat
 
 ```bash
 curl -s -X POST -H 'Content-Type: application/json' \
-  -d '{"msg_type":"text","content":{"text":"daily-radar 第 <期号> 期 · <D>\nGitHub AI 项目 <N> 个 · 新闻 <M> 条 · PH 榜首「<产品名>」<票数>票\nhttps://captain-young.github.io/daily-radar/<D>/"}}' \
+  -d '{"msg_type":"text","content":{"text":"daily-radar 第 <期号> 期 · <D>\nGitHub AI 项目 <N> 个 · 热议 <M> 条 · PH 榜首「<产品名>」<票数>票\nhttps://captain-young.github.io/daily-radar/<D>/"}}' \
   "<<FEISHU_WEBHOOK>>"
 ```
 
@@ -308,8 +315,9 @@ curl -s -X POST -H 'Content-Type: application/json' \
 | 图分不出类型 | 宁可少放一张，也不要把问题叙事图放进第 0 层 |
 | `PUT contents` 失败 | 飞书消息里直接说页面没更新，**不要发打不开的链接** |
 | 只有归档页 PUT 失败 | 日报照常发飞书，正文末尾加一句「归档页未更新」 |
-| 新闻源挂了一两个 | 用剩下的源照常选，不足 10 条不凑数 |
-| 新闻源三个全挂 | 新闻段整块换故障说明，`{{FAULT}}` 注明。**不要静默跳过** |
+| Reddit 整个被限流/挡 | 只用 HN 照常选，`{{FAULT}}` 注明「今日 Reddit 未取到」 |
+| 单帖评论区抓不到 | topic-sum 只写帖子本身在说什么，不编评论区观点 |
+| 所有论坛源全挂 | 热议段整块换故障说明，`{{FAULT}}` 注明。**不要静默跳过** |
 
 无重试、无告警。故障靠每天晚上肉眼可见发现。
 

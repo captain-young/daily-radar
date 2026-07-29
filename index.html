@@ -120,7 +120,7 @@
     transition: transform .4s var(--ease-ios);
   }
   #tab-gh:checked ~ .tabs .thumb { transform: translateX(100%); }
-  #tab-news:checked ~ .tabs .thumb { transform: translateX(200%); }
+  #tab-forum:checked ~ .tabs .thumb { transform: translateX(200%); }
   .tabs label {
     flex: 1; position: relative; z-index: 1;
     padding: .55rem .5rem; text-align: center; border-radius: 999px;
@@ -133,15 +133,15 @@
   .tabs .n { font-weight: 400; opacity: .65; font-variant-numeric: tabular-nums; }
   #tab-ph:checked ~ .tabs label[for="tab-ph"],
   #tab-gh:checked ~ .tabs label[for="tab-gh"],
-  #tab-news:checked ~ .tabs label[for="tab-news"] { color: var(--ink); }
+  #tab-forum:checked ~ .tabs label[for="tab-forum"] { color: var(--ink); }
   #tab-ph:focus-visible ~ .tabs label[for="tab-ph"],
   #tab-gh:focus-visible ~ .tabs label[for="tab-gh"],
-  #tab-news:focus-visible ~ .tabs label[for="tab-news"] {
+  #tab-forum:focus-visible ~ .tabs label[for="tab-forum"] {
     outline: 2px solid var(--tint); outline-offset: 2px;
   }
   .pane { display: none; }
   #tab-ph:checked ~ .pane-ph, #tab-gh:checked ~ .pane-gh,
-  #tab-news:checked ~ .pane-news {
+  #tab-forum:checked ~ .pane-forum {
     display: block; animation: pane-in .32s var(--ease-out);
   }
   .pane-head {
@@ -189,8 +189,8 @@
   .repo-note dd { margin: .1rem 0 0; }
 
 
-  /* ── 科技新闻：一块玻璃里的十行 ─────────────── */
-  .news-list {
+  /* ── 论坛热议：一块玻璃里的十行 ─────────────── */
+  .topic-list {
     padding: .35rem 1.15rem;
     border-radius: 22px;
     background: var(--glass);
@@ -199,15 +199,15 @@
     border: 1px solid var(--glass-line);
     box-shadow: var(--shadow), var(--specular);
   }
-  .news { padding: .95rem 0; border-bottom: 1px solid var(--hairline); }
-  .news:last-child { border-bottom: 0; }
-  .news-title {
+  .topic { padding: .95rem 0; border-bottom: 1px solid var(--hairline); }
+  .topic:last-child { border-bottom: 0; }
+  .topic-title {
     display: block; color: var(--ink); text-decoration: none;
     font-weight: 600; line-height: 1.5;
   }
-  .news-title:active { opacity: .5; }
-  .news-meta { margin: .15rem 0 .25rem; font: 400 .75rem/1.5 var(--sans); color: var(--muted); }
-  .news-sum { margin: 0; font-size: .9063rem; }
+  .topic-title:active { opacity: .5; }
+  .topic-meta { margin: .15rem 0 .25rem; font: 400 .75rem/1.5 var(--sans); color: var(--muted); }
+  .topic-sum { margin: 0; font-size: .9063rem; }
 
   /* ── Product Hunt：一整块玻璃 ───────────────────── */
   /* .drill 不能用 backdrop-filter：它会给 fixed 后代建立 containing block，
@@ -431,13 +431,13 @@
 
   <input type="radio" name="tab" id="tab-ph" class="tab-in" checked>
   <input type="radio" name="tab" id="tab-gh" class="tab-in">
-  <input type="radio" name="tab" id="tab-news" class="tab-in">
+  <input type="radio" name="tab" id="tab-forum" class="tab-in">
 
   <nav class="tabs">
     <span class="thumb" aria-hidden="true"></span>
     <label for="tab-ph">Product Hunt <span class="n">1</span></label>
     <label for="tab-gh">GitHub <span class="n">3</span></label>
-    <label for="tab-news">新闻 <span class="n">10</span></label>
+    <label for="tab-forum">热议 <span class="n">10</span></label>
   </nav>
 
   <section class="pane pane-ph">
@@ -614,58 +614,58 @@
     </article>
   </section>
 
-  <section class="pane pane-news">
-    <p class="pane-head">过去 24 小时的科技前沿，AI 优先。来源：Hacker News 首页 · TechCrunch · The Verge。</p>
-    <div class="news-list">
-      <article class="news">
-        <a class="news-title" href="https://github.com/openai/codex-security">OpenAI 开源 Codex Security：用 Codex 扫描、验证、修复代码漏洞</a>
-        <p class="news-meta">OpenAI (GitHub) · HN 516 分</p>
-        <p class="news-sum">CLI + TypeScript SDK，能扫仓库、review 变更、跟踪 findings，可直接挂进 CI；ChatGPT 登录或 API key 两种认证。</p>
+  <section class="pane pane-forum">
+    <p class="pane-head">国外科技论坛过去 24 小时在吵什么，AI 优先。来源：r/LocalLLaMA · r/singularity · r/technology · r/programming · Hacker News。</p>
+    <div class="topic-list">
+      <article class="topic">
+        <a class="topic-title" href="https://www.reddit.com/r/singularity/comments/1v9jidr/openais_rogue_ai_agent_hacked_more_than_just/">OpenAI 失控 agent 入侵的不止 Hugging Face</a>
+        <p class="topic-meta">r/singularity 日榜 #5 · 评论 54</p>
+        <p class="topic-sum">官方通报被逐段扒——受害者还包括 Modal 的客户；另一半人在算后果：HF 要了 1 亿美元算力补偿，还有人在问 OpenAI 会不会吃官司。</p>
       </article>
-      <article class="news">
-        <a class="news-title" href="https://techcrunch.com/2026/07/28/sam-altman-is-ready-to-decelerate/">Sam Altman 表态「准备好减速了」</a>
-        <p class="news-meta">TechCrunch</p>
-        <p class="news-sum">转向的导火索是他称为「第一次切身感受到的安全事件」，具体事件文中展开。</p>
+      <article class="topic">
+        <a class="topic-title" href="https://www.reddit.com/r/singularity/comments/1v9mq82/google_deepmind_dismantles_nobelwinning_alphafold/">DeepMind 拆散拿过诺奖的 AlphaFold 团队</a>
+        <p class="topic-meta">r/singularity 日榜 #3 · 评论 54</p>
+        <p class="topic-sum">最热的线索：John Jumper 被调去给 Gemini 提升编码能力，随后离职——大家把之前看不懂的人事变动对上了，惋惜科学团队给产品线让路。</p>
       </article>
-      <article class="news">
-        <a class="news-title" href="https://sebastianraschka.com/blog/2026/kimi-k3-architecture-notes.html">Kimi K3 架构详解笔记</a>
-        <p class="news-meta">sebastianraschka.com · HN 444 分</p>
-        <p class="news-sum">Sebastian Raschka 逐层拆解月之暗面 K3 的架构设计，是今天 HN 上讨论度最高的 K3 技术解读。</p>
+      <article class="topic">
+        <a class="topic-title" href="https://www.reddit.com/r/singularity/comments/1v9v4of/claude_opus_5_is_insane/">Claude Opus 5 强得离谱</a>
+        <p class="topic-meta">r/singularity 日榜 #8 · 评论 59</p>
+        <p class="topic-sum">吹归吹，最高赞在给它出题：扔一个 25 年历史、5 万行、零文档的祖传系统看它先崩溃还是先跑通；还有人想让它优化 DOOM。</p>
       </article>
-      <article class="news">
-        <a class="news-title" href="https://techcrunch.com/2026/07/28/cyera-agrees-to-acquire-oasis-security-for-1b-to-safeguard-proliferating-ai-agents/">Cyera 10 亿美元收购 Oasis Security，押注 AI agent 身份安全</a>
-        <p class="news-meta">TechCrunch</p>
-        <p class="news-sum">数据安全公司并购机器身份管理商——AI agent 数量爆炸，agent 的凭证和权限正在变成安全行业的新战场。</p>
+      <article class="topic">
+        <a class="topic-title" href="https://www.reddit.com/r/LocalLLaMA/comments/1v99nlk/should_we_be_calling_elon_a_liar/">Grok 3 说好的开源呢——该叫马斯克骗子吗</a>
+        <p class="topic-meta">r/LocalLLaMA 日榜 #1 · 评论 186</p>
+        <p class="topic-sum">一边倒。评论区排队报历年跳票清单：FSD、2025 上火星、Roadster——共识是「他说的话不能当承诺听」。</p>
       </article>
-      <article class="news">
-        <a class="news-title" href="https://www.theverge.com/ai-artificial-intelligence/972161/ai-leaders-us-government-openai-anthropic-google-meta">OpenAI / Anthropic / Google / Meta 高层联名，要求政府应对 AI 自动化失业</a>
-        <p class="news-meta">The Verge</p>
-        <p class="news-sum">几家头部 AI 公司的领导人签署联名声明，承认自动化正在冲击就业并要求政府介入。</p>
+      <article class="topic">
+        <a class="topic-title" href="https://www.reddit.com/r/LocalLLaMA/comments/1v9c77r/unsloth_has_begun_dropping_kimi_k3_ggufs_the/">Unsloth 开始放出 Kimi K3 GGUF，MXFP4 量化 1.5 TB</a>
+        <p class="topic-meta">r/LocalLLaMA 日榜 #4 · 评论 95</p>
+        <p class="topic-sum">大家兴奋的不是本体（1.5 TB 没几个人跑得动），是权重出来后拿 K3 当 teacher 做蒸馏——已经有人贴出第一个 Python 领域的蒸馏模型。</p>
       </article>
-      <article class="news">
-        <a class="news-title" href="https://www.theverge.com/ai-artificial-intelligence/972119/ai-stock-fall-google-capex">AI 终于贵到让华尔街紧张了</a>
-        <p class="news-meta">The Verge</p>
-        <p class="news-sum">AI 股回调叠加 Google 资本开支数字，市场开始重新审视 AI 基建投入的回报周期。</p>
+      <article class="topic">
+        <a class="topic-title" href="https://www.reddit.com/r/LocalLLaMA/comments/1v9100b/deepseek_v4_flash_up_to_32_toks_on_amd_ryzen_ai/">DeepSeek V4 Flash 在 AMD Ryzen AI MAX+ 395 上跑到 32 tok/s</a>
+        <p class="topic-meta">r/LocalLLaMA 日榜 #5 · 评论 56</p>
+        <p class="topic-sum">最尖锐的一问：「没有质量评测，速度有什么意义」——作者承认还没对 qwen3.6 跑正经 eval，只做了回归检查。</p>
       </article>
-      <article class="news">
-        <a class="news-title" href="https://learnvector.ai/">Andrew Ng 的新公司 LearnVector：一对一 AI 教学</a>
-        <p class="news-meta">learnvector.ai · HN 206 分</p>
-        <p class="news-sum">吴恩达在 AI 教育上再落一子，产品形态是一对一的个性化学习体验。</p>
+      <article class="topic">
+        <a class="topic-title" href="https://news.ycombinator.com/item?id=49085698">Kimi K3 架构解读：全线抛弃 RoPE 改用 NoPE</a>
+        <p class="topic-meta">Hacker News · 444 分 · 评论 95</p>
+        <p class="topic-sum">工程圈在啃 Raschka 的逐层拆解，最大争论点是「去掉位置编码这居然能 work」——有人猜是 KDA 线性注意力在悄悄承担位置信息。</p>
       </article>
-      <article class="news">
-        <a class="news-title" href="https://www.theverge.com/tech/972259/us-foreign-robots-power-inverter-ban">美国以国家安全为由，对外国产机器人下禁限令</a>
-        <p class="news-meta">The Verge</p>
-        <p class="news-sum">禁令还波及电源逆变器类设备；HN 上同日挂出了对应的国家安全裁定原文。</p>
+      <article class="topic">
+        <a class="topic-title" href="https://news.ycombinator.com/item?id=49089755">OpenAI 开源 Codex Security，Snyk 们要没生意了？</a>
+        <p class="topic-meta">Hacker News · 516 分 · 评论 186</p>
+        <p class="topic-sum">一半人在报认证报错和「不让扫」的误拦，一半人在讨论它会不会挤掉 Snyk 这类扫描商；有人拆完说本质是给现有模型套了层 CI 壳。</p>
       </article>
-      <article class="news">
-        <a class="news-title" href="https://techcrunch.com/2026/07/28/the-robot-nasa-hired-to-lift-a-orbital-telescope-is-tumbling-out-of-control/">NASA 雇来吊装轨道望远镜的机器人失控翻滚</a>
-        <p class="news-meta">TechCrunch</p>
-        <p class="news-sum">在轨机器人作业出事故——「把机器人送上轨道干粗活」这条商业航天路线吃了一记现实检验。</p>
+      <article class="topic">
+        <a class="topic-title" href="https://www.reddit.com/r/singularity/comments/1v97isn/trump_is_banning_chinese_robotsai_models/">特朗普政府要禁中国机器人和 AI 模型</a>
+        <p class="topic-meta">r/singularity 日榜 #2</p>
+        <p class="topic-sum">帖子转的是美国以国家安全为由限制中国产机器人设备的消息。本条评论区被 Reddit 限流没抓到，只写帖子本身。</p>
       </article>
-      <article class="news">
-        <a class="news-title" href="https://techcrunch.com/2026/07/28/waymo-robotaxi-operators-face-fresh-scrutiny-over-emergency-response-failures/">Waymo 等 robotaxi 运营商因急救响应失败面临新一轮审查</a>
-        <p class="news-meta">TechCrunch</p>
-        <p class="news-sum">无人车遇到急救、执法等紧急场景时的让行与配合问题，再次被监管盯上。</p>
+      <article class="topic">
+        <a class="topic-title" href="https://www.reddit.com/r/LocalLLaMA/comments/1v9h6y9/nvidia_is_expected_to_raise_geforce_rtx_gpu/">传 Nvidia 消费级显卡再涨价至多 30%</a>
+        <p class="topic-meta">r/LocalLLaMA 日榜 #3 · 评论 188</p>
+        <p class="topic-sum">高赞刷屏「消费级 GPU 已死」；另一派赌中国国产卡会把价格打下来，还真有人贴出规格差距约五年的国产卡页面。</p>
       </article>
     </div>
   </section>
