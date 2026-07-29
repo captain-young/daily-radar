@@ -189,18 +189,22 @@
   .repo-note dd { margin: .1rem 0 0; }
 
 
-  /* ── 论坛热议：一块玻璃里的十行 ─────────────── */
-  .topic-list {
-    padding: .35rem 1.15rem;
+  /* ── 论坛热议：每条一张玻璃卡片 ─────────────── */
+  .topic {
+    margin: 0 0 .85rem; padding: 1rem 1.15rem 1.1rem;
     border-radius: 22px;
     background: var(--glass);
     -webkit-backdrop-filter: blur(24px) saturate(180%);
     backdrop-filter: blur(24px) saturate(180%);
     border: 1px solid var(--glass-line);
     box-shadow: var(--shadow), var(--specular);
+    animation: card-in .45s var(--ease-out) backwards;
   }
-  .topic { padding: .95rem 0; border-bottom: 1px solid var(--hairline); }
-  .topic:last-child { border-bottom: 0; }
+  .topic-list .topic:nth-of-type(1) { animation-delay: .04s; }
+  .topic-list .topic:nth-of-type(2) { animation-delay: .09s; }
+  .topic-list .topic:nth-of-type(3) { animation-delay: .14s; }
+  .topic-list .topic:nth-of-type(4) { animation-delay: .19s; }
+  .topic-list .topic:nth-of-type(n+5) { animation-delay: .24s; }
   .topic-title {
     display: block; color: var(--ink); text-decoration: none;
     font-weight: 600; line-height: 1.5;
