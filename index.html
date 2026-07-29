@@ -131,13 +131,19 @@
     position: fixed; inset: 0; z-index: 50;
     background: #0B0D0EF2;
   }
-  /* 浮层里图片按 1600px 原始宽度铺开，可以拖着看细节——这才是「放大」，
-     只做 fit-to-screen 在手机上跟内联一样大，等于没放大 */
+  /* 整张放得下、不用拖：fit-to-screen，居中。
+     真要逐像素看就走顶栏的「原图 ↗」，手机上那条给的是原生捏合缩放，比自己做拖动好用 */
   .lb-scroll {
-    position: absolute; inset: 3rem 0 0; overflow: auto;
+    position: absolute; inset: 3rem 0 0;
+    display: flex; align-items: center; justify-content: center;
+    padding: 1rem; overflow: auto;
     -webkit-overflow-scrolling: touch;
   }
-  .lb-scroll img { display: block; width: auto; max-width: none; height: auto; }
+  .lb-scroll img {
+    display: block; width: auto; height: auto;
+    max-width: 100%; max-height: calc(100vh - 5rem);
+    object-fit: contain;
+  }
   .lb-bar {
     position: absolute; top: 0; left: 0; right: 0; height: 3rem;
     display: flex; align-items: center; justify-content: space-between;
@@ -306,7 +312,7 @@
       <div class="lb">
         <div class="lb-bar">
           <label class="x" for="z1">✕ 关闭</label>
-          <span class="tip">拖动查看细节</span>
+          <span class="tip">要逐像素看点右边</span>
           <a href="https://ph-files.imgix.net/66f2a38e-2654-4946-b774-a8d8f02afdfe.png?auto=format">原图 ↗</a>
         </div>
         <div class="lb-scroll"><img src="https://ph-files.imgix.net/66f2a38e-2654-4946-b774-a8d8f02afdfe.png?auto=format&w=1600" alt=""></div>
@@ -316,7 +322,7 @@
       <div class="lb">
         <div class="lb-bar">
           <label class="x" for="z2">✕ 关闭</label>
-          <span class="tip">拖动查看细节</span>
+          <span class="tip">要逐像素看点右边</span>
           <a href="https://ph-files.imgix.net/5666270e-9a5f-47d5-9a8f-cec13c15e089.png?auto=format">原图 ↗</a>
         </div>
         <div class="lb-scroll"><img src="https://ph-files.imgix.net/5666270e-9a5f-47d5-9a8f-cec13c15e089.png?auto=format&w=1600" alt=""></div>
@@ -326,7 +332,7 @@
       <div class="lb">
         <div class="lb-bar">
           <label class="x" for="z3">✕ 关闭</label>
-          <span class="tip">拖动查看细节</span>
+          <span class="tip">要逐像素看点右边</span>
           <a href="https://ph-files.imgix.net/8825e809-65dc-490e-9702-8190c678a613.png?auto=format">原图 ↗</a>
         </div>
         <div class="lb-scroll"><img src="https://ph-files.imgix.net/8825e809-65dc-490e-9702-8190c678a613.png?auto=format&w=1600" alt=""></div>
@@ -347,7 +353,7 @@
           <p>他专门做了一张三栏对比图来讲这件事：</p>
           <label class="zoom" for="z4"><img class="evidence" src="https://ph-files.imgix.net/e43c0263-e8df-4697-a2b2-7817d04a2d57.png?auto=format&w=800" alt="THE PROBLEM 对比图"></label>
           <input type="checkbox" id="z4" class="lb-toggle">
-          <div class="lb"><div class="lb-bar"><label class="x" for="z4">✕ 关闭</label><span class="tip">拖动查看细节</span><a href="https://ph-files.imgix.net/e43c0263-e8df-4697-a2b2-7817d04a2d57.png?auto=format">原图 ↗</a></div><div class="lb-scroll"><img src="https://ph-files.imgix.net/e43c0263-e8df-4697-a2b2-7817d04a2d57.png?auto=format&w=1600" alt=""></div></div>
+          <div class="lb"><div class="lb-bar"><label class="x" for="z4">✕ 关闭</label><span class="tip">要逐像素看点右边</span><a href="https://ph-files.imgix.net/e43c0263-e8df-4697-a2b2-7817d04a2d57.png?auto=format">原图 ↗</a></div><div class="lb-scroll"><img src="https://ph-files.imgix.net/e43c0263-e8df-4697-a2b2-7817d04a2d57.png?auto=format&w=1600" alt=""></div></div>
           <p style="margin:.3rem 0 .6rem"><a class="zoomlink" href="https://ph-files.imgix.net/e43c0263-e8df-4697-a2b2-7817d04a2d57.png?auto=format">原图 ↗</a></p>
           <p class="quote">An eval set scores the inputs you chose. Sampling scores a fraction of the rest. Production failures live in the runs nobody looked at.</p>
           <p>还搬了外部数字加压：Gartner 预测 2027 年 40%+ 的 agentic AI 项目会被砍掉。</p>
@@ -366,7 +372,7 @@
         <p><strong>第三层 · 首图</strong></p>
         <label class="zoom" for="z5"><img class="evidence" src="https://ph-files.imgix.net/a3db6429-c30c-4462-a6ff-d3896ad6d2c5.png?auto=format&w=800" alt="品牌封面图"></label>
           <input type="checkbox" id="z5" class="lb-toggle">
-          <div class="lb"><div class="lb-bar"><label class="x" for="z5">✕ 关闭</label><span class="tip">拖动查看细节</span><a href="https://ph-files.imgix.net/a3db6429-c30c-4462-a6ff-d3896ad6d2c5.png?auto=format">原图 ↗</a></div><div class="lb-scroll"><img src="https://ph-files.imgix.net/a3db6429-c30c-4462-a6ff-d3896ad6d2c5.png?auto=format&w=1600" alt=""></div></div>
+          <div class="lb"><div class="lb-bar"><label class="x" for="z5">✕ 关闭</label><span class="tip">要逐像素看点右边</span><a href="https://ph-files.imgix.net/a3db6429-c30c-4462-a6ff-d3896ad6d2c5.png?auto=format">原图 ↗</a></div><div class="lb-scroll"><img src="https://ph-files.imgix.net/a3db6429-c30c-4462-a6ff-d3896ad6d2c5.png?auto=format&w=1600" alt=""></div></div>
           <p style="margin:.3rem 0 .6rem"><a class="zoomlink" href="https://ph-files.imgix.net/a3db6429-c30c-4462-a6ff-d3896ad6d2c5.png?auto=format">原图 ↗</a></p>
       </div>
       <input type="checkbox" id="r2" class="reveal">

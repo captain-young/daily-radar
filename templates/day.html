@@ -41,7 +41,7 @@
       <div class="lb">
         <div class="lb-bar">
           <label class="x" for="z1">✕ 关闭</label>
-          <span class="tip">拖动查看细节</span>
+          <span class="tip">要逐像素看点右边</span>
           <a href="原图URL(不带 &w=)">原图 ↗</a>
         </div>
         <div class="lb-scroll"><img src="…&w=1600" alt=""></div>
@@ -50,9 +50,9 @@
     </div>
 
     **每张图三个入口**，前两个不离开页面：
-      ① 点图 → `label.zoom` 开站内浮层（浮层里的图按 `&w=1600` 铺开，可拖动看细节）
+      ① 点图 → `label.zoom` 开站内浮层。浮层里 **fit-to-screen 居中，整张放得下、不用拖**
       ② 浮层顶栏的「✕ 关闭」关掉，滚动位置和已解密状态都不丢
-      ③ caption 里的「原图 ↗」→ 真要极限放大时才跳走，兜底用
+      ③ 顶栏和 caption 的「原图 ↗」→ 逐像素看时才跳走，手机上给的是原生捏合缩放
 
     `id` 用 `z1…z5`，和解密的 `r1…r4` 不要撞。`<input>` 必须是 `.lb` 的**前置兄弟**。
     `.evidence` 那些图同样要做，caption 没有的就在图后面单独放一行文字链。
@@ -208,13 +208,19 @@
     position: fixed; inset: 0; z-index: 50;
     background: #0B0D0EF2;
   }
-  /* 浮层里图片按 1600px 原始宽度铺开，可以拖着看细节——这才是「放大」，
-     只做 fit-to-screen 在手机上跟内联一样大，等于没放大 */
+  /* 整张放得下、不用拖：fit-to-screen，居中。
+     真要逐像素看就走顶栏的「原图 ↗」，手机上那条给的是原生捏合缩放，比自己做拖动好用 */
   .lb-scroll {
-    position: absolute; inset: 3rem 0 0; overflow: auto;
+    position: absolute; inset: 3rem 0 0;
+    display: flex; align-items: center; justify-content: center;
+    padding: 1rem; overflow: auto;
     -webkit-overflow-scrolling: touch;
   }
-  .lb-scroll img { display: block; width: auto; max-width: none; height: auto; }
+  .lb-scroll img {
+    display: block; width: auto; height: auto;
+    max-width: 100%; max-height: calc(100vh - 5rem);
+    object-fit: contain;
+  }
   .lb-bar {
     position: absolute; top: 0; left: 0; right: 0; height: 3rem;
     display: flex; align-items: center; justify-content: space-between;
