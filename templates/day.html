@@ -13,6 +13,8 @@
     {{FAULT}}                       故障提示条，正常时空字符串
     {{GITHUB_ROWS}}                 GitHub 段的卡片（只放 AI 项目，筛选规则见 routine prompt 步骤 4）
     {{GH_COUNT}}                    标签栏上的数字：本期实际收录的 AI 项目数
+    {{NEWS_ROWS}}                   新闻段的行（科技前沿 10 条，AI 优先排序）
+    {{NEWS_COUNT}}                  标签栏上的数字：本期新闻条数
     {{PH_BRIEF}}                    PH 第 0 层「先看懂」
     {{PH_QUESTIONS}}                PH 四问
     {{SUNDAY_BLOCK}}                周日的同类对撞，其余日子空字符串
@@ -54,6 +56,15 @@
         「只从官方渠道安装，第三方镜像可能带恶意代码」的警告
       · Jenkins 是榜上唯一的十五年老项目，+180 对 26k star 的老库是日常波动，
         看不出特别动作——**没查清就说没查清，不要替它编一个上榜理由**
+
+  NEWS_ROWS —— 每天 10 条科技前沿新闻（选取规则见 routine prompt 步骤 6），markup：
+    <article class="news">
+      <a class="news-title" href="原文URL">中文标题（意译，不是直译）</a>
+      <p class="news-meta">The Verge · HN 444 分</p>
+      <p class="news-sum">一句话：它是什么、为什么值得看。</p>
+    </article>
+    news-meta 的 HN 分数只在条目来自 HN 时带。排序按重要性（AI 优先），不按分数。
+    **摘要只写标题和原文撑得住的内容**，链接用原文 URL 原样带上。
 
   PH_BRIEF —— 第 0 层，全部公开，**一个字都不涂黑**：
     <div class="brief">
@@ -214,13 +225,14 @@
   }
   .tabs .thumb {
     position: absolute; top: 3px; bottom: 3px; left: 3px;
-    width: calc(50% - 3px);
+    width: calc(33.333% - 2px);
     border-radius: 999px;
     background: var(--glass-thick);
     box-shadow: 0 3px 10px rgba(24,39,75,.16), var(--specular);
     transition: transform .4s var(--ease-ios);
   }
   #tab-gh:checked ~ .tabs .thumb { transform: translateX(100%); }
+  #tab-news:checked ~ .tabs .thumb { transform: translateX(200%); }
   .tabs label {
     flex: 1; position: relative; z-index: 1;
     padding: .55rem .5rem; text-align: center; border-radius: 999px;
@@ -232,13 +244,16 @@
   .tabs label:active { transform: scale(.96); }
   .tabs .n { font-weight: 400; opacity: .65; font-variant-numeric: tabular-nums; }
   #tab-ph:checked ~ .tabs label[for="tab-ph"],
-  #tab-gh:checked ~ .tabs label[for="tab-gh"] { color: var(--ink); }
+  #tab-gh:checked ~ .tabs label[for="tab-gh"],
+  #tab-news:checked ~ .tabs label[for="tab-news"] { color: var(--ink); }
   #tab-ph:focus-visible ~ .tabs label[for="tab-ph"],
-  #tab-gh:focus-visible ~ .tabs label[for="tab-gh"] {
+  #tab-gh:focus-visible ~ .tabs label[for="tab-gh"],
+  #tab-news:focus-visible ~ .tabs label[for="tab-news"] {
     outline: 2px solid var(--tint); outline-offset: 2px;
   }
   .pane { display: none; }
-  #tab-ph:checked ~ .pane-ph, #tab-gh:checked ~ .pane-gh {
+  #tab-ph:checked ~ .pane-ph, #tab-gh:checked ~ .pane-gh,
+  #tab-news:checked ~ .pane-news {
     display: block; animation: pane-in .32s var(--ease-out);
   }
   .pane-head {
@@ -284,6 +299,27 @@
     text-transform: uppercase;
   }
   .repo-note dd { margin: .1rem 0 0; }
+
+
+  /* ── 科技新闻：一块玻璃里的十行 ─────────────── */
+  .news-list {
+    padding: .35rem 1.15rem;
+    border-radius: 22px;
+    background: var(--glass);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid var(--glass-line);
+    box-shadow: var(--shadow), var(--specular);
+  }
+  .news { padding: .95rem 0; border-bottom: 1px solid var(--hairline); }
+  .news:last-child { border-bottom: 0; }
+  .news-title {
+    display: block; color: var(--ink); text-decoration: none;
+    font-weight: 600; line-height: 1.5;
+  }
+  .news-title:active { opacity: .5; }
+  .news-meta { margin: .15rem 0 .25rem; font: 400 .75rem/1.5 var(--sans); color: var(--muted); }
+  .news-sum { margin: 0; font-size: .9063rem; }
 
   /* ── Product Hunt：一整块玻璃 ───────────────────── */
   /* .drill 不能用 backdrop-filter：它会给 fixed 后代建立 containing block，
@@ -507,11 +543,13 @@
 
   <input type="radio" name="tab" id="tab-ph" class="tab-in" checked>
   <input type="radio" name="tab" id="tab-gh" class="tab-in">
+  <input type="radio" name="tab" id="tab-news" class="tab-in">
 
   <nav class="tabs">
     <span class="thumb" aria-hidden="true"></span>
     <label for="tab-ph">Product Hunt <span class="n">1</span></label>
-    <label for="tab-gh">GitHub Trending <span class="n">{{GH_COUNT}}</span></label>
+    <label for="tab-gh">GitHub <span class="n">{{GH_COUNT}}</span></label>
+    <label for="tab-news">新闻 <span class="n">{{NEWS_COUNT}}</span></label>
   </nav>
 
   <section class="pane pane-ph">
@@ -529,6 +567,13 @@
   <section class="pane pane-gh">
     <p class="pane-head">{{GH_SUMMARY}}</p>
     {{GITHUB_ROWS}}
+  </section>
+
+  <section class="pane pane-news">
+    <p class="pane-head">过去 24 小时的科技前沿，AI 优先。来源：Hacker News 首页 · TechCrunch · The Verge。</p>
+    <div class="news-list">
+      {{NEWS_ROWS}}
+    </div>
   </section>
 
   <footer class="foot">

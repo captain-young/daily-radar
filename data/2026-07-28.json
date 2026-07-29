@@ -90,5 +90,70 @@
         "Animation"
       ]
     }
+  ],
+  "news": [
+    {
+      "title": "OpenAI 开源 Codex Security：用 Codex 扫描、验证、修复代码漏洞",
+      "url": "https://github.com/openai/codex-security",
+      "source": "OpenAI (GitHub)",
+      "summary": "CLI + TypeScript SDK，能扫仓库、review 变更、跟踪 findings，可直接挂进 CI；ChatGPT 登录或 API key 两种认证。",
+      "hn_points": 516
+    },
+    {
+      "title": "Sam Altman 表态「准备好减速了」",
+      "url": "https://techcrunch.com/2026/07/28/sam-altman-is-ready-to-decelerate/",
+      "source": "TechCrunch",
+      "summary": "转向的导火索是他称为「第一次切身感受到的安全事件」，具体事件文中展开。"
+    },
+    {
+      "title": "Kimi K3 架构详解笔记",
+      "url": "https://sebastianraschka.com/blog/2026/kimi-k3-architecture-notes.html",
+      "source": "sebastianraschka.com",
+      "summary": "Sebastian Raschka 逐层拆解月之暗面 K3 的架构设计，是今天 HN 上讨论度最高的 K3 技术解读。",
+      "hn_points": 444
+    },
+    {
+      "title": "Cyera 10 亿美元收购 Oasis Security，押注 AI agent 身份安全",
+      "url": "https://techcrunch.com/2026/07/28/cyera-agrees-to-acquire-oasis-security-for-1b-to-safeguard-proliferating-ai-agents/",
+      "source": "TechCrunch",
+      "summary": "数据安全公司并购机器身份管理商——AI agent 数量爆炸，agent 的凭证和权限正在变成安全行业的新战场。"
+    },
+    {
+      "title": "OpenAI / Anthropic / Google / Meta 高层联名，要求政府应对 AI 自动化失业",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/972161/ai-leaders-us-government-openai-anthropic-google-meta",
+      "source": "The Verge",
+      "summary": "几家头部 AI 公司的领导人签署联名声明，承认自动化正在冲击就业并要求政府介入。"
+    },
+    {
+      "title": "AI 终于贵到让华尔街紧张了",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/972119/ai-stock-fall-google-capex",
+      "source": "The Verge",
+      "summary": "AI 股回调叠加 Google 资本开支数字，市场开始重新审视 AI 基建投入的回报周期。"
+    },
+    {
+      "title": "Andrew Ng 的新公司 LearnVector：一对一 AI 教学",
+      "url": "https://learnvector.ai/",
+      "source": "learnvector.ai",
+      "summary": "吴恩达在 AI 教育上再落一子，产品形态是一对一的个性化学习体验。",
+      "hn_points": 206
+    },
+    {
+      "title": "美国以国家安全为由，对外国产机器人下禁限令",
+      "url": "https://www.theverge.com/tech/972259/us-foreign-robots-power-inverter-ban",
+      "source": "The Verge",
+      "summary": "禁令还波及电源逆变器类设备；HN 上同日挂出了对应的国家安全裁定原文。"
+    },
+    {
+      "title": "NASA 雇来吊装轨道望远镜的机器人失控翻滚",
+      "url": "https://techcrunch.com/2026/07/28/the-robot-nasa-hired-to-lift-a-orbital-telescope-is-tumbling-out-of-control/",
+      "source": "TechCrunch",
+      "summary": "在轨机器人作业出事故——「把机器人送上轨道干粗活」这条商业航天路线吃了一记现实检验。"
+    },
+    {
+      "title": "Waymo 等 robotaxi 运营商因急救响应失败面临新一轮审查",
+      "url": "https://techcrunch.com/2026/07/28/waymo-robotaxi-operators-face-fresh-scrutiny-over-emergency-response-failures/",
+      "source": "TechCrunch",
+      "summary": "无人车遇到急救、执法等紧急场景时的让行与配合问题，再次被监管盯上。"
+    }
   ]
 }
