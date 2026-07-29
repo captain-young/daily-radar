@@ -53,29 +53,40 @@
     font: 400 .8rem/1.6 var(--mono);
   }
 
-  /* ── 区标题 ─────────────────────────── */
-  .zone-head {
-    display: flex; align-items: baseline; gap: .75rem;
-    margin: 0 0 1.25rem; padding-top: 1.5rem;
-    border-top: 1px solid var(--rule);
-    font: 600 .8rem/1 var(--mono);
-    letter-spacing: .14em; text-transform: uppercase;
+  /* ── 标签页：两件无关的事，平级 ─────── */
+  .tab-in { position: absolute; width: 1px; height: 1px; opacity: 0; }
+  .tabs {
+    display: flex; gap: 1.5rem;
+    margin: 1.5rem 0 1.5rem;
+    border-bottom: 1px solid var(--rule);
   }
-  .zone-head .cn { font-family: var(--sans); font-size: 1rem; letter-spacing: 0; }
-  .zone-head .mode {
-    margin-left: auto; text-transform: none; letter-spacing: 0;
-    font-weight: 400; color: var(--muted); font-family: var(--sans);
+  .tabs label {
+    padding: .5rem 0; margin-bottom: -1px;
+    border-bottom: 2px solid transparent;
+    font: 600 .75rem/1.4 var(--mono);
+    letter-spacing: .1em; text-transform: uppercase;
+    color: var(--muted); cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
   }
-  .sub {
-    margin: 2rem 0 1rem;
-    font: 600 .7rem/1 var(--mono);
-    letter-spacing: .16em; text-transform: uppercase;
-    color: var(--signal);
+  .tabs label:hover { color: var(--ink); }
+  .tabs .n { font-weight: 400; opacity: .7; }
+  .pane { display: none; }
+  #tab-ph:checked ~ .tabs label[for="tab-ph"],
+  #tab-gh:checked ~ .tabs label[for="tab-gh"] {
+    color: var(--ink); border-bottom-color: var(--signal);
   }
-  .sub:first-of-type { margin-top: 0; }
+  #tab-ph:checked ~ .pane-ph, #tab-gh:checked ~ .pane-gh { display: block; }
+  #tab-ph:focus-visible ~ .tabs label[for="tab-ph"],
+  #tab-gh:focus-visible ~ .tabs label[for="tab-gh"] {
+    outline: 2px solid var(--signal); outline-offset: 2px;
+  }
+  .pane-head {
+    margin: 0 0 1.25rem;
+    font: 400 .8125rem/1.6 var(--sans); color: var(--muted);
+  }
 
-  /* ── 一 · GitHub ────────────────────── */
-  .repo { padding: .9rem 0; border-bottom: 1px solid var(--rule); }
+  /* ── GitHub Trending ────────────────── */
+  .repo { padding: 1rem 0; border-bottom: 1px solid var(--rule); }
   .repo:last-child { border-bottom: 0; }
   .repo-top { display: flex; align-items: baseline; gap: .75rem; }
   .repo-name {
@@ -90,16 +101,21 @@
   }
   .repo-meta { margin: .2rem 0 0; font: 400 .75rem/1.6 var(--mono); color: var(--muted); }
   .streak { color: var(--signal); }
-  .repo-note { margin: .35rem 0 0; font-size: .9375rem; }
+  .repo-note { margin: .4rem 0 0; font-size: .9375rem; }
 
-  /* ── 二 · Product Hunt ──────────────── */
+  /* ── Product Hunt ───────────────────── */
   .drill {
-    margin-top: 2.5rem; padding: 1.5rem 1.25rem 2rem;
+    padding: 1.5rem 1.25rem 2rem;
     background: var(--paper-2); border-radius: 2px;
   }
-  .drill .zone-head { border-top: 0; padding-top: 0; }
+  .sub {
+    margin: 2rem 0 1rem;
+    font: 600 .7rem/1 var(--mono);
+    letter-spacing: .16em; text-transform: uppercase;
+    color: var(--signal);
+  }
+  .sub:first-child { margin-top: 0; }
 
-  /* 第 0 层 */
   .brief { margin: 0 0 1.25rem; }
   .brief p { margin: 0 0 .6rem; font-size: .9375rem; }
   .brief .k {
@@ -108,16 +124,29 @@
     letter-spacing: .1em; color: var(--muted);
     text-transform: uppercase;
   }
-  /* 竖排满宽，不做横向 carousel：横滑容器里的点击在触屏上经常被判成拖动手势，
-     而且每张图只剩 82% 宽度，控制台截图的小字更读不清。竖排两个问题一起消失 */
+
+  /* 竖排满宽，不做横向 carousel：横滑容器里的点击在触屏上常被判成拖动手势，
+     而且每张图只剩 82% 宽度，控制台截图的小字更读不清 */
   .gallery { margin: 0; }
   .gallery figure { margin: 0 0 1.5rem; }
   .gallery img {
     display: block; width: 100%; height: auto;
     border: 1px solid var(--rule); border-radius: 2px;
   }
-  /* 点图开站内浮层，不跳走——跳走会丢掉滚动位置和已解密的状态。
-     用 checkbox + label，和解密同一套机制，不需要 JS */
+  .gallery figcaption {
+    margin-top: .4rem; font: 400 .75rem/1.5 var(--mono); color: var(--muted);
+  }
+  .ph-meta {
+    display: flex; gap: 1rem; align-items: baseline;
+    margin: .75rem 0 0; font: 400 .75rem/1.6 var(--mono); color: var(--muted);
+  }
+  .ph-meta .votes {
+    margin-left: auto; flex: none;
+    color: var(--signal); font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* 点图开站内浮层，不跳走——跳走会丢掉滚动位置和已解密的状态 */
   label.zoom {
     display: block; cursor: zoom-in;
     -webkit-tap-highlight-color: transparent;
@@ -125,14 +154,14 @@
   .lb-toggle { position: absolute; width: 1px; height: 1px; opacity: 0; }
   .lb { display: none; }
   /* 必须用相邻兄弟 + 而不是 ~：.lb 全都是 .gallery 的同级子元素，
-     用 ~ 会一次显示后面所有浮层，最后一个盖在最上面，点第一张图却看到第三张 */
+     用 ~ 会一次显示后面所有浮层，最后一个盖在最上面，点第一张却看到第三张 */
   .lb-toggle:checked + .lb {
     display: block;
     position: fixed; inset: 0; z-index: 50;
     background: #0B0D0EF2;
   }
-  /* 整张放得下、不用拖：fit-to-screen，居中。
-     真要逐像素看就走顶栏的「原图 ↗」，手机上那条给的是原生捏合缩放，比自己做拖动好用 */
+  /* 整张放得下、不用拖：fit-to-screen 居中。
+     真要逐像素看走顶栏的「原图 ↗」，手机上那条给的是原生捏合缩放 */
   .lb-scroll {
     position: absolute; inset: 3rem 0 0;
     display: flex; align-items: center; justify-content: center;
@@ -157,29 +186,11 @@
   body:has(.lb-toggle:checked) { overflow: hidden; }
   /* 键盘走 caption 里的 .zoomlink（真 <a>，原生可聚焦）；
      图片上的 label 是鼠标/触屏入口，不做焦点样式 */
-
-  /* 文字入口兜底：浮层万一在某个内置浏览器里失灵，这条直接开原图 */
   .zoomlink {
     white-space: nowrap; color: var(--signal); text-decoration: none;
     border-bottom: 1px solid var(--signal);
   }
   .zoomlink:hover { background: var(--signal); color: var(--paper-2); }
-  .hint {
-    margin: -.5rem 0 1rem;
-    font: 400 .7rem/1.6 var(--mono); color: var(--muted);
-  }
-  .gallery figcaption {
-    margin-top: .4rem; font: 400 .75rem/1.5 var(--mono); color: var(--muted);
-  }
-  .ph-meta {
-    display: flex; gap: 1rem; align-items: baseline;
-    margin: .75rem 0 0; font: 400 .75rem/1.6 var(--mono); color: var(--muted);
-  }
-  .ph-meta .votes {
-    margin-left: auto; flex: none;
-    color: var(--signal); font-weight: 600;
-    font-variant-numeric: tabular-nums;
-  }
 
   /* 四问 */
   .q { margin: 0 0 2rem; }
@@ -187,8 +198,7 @@
   .q-n { color: var(--signal); margin-right: .4rem; }
   .given { font-size: .9375rem; }
   .given p { margin: 0 0 .5rem; }
-  /* 题面里的图只需认得出，别让它吃掉半屏；.more 里的图往往是细节图表，保持满宽。
-     用 min() 兜住窄屏——写死 26rem 在 390 屏上会比容器还宽 */
+  /* 题面里的图只需认得出；用 min() 兜住窄屏，写死 26rem 在 390 屏上比容器还宽 */
   .given .evidence { max-width: min(26rem, 100%); }
   .quote {
     margin: .5rem 0; padding-left: .75rem;
@@ -240,7 +250,6 @@
 
   @media (prefers-reduced-motion: reduce) {
     .redact .w { transition: none; }
-    .gallery { scroll-behavior: auto; }
   }
 </style>
 </head>
@@ -253,56 +262,19 @@
     
   </header>
 
-  <section>
-    <h2 class="zone-head"><span class="cn">一</span>GITHUB TRENDING<span class="mode">扫读</span></h2>
-        <article class="repo">
-      <div class="repo-top">
-        <a class="repo-name" href="https://github.com/pascalorg/editor">pascalorg/editor</a>
-        <span class="delta">+341</span>
-      </div>
-      <p class="repo-meta">TypeScript · 总 19,091</p>
-      <p class="repo-note">［示例点评占位，验证排版用］</p>
-    </article>
-    <article class="repo">
-      <div class="repo-top">
-        <a class="repo-name" href="https://github.com/jenkinsci/jenkins">jenkinsci/jenkins</a>
-        <span class="delta">+180</span>
-      </div>
-      <p class="repo-meta">Java · 总 26,164</p>
-      <p class="repo-note">［示例点评占位，验证排版用］</p>
-    </article>
-    <article class="repo">
-      <div class="repo-top">
-        <a class="repo-name" href="https://github.com/moeru-ai/airi">moeru-ai/airi</a>
-        <span class="delta">+797</span>
-      </div>
-      <p class="repo-meta">TypeScript · 总 45,038</p>
-      <p class="repo-note">［示例点评占位，验证排版用］</p>
-    </article>
-    <article class="repo">
-      <div class="repo-top">
-        <a class="repo-name" href="https://github.com/andrewyng/aisuite">andrewyng/aisuite</a>
-        <span class="delta">+62</span>
-      </div>
-      <p class="repo-meta">Python · 总 15,773</p>
-      <p class="repo-note">［示例点评占位，验证排版用］</p>
-    </article>
-    <article class="repo">
-      <div class="repo-top">
-        <a class="repo-name" href="https://github.com/affaan-m/ECC">affaan-m/ECC</a>
-        <span class="delta">+636</span>
-      </div>
-      <p class="repo-meta">JavaScript · 总 235,121</p>
-      <p class="repo-note">［示例点评占位，验证排版用］</p>
-    </article>
-  </section>
+  <input type="radio" name="tab" id="tab-ph" class="tab-in" checked>
+  <input type="radio" name="tab" id="tab-gh" class="tab-in">
 
-  <section class="drill">
-    <h2 class="zone-head"><span class="cn">二</span>PRODUCT HUNT<span class="mode">先判断，再对答案</span></h2>
+  <nav class="tabs">
+    <label for="tab-ph">Product Hunt <span class="n">1</span></label>
+    <label for="tab-gh">GitHub Trending <span class="n">5</span></label>
+  </nav>
 
-    <p class="sub">0 · 先看懂</p>
-    <p class="hint">点图开浮层看细节，不离开页面</p>
-        <div class="brief">
+  <section class="pane pane-ph">
+    <p class="pane-head">先自己判断，再对答案。五到十分钟。</p>
+    <div class="drill">
+      <p class="sub">0 · 先看懂</p>
+      <div class="brief">
       <p><span class="k">它是什么</span>AI agent 的线上质检台。agent 每跑一次，它就按你自己定义的标准打分（LLM 当裁判、技术校验、质量指标），分数不对就自动拦下来或转人工。</p>
       <p><span class="k">给谁用</span>已经把 agent 放到生产环境、面对真实客户的工程团队，不限技术栈。</p>
     </div>
@@ -339,9 +311,8 @@
       </div>
     </div>
     <p class="ph-meta"><span class="topics">SaaS · Developer Tools · Artificial Intelligence</span><span class="votes">580 票</span></p>
-
-    <p class="sub">1 · 四问</p>
-    <section class="q">
+      <p class="sub">1 · 四问</p>
+      <section class="q">
       <p class="q-text"><span class="q-n">①</span>maker 把这个功能框成了什么问题？</p>
       <div class="given">
         <p>材料就是上面那三张图和两行说明——他卖的是同一个功能，但他选了一种讲法。先想：如果你要卖这东西，你会说客户现在正遭什么罪？</p>
@@ -428,11 +399,56 @@
       </div>
       <label for="r4" class="reveal-btn">对答案</label>
     </section>
-    
+      
+    </div>
+    <p class="foot" style="margin-top:1.5rem;border:0;padding:0">判断完写一句预测，回复在飞书那条消息底下：<strong>「我认为它 6 个月后还在／死了，因为___」</strong>。30 天后往上翻，看命中率。</p>
+  </section>
+
+  <section class="pane pane-gh">
+    <p class="pane-head">今天涨得最快的五个，扫一眼就行。</p>
+        <article class="repo">
+      <div class="repo-top">
+        <a class="repo-name" href="https://github.com/pascalorg/editor">pascalorg/editor</a>
+        <span class="delta">+341</span>
+      </div>
+      <p class="repo-meta">TypeScript · 总 19,091 · 建库 2025-10</p>
+      <p class="repo-note">浏览器里做 3D 建筑设计，做完直接出链接分享。冲的是 SketchUp 那类要装客户端的场景。</p>
+    </article>
+    <article class="repo">
+      <div class="repo-top">
+        <a class="repo-name" href="https://github.com/jenkinsci/jenkins">jenkinsci/jenkins</a>
+        <span class="delta">+180</span>
+      </div>
+      <p class="repo-meta">Java · 总 26,164 · 建库 2010-11</p>
+      <p class="repo-note">老牌 CI/CD 服务器，2010 年的项目。自己机器上跑流水线调度，插件生态是它最难被替掉的部分。</p>
+    </article>
+    <article class="repo">
+      <div class="repo-top">
+        <a class="repo-name" href="https://github.com/moeru-ai/airi">moeru-ai/airi</a>
+        <span class="delta">+797</span>
+      </div>
+      <p class="repo-meta">TypeScript · 总 45,038 · 建库 2024-12</p>
+      <p class="repo-note">自托管的 AI 虚拟伙伴：Live2D/VRM 形象加实时语音，还能自己去玩 Minecraft 和 Factorio。仓库简介里写的目标是对标 Neuro-sama。</p>
+    </article>
+    <article class="repo">
+      <div class="repo-top">
+        <a class="repo-name" href="https://github.com/andrewyng/aisuite">andrewyng/aisuite</a>
+        <span class="delta">+62</span>
+      </div>
+      <p class="repo-meta">Python · 总 15,773 · 建库 2024-06</p>
+      <p class="repo-note">一层统一接口把各家大模型 API 抹平，换供应商只改一个字符串。Andrew Ng 的项目。</p>
+    </article>
+    <article class="repo">
+      <div class="repo-top">
+        <a class="repo-name" href="https://github.com/affaan-m/ECC">affaan-m/ECC</a>
+        <span class="delta">+636</span>
+      </div>
+      <p class="repo-meta">JavaScript · 总 235,121 · 建库 2026-01</p>
+      <p class="repo-note">给 Claude Code / Codex / Cursor 这类编码 agent 配 skills、记忆和安全策略的框架。<strong>建库半年 23.5 万星、3.6 万 fork</strong>——这个体量在 GitHub 上属最头部那几个，和它 6 个月的年龄对不上，值得自己点进去看看是真需求还是另有原因。</p>
+    </article>
   </section>
 
   <footer class="foot">
-    <p>判断完写一句预测，回复在飞书那条消息底下：<strong>「我认为它 6 个月后还在／死了，因为___」</strong>。30 天后往上翻，看命中率。</p>
     <p class="archive">往期　<a href="#">07-28</a> <a href="#">07-27</a></p>
   </footer>
 
