@@ -34,16 +34,20 @@
     </div>
     <div class="gallery">
       <figure>
-        <a class="zoom" href="原图URL(不带 &w=)" target="_blank" rel="noopener"><img src="…&w=800" alt=""></a>
-        <figcaption>这张在演什么</figcaption>
+        <a class="zoom" href="原图URL(不带 &w=)"><img src="…&w=800" alt=""></a>
+        <figcaption>这张在演什么　<a class="zoomlink" href="原图URL(不带 &w=)">原图 ↗</a></figcaption>
       </figure>
-      × 3-4 张
+      × 3-4 张（竖排，不要横滑）
     </div>
 
-    **PH 段的每张图都必须用 `<a class="zoom">` 包起来**，`src` 用 `&w=800`（省流量），
-    `href` 用**不带 `w` 参数的原图**（实测原图 267KB vs w=800 的 27.8KB，差 10 倍）。
-    控制台截图的小字在手机上不放大读不清，而第 0 层全靠看清界面。
-    `.evidence` 那些图同样要包。
+    **每张图都要有两个入口**：图片本身用 `<a class="zoom">` 包住，caption 末尾再加一个
+    `<a class="zoomlink">原图 ↗</a>`。图片区域的点击在某些内置浏览器里不生效，
+    文字链是兜底。`.evidence` 那些图同样要包，caption 没有的就在图后面单独放一行文字链。
+
+    `src` 用 `&w=800`（省流量），`href` 用**不带 `w` 参数的原图**
+    （实测原图 267KB vs w=800 的 27.8KB）。
+    **不要加 `target="_blank"`** ——飞书等内置浏览器会拦掉新窗口，表现就是「点了没反应」。
+    同标签跳转，返回键回来。
     <p class="ph-meta"><span class="topics">SaaS · Developer Tools</span><span class="votes">580 票</span></p>
 
   PH_QUESTIONS —— 四个 <section class="q">，每个三段：题面材料 / 涂黑的判定 / .more 里的展开
@@ -170,24 +174,25 @@
     letter-spacing: .1em; color: var(--muted);
     text-transform: uppercase;
   }
-  .gallery {
-    display: flex; gap: .75rem;
-    overflow-x: auto; scroll-snap-type: x mandatory;
-    margin: 0 -1.25rem; padding: 0 1.25rem .5rem;
-    -webkit-overflow-scrolling: touch;
-  }
-  .gallery figure { flex: 0 0 82%; margin: 0; scroll-snap-align: start; }
+  /* 竖排满宽，不做横向 carousel：横滑容器里的点击在触屏上经常被判成拖动手势，
+     而且每张图只剩 82% 宽度，控制台截图的小字更读不清。竖排两个问题一起消失 */
+  .gallery { margin: 0; }
+  .gallery figure { margin: 0 0 1.5rem; }
   .gallery img {
     display: block; width: 100%; height: auto;
     border: 1px solid var(--rule); border-radius: 2px;
   }
-  /* 图都用 a.zoom 包起来指向原图——控制台截图的小字在手机上必须放大才读得清，
-     交给浏览器原生的双击/捏合缩放，比自己搭 lightbox 可靠 */
   a.zoom {
     display: block; cursor: zoom-in;
     -webkit-tap-highlight-color: transparent;
   }
   a.zoom:focus-visible { outline: 2px solid var(--signal); outline-offset: 2px; }
+  /* 图片本身可点，但再给一个明确的文字入口——文字链在任何环境里都点得动 */
+  .zoomlink {
+    white-space: nowrap; color: var(--signal); text-decoration: none;
+    border-bottom: 1px solid var(--signal);
+  }
+  .zoomlink:hover { background: var(--signal); color: var(--paper-2); }
   .hint {
     margin: -.5rem 0 1rem;
     font: 400 .7rem/1.6 var(--mono); color: var(--muted);

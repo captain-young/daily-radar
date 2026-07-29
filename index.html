@@ -108,24 +108,25 @@
     letter-spacing: .1em; color: var(--muted);
     text-transform: uppercase;
   }
-  .gallery {
-    display: flex; gap: .75rem;
-    overflow-x: auto; scroll-snap-type: x mandatory;
-    margin: 0 -1.25rem; padding: 0 1.25rem .5rem;
-    -webkit-overflow-scrolling: touch;
-  }
-  .gallery figure { flex: 0 0 82%; margin: 0; scroll-snap-align: start; }
+  /* 竖排满宽，不做横向 carousel：横滑容器里的点击在触屏上经常被判成拖动手势，
+     而且每张图只剩 82% 宽度，控制台截图的小字更读不清。竖排两个问题一起消失 */
+  .gallery { margin: 0; }
+  .gallery figure { margin: 0 0 1.5rem; }
   .gallery img {
     display: block; width: 100%; height: auto;
     border: 1px solid var(--rule); border-radius: 2px;
   }
-  /* 图都用 a.zoom 包起来指向原图——控制台截图的小字在手机上必须放大才读得清，
-     交给浏览器原生的双击/捏合缩放，比自己搭 lightbox 可靠 */
   a.zoom {
     display: block; cursor: zoom-in;
     -webkit-tap-highlight-color: transparent;
   }
   a.zoom:focus-visible { outline: 2px solid var(--signal); outline-offset: 2px; }
+  /* 图片本身可点，但再给一个明确的文字入口——文字链在任何环境里都点得动 */
+  .zoomlink {
+    white-space: nowrap; color: var(--signal); text-decoration: none;
+    border-bottom: 1px solid var(--signal);
+  }
+  .zoomlink:hover { background: var(--signal); color: var(--paper-2); }
   .hint {
     margin: -.5rem 0 1rem;
     font: 400 .7rem/1.6 var(--mono); color: var(--muted);
@@ -263,15 +264,15 @@
     <h2 class="zone-head"><span class="cn">二</span>PRODUCT HUNT<span class="mode">先判断，再对答案</span></h2>
 
     <p class="sub">0 · 先看懂</p>
-    <p class="hint">图都可以点开看原图</p>
+    <p class="hint">图和 caption 末尾的「原图 ↗」都能点开看原图</p>
         <div class="brief">
       <p><span class="k">它是什么</span>AI agent 的线上质检台。agent 每跑一次，它就按你自己定义的标准打分（LLM 当裁判、技术校验、质量指标），分数不对就自动拦下来或转人工。</p>
       <p><span class="k">给谁用</span>已经把 agent 放到生产环境、面对真实客户的工程团队，不限技术栈。</p>
     </div>
     <div class="gallery">
-      <figure><a class="zoom" href="https://ph-files.imgix.net/66f2a38e-2654-4946-b774-a8d8f02afdfe.png?auto=format" target="_blank" rel="noopener"><img src="https://ph-files.imgix.net/66f2a38e-2654-4946-b774-a8d8f02afdfe.png?auto=format&w=800" alt=""></a><figcaption>控制台：左栏是这家保险公司挂着的 6 个 agent，右边是其中 Claims Review Agent 的风险分布（127 低 / 33 中 / 67 高 / 128 critical）和 24 小时活动量</figcaption></figure>
-      <figure><a class="zoom" href="https://ph-files.imgix.net/5666270e-9a5f-47d5-9a8f-cec13c15e089.png?auto=format" target="_blank" rel="noopener"><img src="https://ph-files.imgix.net/5666270e-9a5f-47d5-9a8f-cec13c15e089.png?auto=format&w=800" alt=""></a><figcaption>单次运行的逐条时间线：每次工具调用、每句对话都标了时间和风险等级</figcaption></figure>
-      <figure><a class="zoom" href="https://ph-files.imgix.net/8825e809-65dc-490e-9702-8190c678a613.png?auto=format" target="_blank" rel="noopener"><img src="https://ph-files.imgix.net/8825e809-65dc-490e-9702-8190c678a613.png?auto=format&w=800" alt=""></a><figcaption>评分侧：这次运行风险分 108，判为 Critical；右边汇总成功率 75%、典型耗时 8m25s、24 小时内失败 3 次</figcaption></figure>
+      <figure><a class="zoom" href="https://ph-files.imgix.net/66f2a38e-2654-4946-b774-a8d8f02afdfe.png?auto=format"><img src="https://ph-files.imgix.net/66f2a38e-2654-4946-b774-a8d8f02afdfe.png?auto=format&w=800" alt=""></a><figcaption>控制台：左栏是这家保险公司挂着的 6 个 agent，右边是其中 Claims Review Agent 的风险分布（127 低 / 33 中 / 67 高 / 128 critical）和 24 小时活动量　<a class="zoomlink" href="https://ph-files.imgix.net/66f2a38e-2654-4946-b774-a8d8f02afdfe.png?auto=format">原图 ↗</a></figcaption></figure>
+      <figure><a class="zoom" href="https://ph-files.imgix.net/5666270e-9a5f-47d5-9a8f-cec13c15e089.png?auto=format"><img src="https://ph-files.imgix.net/5666270e-9a5f-47d5-9a8f-cec13c15e089.png?auto=format&w=800" alt=""></a><figcaption>单次运行的逐条时间线：每次工具调用、每句对话都标了时间和风险等级　<a class="zoomlink" href="https://ph-files.imgix.net/5666270e-9a5f-47d5-9a8f-cec13c15e089.png?auto=format">原图 ↗</a></figcaption></figure>
+      <figure><a class="zoom" href="https://ph-files.imgix.net/8825e809-65dc-490e-9702-8190c678a613.png?auto=format"><img src="https://ph-files.imgix.net/8825e809-65dc-490e-9702-8190c678a613.png?auto=format&w=800" alt=""></a><figcaption>评分侧：这次运行风险分 108，判为 Critical；右边汇总成功率 75%、典型耗时 8m25s、24 小时内失败 3 次　<a class="zoomlink" href="https://ph-files.imgix.net/8825e809-65dc-490e-9702-8190c678a613.png?auto=format">原图 ↗</a></figcaption></figure>
     </div>
     <p class="ph-meta"><span class="topics">SaaS · Developer Tools · Artificial Intelligence</span><span class="votes">580 票</span></p>
 
@@ -286,7 +287,8 @@
         <p class="redact"><span class="w">你的 eval 集只测了你自己挑的那些输入</span>，<span class="w">抽样只看了 1%</span>，<span class="w">真正的失败藏在没人看过的那些运行里</span>。</p>
         <div class="more">
           <p>他专门做了一张三栏对比图来讲这件事：</p>
-          <a class="zoom" href="https://ph-files.imgix.net/e43c0263-e8df-4697-a2b2-7817d04a2d57.png?auto=format" target="_blank" rel="noopener"><img class="evidence" src="https://ph-files.imgix.net/e43c0263-e8df-4697-a2b2-7817d04a2d57.png?auto=format&w=800" alt="THE PROBLEM 对比图"></a>
+          <a class="zoom" href="https://ph-files.imgix.net/e43c0263-e8df-4697-a2b2-7817d04a2d57.png?auto=format"><img class="evidence" src="https://ph-files.imgix.net/e43c0263-e8df-4697-a2b2-7817d04a2d57.png?auto=format&w=800" alt="THE PROBLEM 对比图"></a>
+          <p style="margin:.3rem 0 .6rem"><a class="zoomlink" href="https://ph-files.imgix.net/e43c0263-e8df-4697-a2b2-7817d04a2d57.png?auto=format">原图 ↗</a></p>
           <p class="quote">An eval set scores the inputs you chose. Sampling scores a fraction of the rest. Production failures live in the runs nobody looked at.</p>
           <p>还搬了外部数字加压：Gartner 预测 2027 年 40%+ 的 agentic AI 项目会被砍掉。</p>
           <p><strong>这一问的价值在落差</strong>：上面那句中性功能描述（「按你定义的标准打分」）读起来平淡无味，他把同一件事讲成「你正在瞎飞，而且 40% 的项目已经因此死了」。功能不变，紧迫感是造出来的。</p>
@@ -302,7 +304,8 @@
         <p><strong>第二层 · 首评里的划界句</strong></p>
         <p class="quote">observe, evaluate, act, all inside the same run</p>
         <p><strong>第三层 · 首图</strong></p>
-        <a class="zoom" href="https://ph-files.imgix.net/a3db6429-c30c-4462-a6ff-d3896ad6d2c5.png?auto=format" target="_blank" rel="noopener"><img class="evidence" style="margin-top:0" src="https://ph-files.imgix.net/a3db6429-c30c-4462-a6ff-d3896ad6d2c5.png?auto=format&w=800" alt="品牌封面图"></a>
+        <a class="zoom" href="https://ph-files.imgix.net/a3db6429-c30c-4462-a6ff-d3896ad6d2c5.png?auto=format"><img class="evidence" style="margin-top:0" src="https://ph-files.imgix.net/a3db6429-c30c-4462-a6ff-d3896ad6d2c5.png?auto=format&w=800" alt="品牌封面图"></a>
+          <p style="margin:.3rem 0 .6rem"><a class="zoomlink" href="https://ph-files.imgix.net/a3db6429-c30c-4462-a6ff-d3896ad6d2c5.png?auto=format">原图 ↗</a></p>
       </div>
       <input type="checkbox" id="r2" class="reveal">
       <div class="answer">
