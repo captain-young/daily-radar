@@ -31,9 +31,7 @@
 
   * { box-sizing: border-box; }
   body {
-    margin: 0;
-    background: var(--paper);
-    color: var(--ink);
+    margin: 0; background: var(--paper); color: var(--ink);
     font: 16px/1.75 var(--sans);
     -webkit-text-size-adjust: 100%;
   }
@@ -42,41 +40,39 @@
   /* ── 报头 ───────────────────────────── */
   .masthead { padding: 2.5rem 0 1rem; }
   .wordmark {
-    margin: 0;
-    font-size: clamp(1.75rem, 7vw, 2.5rem);
-    font-weight: 800;
-    letter-spacing: -.04em;
-    line-height: 1;
+    margin: 0; font-size: clamp(1.75rem, 7vw, 2.5rem);
+    font-weight: 800; letter-spacing: -.04em; line-height: 1;
   }
   .issueline {
-    margin: .6rem 0 0;
-    font: 400 .75rem/1.6 var(--mono);
-    color: var(--muted);
-    letter-spacing: .02em;
+    margin: .6rem 0 0; font: 400 .75rem/1.6 var(--mono);
+    color: var(--muted); letter-spacing: .02em;
   }
   .fault {
-    margin: 1rem 0 0;
-    padding: .6rem .8rem;
-    border-left: 3px solid var(--signal);
-    background: var(--paper-2);
+    margin: 1rem 0 0; padding: .6rem .8rem;
+    border-left: 3px solid var(--signal); background: var(--paper-2);
     font: 400 .8rem/1.6 var(--mono);
   }
 
   /* ── 区标题 ─────────────────────────── */
   .zone-head {
     display: flex; align-items: baseline; gap: .75rem;
-    margin: 0 0 1.25rem;
-    padding-top: 1.5rem;
+    margin: 0 0 1.25rem; padding-top: 1.5rem;
     border-top: 1px solid var(--rule);
     font: 600 .8rem/1 var(--mono);
-    letter-spacing: .14em;
-    text-transform: uppercase;
+    letter-spacing: .14em; text-transform: uppercase;
   }
   .zone-head .cn { font-family: var(--sans); font-size: 1rem; letter-spacing: 0; }
   .zone-head .mode {
     margin-left: auto; text-transform: none; letter-spacing: 0;
     font-weight: 400; color: var(--muted); font-family: var(--sans);
   }
+  .sub {
+    margin: 2rem 0 1rem;
+    font: 600 .7rem/1 var(--mono);
+    letter-spacing: .16em; text-transform: uppercase;
+    color: var(--signal);
+  }
+  .sub:first-of-type { margin-top: 0; }
 
   /* ── 一 · GitHub ────────────────────── */
   .repo { padding: .9rem 0; border-bottom: 1px solid var(--rule); }
@@ -84,41 +80,51 @@
   .repo-top { display: flex; align-items: baseline; gap: .75rem; }
   .repo-name {
     font: 600 1.0625rem/1.4 var(--mono);
-    color: var(--ink); text-decoration: none;
-    word-break: break-all;
+    color: var(--ink); text-decoration: none; word-break: break-all;
   }
   .repo-name:hover { color: var(--signal); text-decoration: underline; }
   .delta {
     margin-left: auto; flex: none;
-    font: 600 1rem/1.4 var(--mono);
-    color: var(--signal);
+    font: 600 1rem/1.4 var(--mono); color: var(--signal);
     font-variant-numeric: tabular-nums;
   }
-  .repo-meta {
-    margin: .2rem 0 0;
-    font: 400 .75rem/1.6 var(--mono);
-    color: var(--muted);
-  }
+  .repo-meta { margin: .2rem 0 0; font: 400 .75rem/1.6 var(--mono); color: var(--muted); }
   .streak { color: var(--signal); }
   .repo-note { margin: .35rem 0 0; font-size: .9375rem; }
 
   /* ── 二 · Product Hunt ──────────────── */
   .drill {
-    margin-top: 2.5rem;
-    padding: 1.5rem 1.25rem 2rem;
-    background: var(--paper-2);
-    border-radius: 2px;
+    margin-top: 2.5rem; padding: 1.5rem 1.25rem 2rem;
+    background: var(--paper-2); border-radius: 2px;
   }
   .drill .zone-head { border-top: 0; padding-top: 0; }
-  .hero {
+
+  /* 第 0 层 */
+  .brief { margin: 0 0 1.25rem; }
+  .brief p { margin: 0 0 .6rem; font-size: .9375rem; }
+  .brief .k {
+    display: block;
+    font: 600 .7rem/1.8 var(--mono);
+    letter-spacing: .1em; color: var(--muted);
+    text-transform: uppercase;
+  }
+  .gallery {
+    display: flex; gap: .75rem;
+    overflow-x: auto; scroll-snap-type: x mandatory;
+    margin: 0 -1.25rem; padding: 0 1.25rem .5rem;
+    -webkit-overflow-scrolling: touch;
+  }
+  .gallery figure { flex: 0 0 82%; margin: 0; scroll-snap-align: start; }
+  .gallery img {
     display: block; width: 100%; height: auto;
     border: 1px solid var(--rule); border-radius: 2px;
   }
+  .gallery figcaption {
+    margin-top: .4rem; font: 400 .75rem/1.5 var(--mono); color: var(--muted);
+  }
   .ph-meta {
     display: flex; gap: 1rem; align-items: baseline;
-    margin: .75rem 0 2rem;
-    font: 400 .75rem/1.6 var(--mono);
-    color: var(--muted);
+    margin: .75rem 0 0; font: 400 .75rem/1.6 var(--mono); color: var(--muted);
   }
   .ph-meta .votes {
     margin-left: auto; flex: none;
@@ -126,29 +132,33 @@
     font-variant-numeric: tabular-nums;
   }
 
-  .q { margin: 0 0 1.75rem; }
+  /* 四问 */
+  .q { margin: 0 0 2rem; }
   .q-text { margin: 0 0 .6rem; font-weight: 600; }
   .q-n { color: var(--signal); margin-right: .4rem; }
-
-  /* 涂黑：条宽就是真实文字宽度 */
-  .reveal { position: absolute; width: 1px; height: 1px; opacity: 0; }
-  .answer { font-size: .9375rem; }
-  .answer p { margin: 0 0 .5rem; }
-  .answer p:last-child { margin-bottom: 0; }
-  .answer .quote {
+  .given { font-size: .9375rem; }
+  .given p { margin: 0 0 .5rem; }
+  /* 题面里的图只需认得出，别让它吃掉半屏；.more 里的图往往是细节图表，保持满宽。
+     用 min() 兜住窄屏——写死 26rem 在 390 屏上会比容器还宽 */
+  .given .evidence { max-width: min(26rem, 100%); }
+  .quote {
     margin: .5rem 0; padding-left: .75rem;
     border-left: 2px solid var(--rule); color: var(--muted);
   }
+
+  .reveal { position: absolute; width: 1px; height: 1px; opacity: 0; }
+  .answer { margin-top: .75rem; font-size: .9375rem; }
+  .answer p { margin: 0 0 .5rem; }
+  .answer p:last-child { margin-bottom: 0; }
   .answer .evidence {
     display: block; width: 100%; height: auto; margin: .6rem 0;
     border: 1px solid var(--rule); border-radius: 2px;
   }
-  /* 证据层：解密前整块不存在。只涂黑结论是不够的——引文、图片、旁证本身就是答案 */
+  /* 展开层：解密前整块不存在。只涂黑判定不够——理由和图片本身会指向答案 */
   .answer .more { display: none; }
   .reveal:checked ~ .answer .more { display: block; }
   .redact .w {
-    background: var(--ink); color: transparent;
-    border-radius: 1px;
+    background: var(--ink); color: transparent; border-radius: 1px;
     /* 文字仍在 DOM 里，只是看不见——禁掉选中，免得全选或长按把答案抹出来 */
     user-select: none; -webkit-user-select: none;
     transition: background-color .18s ease, color .18s ease;
@@ -157,13 +167,11 @@
     background: transparent; color: inherit;
     user-select: auto; -webkit-user-select: auto;
   }
-
   .reveal-btn {
     display: inline-block; margin-top: .75rem;
     padding: .3rem .8rem;
     border: 1px solid var(--ink); border-radius: 2px;
-    font: 600 .75rem/1.6 var(--mono);
-    letter-spacing: .08em;
+    font: 600 .75rem/1.6 var(--mono); letter-spacing: .08em;
     cursor: pointer; user-select: none;
   }
   .reveal-btn:hover { background: var(--ink); color: var(--paper-2); }
@@ -183,6 +191,7 @@
 
   @media (prefers-reduced-motion: reduce) {
     .redact .w { transition: none; }
+    .gallery { scroll-behavior: auto; }
   }
 </style>
 </head>
@@ -240,68 +249,107 @@
   </section>
 
   <section class="drill">
-    <h2 class="zone-head"><span class="cn">二</span>PRODUCT HUNT<span class="mode">先猜，再解密</span></h2>
-        <img class="hero" src="https://ph-files.imgix.net/5666270e-9a5f-47d5-9a8f-cec13c15e089.png?auto=format&w=800" alt="Product Hunt 首屏图">
-    <p class="ph-meta"><span class="topics">SaaS · Developer Tools · Artificial Intelligence</span><span class="votes">580 票</span></p>
-    <p class="q-text" style="margin-bottom:1.5rem">先别往下翻。看着上面这张图，回答四个问题，再一个一个解密。</p>
+    <h2 class="zone-head"><span class="cn">二</span>PRODUCT HUNT<span class="mode">先判断，再对答案</span></h2>
 
-<section class="q">
-      <p class="q-text"><span class="q-n">①</span>它堵的是哪两个动作之间的缝？</p>
+    <p class="sub">0 · 先看懂</p>
+        <div class="brief">
+      <p><span class="k">它是什么</span>AI agent 的线上质检台。agent 每跑一次，它就按你自己定义的标准打分（LLM 当裁判、技术校验、质量指标），分数不对就自动拦下来或转人工。</p>
+      <p><span class="k">给谁用</span>已经把 agent 放到生产环境、面对真实客户的工程团队，不限技术栈。</p>
+    </div>
+    <div class="gallery">
+      <figure><img src="https://ph-files.imgix.net/66f2a38e-2654-4946-b774-a8d8f02afdfe.png?auto=format&w=800" alt=""><figcaption>控制台：左栏是这家保险公司挂着的 6 个 agent，右边是其中 Claims Review Agent 的风险分布（127 低 / 33 中 / 67 高 / 128 critical）和 24 小时活动量</figcaption></figure>
+      <figure><img src="https://ph-files.imgix.net/5666270e-9a5f-47d5-9a8f-cec13c15e089.png?auto=format&w=800" alt=""><figcaption>单次运行的逐条时间线：每次工具调用、每句对话都标了时间和风险等级</figcaption></figure>
+      <figure><img src="https://ph-files.imgix.net/8825e809-65dc-490e-9702-8190c678a613.png?auto=format&w=800" alt=""><figcaption>评分侧：这次运行风险分 108，判为 Critical；右边汇总成功率 75%、典型耗时 8m25s、24 小时内失败 3 次</figcaption></figure>
+    </div>
+    <p class="ph-meta"><span class="topics">SaaS · Developer Tools · Artificial Intelligence</span><span class="votes">580 票</span></p>
+
+    <p class="sub">1 · 四问</p>
+    <section class="q">
+      <p class="q-text"><span class="q-n">①</span>maker 把这个功能框成了什么问题？</p>
+      <div class="given">
+        <p>材料就是上面那三张图和两行说明——他卖的是同一个功能，但他选了一种讲法。先想：如果你要卖这东西，你会说客户现在正遭什么罪？</p>
+      </div>
       <input type="checkbox" id="r1" class="reveal">
       <div class="answer">
-        <p class="redact"><span class="w">测试环境里 eval 全部通过</span>，<span class="w">产品上了生产就崩</span>——<span class="w">中间那段没人看着的空档</span>。</p>
+        <p class="redact"><span class="w">你的 eval 集只测了你自己挑的那些输入</span>，<span class="w">抽样只看了 1%</span>，<span class="w">真正的失败藏在没人看过的那些运行里</span>。</p>
         <div class="more">
-          <p class="quote">maker 原话：do you actually know what your agents are doing in production right now？并引了 Gartner「2027 年 40%+ agentic AI 项目会被砍掉」。</p>
+          <p>他专门做了一张三栏对比图来讲这件事：</p>
+          <img class="evidence" src="https://ph-files.imgix.net/e43c0263-e8df-4697-a2b2-7817d04a2d57.png?auto=format&w=800" alt="THE PROBLEM 对比图">
+          <p class="quote">An eval set scores the inputs you chose. Sampling scores a fraction of the rest. Production failures live in the runs nobody looked at.</p>
+          <p>还搬了外部数字加压：Gartner 预测 2027 年 40%+ 的 agentic AI 项目会被砍掉。</p>
+          <p><strong>这一问的价值在落差</strong>：上面那句中性功能描述（「按你定义的标准打分」）读起来平淡无味，他把同一件事讲成「你正在瞎飞，而且 40% 的项目已经因此死了」。功能不变，紧迫感是造出来的。</p>
         </div>
       </div>
-      <label for="r1" class="reveal-btn">解密</label>
+      <label for="r1" class="reveal-btn">对答案</label>
     </section>
 <section class="q">
-      <p class="q-text"><span class="q-n">②</span>标题 / 首评 / 首图讲的是同一句话吗？</p>
+      <p class="q-text"><span class="q-n">②</span>下面三层讲的是同一句话吗？哪里对齐、哪里打架？</p>
+      <div class="given">
+        <p><strong>第一层 · launch tagline</strong></p>
+        <p class="quote">Evaluate your AI Agents in real-time</p>
+        <p><strong>第二层 · 首评里的划界句</strong></p>
+        <p class="quote">observe, evaluate, act, all inside the same run</p>
+        <p><strong>第三层 · 首图</strong></p>
+        <img class="evidence" style="margin-top:0" src="https://ph-files.imgix.net/a3db6429-c30c-4462-a6ff-d3896ad6d2c5.png?auto=format&w=800" alt="品牌封面图">
+      </div>
       <input type="checkbox" id="r2" class="reveal">
       <div class="answer">
-        <p>launch tagline：<strong class="redact"><span class="w">Evaluate</span> <span class="w">your</span> <span class="w">AI</span> <span class="w">Agents</span> <span class="w">in</span> <span class="w">real-time</span></strong></p>
-        <p class="redact"><span class="w">对齐</span>。<span class="w">三层都压在 real-time 这一个差异点上</span>。</p>
+        <p class="redact"><span class="w">对齐</span>。<span class="w">三层的重量全压在 real-time 这一个差异点上</span>，<span class="w">没有一层跑偏</span>。</p>
         <div class="more">
-          <p>首评划界句：<em>observe, evaluate, act, all inside the same run</em>——潜台词是放弃做纯 observability 平台。</p>
-          <p>品牌封面图（「首图」那一层的证据）：</p>
-          <img class="evidence" src="https://ph-files.imgix.net/a3db6429-c30c-4462-a6ff-d3896ad6d2c5.png?auto=format&w=800" alt="品牌封面图">
+          <p>tagline 只有 6 个词，唯一的差异点是 <em>in real-time</em>，全句重量都在那三个字上。</p>
+          <p>划界句用 <em>all inside the same run</em> 把纯 observability 那一片地盘划走了——潜台词是「别人只观察完把问题丢回给你」。注意差异化是靠「别人到哪就停了」来定义的。</p>
+          <p>封面图直接把 tagline 印成主视觉，没有另起一套说法。</p>
+          <p><strong>顺带一个 PH 的结构性现象</strong>：产品级 tagline 和本次 launch 的 tagline 是两层，经常不一致。同榜的 Cekura 产品级写「Automated QA for Voice AI」，launch 写「The self-improvement loop for voice agents」——前者是功能描述，后者在造新概念。两层打架本身就是素材。</p>
         </div>
       </div>
-      <label for="r2" class="reveal-btn">解密</label>
+      <label for="r2" class="reveal-btn">对答案</label>
     </section>
 <section class="q">
-      <p class="q-text"><span class="q-n">③</span>它按什么收钱？</p>
+      <p class="q-text"><span class="q-n">③</span>它按什么收钱？价值单位是什么？</p>
+      <div class="given">
+        <p>能拿到的唯一定价证据在首评末尾：</p>
+        <p class="quote">送 1,000,000 free agent steps</p>
+        <p>先想：他为什么选 step 当免费额度的单位，而不是天数或席位？</p>
+      </div>
       <input type="checkbox" id="r3" class="reveal">
       <div class="answer">
-        <p class="redact"><span class="w">按用量</span>。<span class="w">价值单位是 agent 运行次数</span>。</p>
+        <p class="redact"><span class="w">按用量</span>。<span class="w">价值单位是 agent 运行的 step 数</span>。</p>
         <div class="more">
-          <p>证据：首评送「1,000,000 free agent steps」——用 step 当免费额度单位，等于宣布价值随运行次数线性增长。</p>
+          <p>免费额度用什么计量，就等于宣布价值随什么线性增长。给「100 万 step」而不是「3 个月」或「5 个席位」，是在说：你的 agent 跑得越多，我值越多钱。</p>
+          <p>对照另两种选法：<strong>按人</strong>（席位）适合价值来自协作的工具；<strong>按结果</strong>（成功拦下一次故障收一次钱）激励最对齐但最难计量。选按用量意味着它赌客户的 agent 调用量会涨。</p>
+          <p class="quote">本期未取到官网定价页，第 ③ 问只用了首评里的免费额度作证据。</p>
         </div>
       </div>
-      <label for="r3" class="reveal-btn">解密</label>
+      <label for="r3" class="reveal-btn">对答案</label>
     </section>
 <section class="q">
-      <p class="q-text"><span class="q-n">④</span>评论区谁在用自己的数字追问？根基质疑是什么？</p>
+      <p class="q-text"><span class="q-n">④</span>下面 6 条评论，哪几条是真信号？哪条是打在方法论根基上的质疑？</p>
+      <div class="given">
+        <p class="quote">1 · Stefan Knight：我不会把学步的孩子一个人留在家里，那为什么会把 agent 部署上线之后就不管了。</p>
+        <p class="quote">2 · Ben Lang：恭喜团队。</p>
+        <p class="quote">3 · Abdullah Javaid：我的 agent 三次里有一次报成功，但页面其实根本没更新。你能不能校验外部副作用——页面真的变了、那行数据真的写进去了——而不是只给运行记录打分？</p>
+        <p class="quote">4 · Gal Dayan（做语音 agent）：对我们来说 time-to-respond 比正确性更重要，客户在静默里就把电话挂了。你能把每轮延迟当成独立的质量维度吗？</p>
+        <p class="quote">5 · Flavio Riper：你有没有把每次判定绑定到具体的 evaluator 版本和它用的证据？</p>
+        <p class="quote">6 · Reda Roqai Chaoui：哪类 agent 收益最大——客服、写代码、还是做研究？</p>
+      </div>
       <input type="checkbox" id="r4" class="reveal">
       <div class="answer">
-        <p class="redact"><span class="w">购买信号是带自己失败率数字的追问</span>；<span class="w">根基质疑是</span>「<span class="w">谁来评估评估器</span>」。</p>
+        <p class="redact"><span class="w">3 和 4 是真购买信号</span>；<span class="w">5 是根基质疑</span>；<span class="w">2 是零信息</span>；<span class="w">1 只有共鸣</span>；<span class="w">6 暴露定位没讲清</span>。</p>
         <div class="more">
-          <p><strong>购买信号</strong>：</p>
-          <p class="quote">Abdullah：我的 agent 三次里有一次报成功，但页面其实根本没更新。你能不能校验外部副作用，而不是只给运行记录打分？</p>
-          <p>他已经在自己系统上试用过一遍，才报得出「三次里一次」这个数。</p>
-          <p><strong>根基质疑</strong>：</p>
-          <p class="quote">Flavio：你有没有把每次判定绑定到具体的 evaluator 版本和它用的证据？</p>
-          <p>评估器自己变了的时候，怎么区分是 agent 退化还是评估退化——所有 AI 评估类产品都绕不过的根本难题。</p>
+          <p><strong>3、4 是真购买信号</strong>：两条都带了自己的场景和数字。「三次里有一次」是他在自己系统上量出来的；「客户在静默里挂电话」是他每天在处理的事。带自己数据的追问，意味着对方已经在心里试用过一遍了。</p>
+          <p><strong>5 是根基质疑</strong>：评估器自己变了的时候，怎么区分是 agent 退化还是评估退化。这一条答不好，整个产品的可信度归零——所有 AI 评估类产品都绕不过「谁来评估评估器」。</p>
+          <p><strong>2 是零信息</strong>，跳过。所有 congrats / love it / 恭喜都属于这类，不要花时间读。</p>
+          <p><strong>1 有共鸣但没有自己的数据</strong>：类比讲得漂亮，可它没告诉你他的 agent 出过什么问题。中等信号，不是买单信号。</p>
+          <p><strong>6 是症状不是问题</strong>：他对不上自己的号，说明产品定位没写清。出现这种提问别怪用户，是文案漏了。</p>
         </div>
       </div>
-      <label for="r4" class="reveal-btn">解密</label>
+      <label for="r4" class="reveal-btn">对答案</label>
     </section>
     
   </section>
 
   <footer class="foot">
-    <p>猜完了写一句预测，回复在飞书那条消息底下：<strong>「我认为它 6 个月后还在／死了，因为___」</strong>。30 天后往上翻，看命中率。</p>
+    <p>判断完写一句预测，回复在飞书那条消息底下：<strong>「我认为它 6 个月后还在／死了，因为___」</strong>。30 天后往上翻，看命中率。</p>
     <p class="archive">往期　<a href="#">07-28</a> <a href="#">07-27</a></p>
   </footer>
 
