@@ -253,7 +253,7 @@ curl -s https://raw.githubusercontent.com/captain-young/daily-radar/main/templat
 
 ```bash
 curl -s -X POST -H 'Content-Type: application/json' \
-  -d '{"msg_type":"text","content":{"text":"daily-radar № <期号> · <D>\nGitHub 5 个 · PH 榜首「<产品名>」<票数>票\nhttps://captain-young.github.io/daily-radar/<D>/"}}' \
+  -d '{"msg_type":"text","content":{"text":"daily-radar 第 <期号> 期 · <D>\nGitHub 5 个 · PH 榜首「<产品名>」<票数>票\nhttps://captain-young.github.io/daily-radar/<D>/"}}' \
   "<<FEISHU_WEBHOOK>>"
 ```
 
