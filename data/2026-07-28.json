@@ -1,0 +1,112 @@
+{
+  "issue": 1,
+  "date": "2026-07-29",
+  "ph_day": "2026-07-28",
+  "github": [
+    {
+      "repo": "pascalorg/editor",
+      "lang": "TypeScript",
+      "stars_total": 19091,
+      "stars_today": 341,
+      "streak": 1,
+      "url": "https://github.com/pascalorg/editor",
+      "note": "浏览器里的 3D 建筑编辑器，做完直接出链接分享"
+    },
+    {
+      "repo": "jenkinsci/jenkins",
+      "lang": "Java",
+      "stars_total": 26164,
+      "stars_today": 180,
+      "streak": 1,
+      "url": "https://github.com/jenkinsci/jenkins",
+      "note": "老牌自托管 CI/CD 服务器"
+    },
+    {
+      "repo": "moeru-ai/airi",
+      "lang": "TypeScript",
+      "stars_total": 45038,
+      "stars_today": 797,
+      "streak": 1,
+      "url": "https://github.com/moeru-ai/airi",
+      "note": "自托管的 AI 虚拟伴侣框架，目标是 re-creating Neuro-sama"
+    },
+    {
+      "repo": "andrewyng/aisuite",
+      "lang": "Python",
+      "stars_total": 15773,
+      "stars_today": 62,
+      "streak": 1,
+      "url": "https://github.com/andrewyng/aisuite",
+      "note": "统一多家大模型 API 的 Python 库，Andrew Ng 的项目"
+    },
+    {
+      "repo": "affaan-m/ECC",
+      "lang": "JavaScript",
+      "stars_total": 235121,
+      "stars_today": 636,
+      "streak": 1,
+      "url": "https://github.com/affaan-m/ECC",
+      "note": "给编码 agent 加一套先规划、再验证、可沉淀的工程系统"
+    }
+  ],
+  "producthunt": {
+    "id": "1190808",
+    "name": "Prefactor",
+    "slug": "prefactor",
+    "tagline": "Evaluate your AI Agents in real-time",
+    "votes": 580,
+    "topics": [
+      "SaaS",
+      "Developer Tools",
+      "Artificial Intelligence"
+    ],
+    "url": "https://www.producthunt.com/products/prefactor",
+    "real_website": "https://prefactor.ai",
+    "what_it_is": "AI agent 的线上质检台。agent 每跑一次，它就按你自己定义的标准打分（LLM 当裁判、技术校验、质量指标），分数不对就自动拦下来或转人工。",
+    "who": "已经把 agent 放到生产环境、面对真实客户的工程团队，不限技术栈。",
+    "gallery": [
+      {
+        "url": "https://ph-files.imgix.net/66f2a38e-2654-4946-b774-a8d8f02afdfe.png?auto=format",
+        "caption": "控制台：6 个 agent 与 Claims Review Agent 的风险分布和 24 小时活动量"
+      },
+      {
+        "url": "https://ph-files.imgix.net/5666270e-9a5f-47d5-9a8f-cec13c15e089.png?auto=format",
+        "caption": "单次运行的逐条时间线：每次工具调用、每句对话都标了时间和风险等级"
+      },
+      {
+        "url": "https://ph-files.imgix.net/8825e809-65dc-490e-9702-8190c678a613.png?auto=format",
+        "caption": "评分侧：风险分 108 判为 Critical；汇总成功率 75%、典型耗时 8m25s"
+      }
+    ],
+    "problem_image": "https://ph-files.imgix.net/e43c0263-e8df-4697-a2b2-7817d04a2d57.png?auto=format",
+    "cover_image": "https://ph-files.imgix.net/a3db6429-c30c-4462-a6ff-d3896ad6d2c5.png?auto=format",
+    "framing": "你的 eval 集只测了你自己挑的那些输入，抽样只看了 1%，真正的失败藏在没人看过的那些运行里",
+    "consistency": "对齐。三层的重量全压在 real-time 这一个差异点上，没有一层跑偏",
+    "pricing": "按用量。价值单位是 agent 运行的 step 数（本期未取到官网定价页，证据只有首评里的 1,000,000 free agent steps）",
+    "comments_verdict": "3、4 是真购买信号；5 是根基质疑；2 是零信息；1 只有共鸣；6 暴露定位没讲清",
+    "comments_raw": [],
+    "_note": "第 1 期为样张，评论原文未存档，comments_raw 留空；判定字段与页面一致"
+  },
+  "runners_up": [
+    {
+      "name": "Cekura",
+      "tagline": "The self-improvement loop for voice agents",
+      "votes": 399,
+      "topics": [
+        "SaaS",
+        "Developer Tools",
+        "Audio"
+      ]
+    },
+    {
+      "name": "Lottie Creator 2.0",
+      "tagline": "After Effects for the web, built on Lottie",
+      "votes": 355,
+      "topics": [
+        "Design Tools",
+        "Graphics & Design",
+        "Animation"
+      ]
+    }
+  ]
+}

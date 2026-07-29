@@ -95,8 +95,10 @@ daily-radar/
 ├── index.html              最新一期（每天覆盖）
 ├── docs/                   本文档
 ├── routine/prompt.md       自包含 routine prompt（密钥用占位符）
-├── templates/day.html      页面模板，routine 读取后填槽位
-├── data/YYYY-MM-DD.json    结构化数据（去重 / 对撞 / 回看）
+├── templates/day.html      日报页模板，routine 读取后填槽位
+├── templates/archive.html  归档日历页模板
+├── archive/index.html      归档日历页（routine 每天重建）
+├── data/YYYY-MM-DD.json    结构化数据（去重 / 对撞 / 回看 / 归档日历的数据源）
 └── YYYY-MM-DD/index.html   当期归档
 ```
 
@@ -109,9 +111,9 @@ daily-radar/
 这是真人反馈指出来的。标签页让两者平级、各自独立，默认落在 Product Hunt（这个项目存在的理由）。
 纯 CSS radio 实现，无 JS。
 
-- **Product Hunt** —— 深一档的纸，留白大，只有一个产品。第 0 层 + 四问
-- **GitHub Trending** —— 密排。每行 `owner/name`、今日涨星（右对齐等宽）、语言、总 star、
-  建库时间、连续上榜天数、一句中文点评
+- **Product Hunt** —— 一整块玻璃卡片，留白大，只有一个产品。第 0 层 + 四问
+- **GitHub Trending** —— 每个项目一张玻璃卡片：`owner/name`、今日涨星（绿色胶囊）、语言、
+  总 star、建库时间、连续上榜天数、三段式点评
 
 **GitHub 段用三段式，对齐 `github-trending-daily` 那份日报的信息密度**（真人拿两边对比后指出
 一句话点评是降级）。顶部一句当日摘要 + 每个项目三段：
@@ -129,6 +131,36 @@ daily-radar/
     不要替它编一个上榜理由**
 
 meta 行带上**建库时间**，一眼分得出「十五年老项目」和「半年新库」，这是旧日报没有的信息。
+
+### 视觉风格：Apple 液态玻璃（2026-07-29 重构，用户指定）
+
+按 emilkowalski/skills 的 `apple-design` + `emil-design-eng` 两份规则执行：固定渐变色场垫底
+（玻璃需要环境色可折射；不用 `background-attachment: fixed`，iOS 不生效）、玻璃卡片
+（backdrop-filter + saturate + 顶部高光内描边）、sticky 玻璃分段控件（iOS 抽屉曲线滑块）、
+动效只动 transform/opacity、入场一律 ease-out 且 <450ms、`prefers-reduced-motion` 全部瞬时。
+
+一个踩过的坑：**backdrop-filter 会给 fixed 后代建立 containing block**。`.drill` 加了模糊后，
+里面浮层的 `inset: 0` 变成相对卡片而不是视口（遮罩盖不住报头）。修法：`.drill` 不用
+backdrop-filter，提高背景不透明度补偿——背景是平滑固定渐变，模糊与否视觉无差。
+
+### 归档日历页（/archive/，2026-07-29 加入）
+
+页面自己承诺「30 天后往上翻，看命中率」——预测复盘要求能翻回任意一天，页脚只放最近几期
+走不通这个闭环。
+
+- 独立页面，不嵌进日报（日报保持轻）；日报页脚 = 最近 3 期胶囊 + 「全部 →」
+- 月历格子，纯 CSS 无 JS：有刊 = 可点的玻璃胶囊（最新一期带 tint 描边），断更 = 虚线圈，
+  首刊前 / 未来 = 淡灰
+- 数据源 = `data/` 文件名列表——步骤 5 本来就要 GET 它算期号，日历零额外请求
+- routine 每天第 4 个 PUT 重建（覆盖带 sha）；只有归档页失败不影响日报推送
+- 日历上的日期 = PH 榜单日 D，和页面路径、飞书链接是同一个日期
+
+顺带修了一个链接 bug：同一份日报 HTML 发根页和日期页两处，页脚往期链接原来写相对路径
+`../YYYY-MM-DD/`，从根页出发会跳出站点。契约已改为绝对路径 `/daily-radar/YYYY-MM-DD/`。
+
+样张已转正为第 1 期：`/2026-07-28/`（**按 PH 榜单日归档**——发到 07-29 会和明天 routine 的
+D=07-29 撞路径，routine 按新文件不带 sha 去 PUT 会 422）+ `data/2026-07-28.json`（评论原文
+未存档，`comments_raw` 留空注明）。期号从 2 续。
 
 ### 一个待决事项：GitHub 段要不要留
 

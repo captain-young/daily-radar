@@ -15,7 +15,9 @@
     {{PH_BRIEF}}                    PH 第 0 层「先看懂」
     {{PH_QUESTIONS}}                PH 四问
     {{SUNDAY_BLOCK}}                周日的同类对撞，其余日子空字符串
-    {{ARCHIVE_LINKS}}               <a href="../YYYY-MM-DD/">MM-DD</a>，空格分隔
+    {{ARCHIVE_LINKS}}               最近 3 期，<a href="/daily-radar/YYYY-MM-DD/">MM-DD</a>，空格分隔。
+                                    **必须绝对路径**——同一份 HTML 发根页和日期页两处，
+                                    相对路径 ../ 从根页出发会跳出站点
 
   ── 为什么是标签页而不是上下两段 ──
   GitHub Trending 和 Product Hunt 是**两件无关的事**，阅读模式也不同（扫读 vs 精拆）。
@@ -472,6 +474,7 @@
     transition: transform .18s var(--ease-out);
   }
   .archive a:active { transform: scale(.94); }
+  .archive .all { color: var(--tint); }
 
   @media (hover: hover) and (pointer: fine) {
     .tabs label:hover { color: var(--ink); }
@@ -527,7 +530,7 @@
   </section>
 
   <footer class="foot">
-    <p class="archive">往期　{{ARCHIVE_LINKS}}</p>
+    <p class="archive">往期　{{ARCHIVE_LINKS}} <a class="all" href="/daily-radar/archive/">全部 →</a></p>
   </footer>
 
 </div>

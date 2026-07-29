@@ -98,6 +98,7 @@ curl -s -H "Authorization: Bearer <<GH_PAT>>" \
 ```
 
 - 文件数 + 1 = 本期**期号**
+- **记下全部文件名的日期列表**（再加上今天的 D）——步骤 7 重建归档日历页要用
 - 读最近 7 天的 JSON，算 GitHub 项目**连续上榜天数**（≥2 天才在页面上标）
 - **周日**才做：从本周 JSON 里找和今天 PH 产品**同品类**的另一个产品，做对撞块
 
@@ -201,7 +202,7 @@ PH 的 gallery 通常混着三种图，各有归处：
 
 ## 步骤 7 · 发布
 
-三次 `PUT contents`。**覆盖已有文件必须带 `sha`，否则 422**；新文件不带 `sha`。
+四次 `PUT contents`。**覆盖已有文件必须带 `sha`，否则 422**；新文件不带 `sha`。
 
 ```bash
 B64=$(base64 -w0 page.html)      # 云端是 Linux，用 -w0
@@ -212,7 +213,18 @@ B64=$(base64 -w0 page.html)      # 云端是 Linux，用 -w0
 SHA=$(curl -s -H "Authorization: Bearer <<GH_PAT>>" \
   https://api.github.com/repos/captain-young/daily-radar/contents/index.html \
   | grep -o '"sha":"[^"]*"' | head -1 | cut -d'"' -f4)
+# 4) 归档日历页（已存在）      ：同样先 GET contents/archive/index.html 拿 sha 再 PUT
 ```
+
+归档日历页的生成：
+
+```bash
+curl -s https://raw.githubusercontent.com/captain-young/daily-radar/main/templates/archive.html
+```
+
+按模板顶部契约，用步骤 5 记下的日期列表画月历——新月在前、周一开头、
+首刊到最新之间的断更日标 `miss`、链接绝对路径。收尾和日报页一样：
+剥掉契约注释、全文查 `{{...}}` 残留。
 
 `data/<D>.json`：
 
@@ -258,6 +270,7 @@ curl -s -X POST -H 'Content-Type: application/json' \
 | 定价没拿到 | ③ 的 `.more` 里明说未取到，不要编 |
 | 图分不出类型 | 宁可少放一张，也不要把问题叙事图放进第 0 层 |
 | `PUT contents` 失败 | 飞书消息里直接说页面没更新，**不要发打不开的链接** |
+| 只有归档页 PUT 失败 | 日报照常发飞书，正文末尾加一句「归档页未更新」 |
 
 无重试、无告警。故障靠每天晚上肉眼可见发现。
 

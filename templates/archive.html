@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Daily Radar · 归档</title>
+
+<!--
+  生成后两件必做的收尾：① 删掉这段注释 ② 全文检查没有残留的 {{...}}
+
+  routine 每天重建本页（发布到 archive/index.html，覆盖要带 sha）。
+
+  数据源：步骤 5 已经拿到的 data/ 文件名列表（YYYY-MM-DD.json）再加上今天的 D。
+  日期就是 PH 榜单日 D——和页面路径、飞书链接用的同一个日期。
+
+  槽位：
+    {{COUNT}}    总期数
+    {{MONTHS}}   月块序列，**新月在前**，从首刊月到最新一期所在月，中间的月份都要有
+
+  月块 markup：
+    <section class="month">
+      <h2 class="month-name">2026 年 7 月</h2>
+      <div class="cal">
+        <span class="dow">一</span> … <span class="dow">日</span>   ← 周一开头，7 个
+        <span class="day off"></span> × N                           ← 月首空位
+        <a class="day has" href="/daily-radar/2026-07-28/">28</a>   ← 有刊，可点
+        <span class="day miss">27</span>                            ← 首刊之后的断更日
+        <span class="day off">1</span>                              ← 首刊之前 / 最新一期之后
+      </div>
+    </section>
+
+  规则：
+    · 最新一期用 class="day has latest"
+    · miss 只标「首刊日到最新一期之间」没有页面的日子——断更一眼可见；
+      首刊前和未来的日子一律 off，别把项目还不存在的日子标成断更
+    · 链接一律绝对路径 /daily-radar/YYYY-MM-DD/——本页在 /archive/ 下，
+      相对路径会差一层
+-->
+
+<style>
+  :root {
+    --ink:    #1B1C1E;
+    --muted:  rgba(60,60,67,.62);
+    --hairline: rgba(60,60,67,.14);
+    --tint:   #007AFF;
+    --bg:     #F2F3F8;
+    --glass:       rgba(255,255,255,.55);
+    --glass-thick: rgba(255,255,255,.82);
+    --glass-line:  rgba(255,255,255,.62);
+    --specular: inset 0 1px 0 rgba(255,255,255,.65);
+    --shadow:    0 16px 40px rgba(24,39,75,.10), 0 2px 8px rgba(24,39,75,.05);
+    --shadow-sm: 0 6px 16px rgba(24,39,75,.08), 0 1px 3px rgba(24,39,75,.05);
+    --sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "PingFang SC", "Helvetica Neue", sans-serif;
+    --ease-out: cubic-bezier(.23,1,.32,1);
+    color-scheme: light dark;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ink:    #F2F2F7;
+      --muted:  rgba(235,235,245,.62);
+      --hairline: rgba(255,255,255,.14);
+      --tint:   #0A84FF;
+      --bg:     #0B0C10;
+      --glass:       rgba(30,32,38,.62);
+      --glass-thick: rgba(62,64,72,.85);
+      --glass-line:  rgba(255,255,255,.12);
+      --specular: inset 0 1px 0 rgba(255,255,255,.09);
+      --shadow:    0 16px 40px rgba(0,0,0,.55), 0 2px 8px rgba(0,0,0,.35);
+      --shadow-sm: 0 6px 16px rgba(0,0,0,.40), 0 1px 3px rgba(0,0,0,.30);
+    }
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font: 16px/1.7 var(--sans);
+    -webkit-text-size-adjust: 100%;
+  }
+  body::before {
+    content: ""; position: fixed; inset: 0; z-index: -1;
+    background:
+      radial-gradient(48% 36% at 10% 6%,   rgba(10,132,255,.20), transparent 70%),
+      radial-gradient(40% 32% at 92% 16%,  rgba(191,90,242,.15), transparent 70%),
+      radial-gradient(52% 40% at 46% 100%, rgba(100,210,255,.18), transparent 70%),
+      var(--bg);
+  }
+  .sheet {
+    max-width: 44rem; margin: 0 auto; padding: 0 1rem 5rem;
+    animation: rise .5s var(--ease-out);
+  }
+  @keyframes rise    { from { opacity: 0; transform: translateY(10px); } }
+  @keyframes card-in { from { opacity: 0; transform: translateY(14px) scale(.98); } }
+
+  .masthead { padding: 2.75rem .25rem 1.25rem; }
+  .wordmark {
+    margin: 0; font-size: clamp(1.9rem, 7vw, 2.5rem);
+    font-weight: 700; letter-spacing: -.03em; line-height: 1.05;
+  }
+  .issueline {
+    margin: .5rem 0 0; font: 400 .8125rem/1.6 var(--sans);
+    color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+  .back {
+    display: inline-block; margin: 1rem 0 0; padding: .32rem .9rem;
+    border-radius: 999px; text-decoration: none;
+    color: var(--tint); font: 600 .8125rem/1.4 var(--sans);
+    background: var(--glass); border: 1px solid var(--glass-line);
+    -webkit-backdrop-filter: blur(16px) saturate(160%);
+    backdrop-filter: blur(16px) saturate(160%);
+    box-shadow: var(--shadow-sm), var(--specular);
+    transition: transform .18s var(--ease-out);
+  }
+  .back:active { transform: scale(.94); }
+
+  .month {
+    margin: 0 0 1rem; padding: 1.05rem 1.15rem 1.25rem;
+    border-radius: 22px;
+    background: var(--glass);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid var(--glass-line);
+    box-shadow: var(--shadow), var(--specular);
+    animation: card-in .45s var(--ease-out) backwards;
+  }
+  .month:nth-of-type(1) { animation-delay: .04s; }
+  .month:nth-of-type(2) { animation-delay: .09s; }
+  .month:nth-of-type(n+3) { animation-delay: .14s; }
+  .month-name {
+    margin: 0 0 .75rem;
+    font: 600 .9375rem/1.4 var(--sans); letter-spacing: -.01em;
+  }
+  .cal {
+    display: grid; grid-template-columns: repeat(7, 1fr);
+    gap: .3rem; max-width: 26rem;
+  }
+  .dow {
+    text-align: center;
+    font: 600 .6563rem/2 var(--sans); letter-spacing: .05em;
+    color: var(--muted); opacity: .75;
+  }
+  .day {
+    aspect-ratio: 1; display: flex; align-items: center; justify-content: center;
+    border-radius: 999px;
+    font: 400 .875rem/1 var(--sans); font-variant-numeric: tabular-nums;
+  }
+  .day.off  { color: var(--muted); opacity: .3; }
+  .day.miss { color: var(--muted); opacity: .6; border: 1px dashed var(--hairline); }
+  .day.has {
+    background: var(--glass-thick); color: var(--ink);
+    font-weight: 600; text-decoration: none;
+    box-shadow: var(--shadow-sm), var(--specular);
+    -webkit-tap-highlight-color: transparent;
+    transition: transform .18s var(--ease-out);
+  }
+  .day.has:active { transform: scale(.9); }
+  .day.has.latest { box-shadow: var(--shadow-sm), var(--specular), 0 0 0 2px var(--tint); }
+
+  .legend {
+    margin: 1.25rem .25rem 0; display: flex; gap: 1.1rem; flex-wrap: wrap;
+    font: 400 .75rem/1.6 var(--sans); color: var(--muted);
+  }
+  .legend .sw {
+    display: inline-block; width: .9em; height: .9em; margin-right: .35em;
+    border-radius: 999px; vertical-align: -.1em;
+  }
+  .legend .sw-has  { background: var(--glass-thick); box-shadow: var(--shadow-sm), var(--specular); }
+  .legend .sw-miss { border: 1px dashed var(--hairline); }
+
+  @media (hover: hover) and (pointer: fine) {
+    .back:hover { color: var(--ink); }
+    .day.has:hover { transform: scale(1.06); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: .01ms !important;
+      animation-delay: 0ms !important;
+      transition-duration: .01ms !important;
+      transition-delay: 0ms !important;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <header class="masthead">
+    <h1 class="wordmark">归档</h1>
+    <p class="issueline">Daily Radar　·　共 {{COUNT}} 期　·　日期为 PH 榜单日 (PT)</p>
+    <a class="back" href="/daily-radar/">最新一期 →</a>
+  </header>
+
+  {{MONTHS}}
+
+  <p class="legend">
+    <span><span class="sw sw-has"></span>有刊，可点</span>
+    <span><span class="sw sw-miss"></span>断更</span>
+  </p>
+
+</div>
+</body>
+</html>
