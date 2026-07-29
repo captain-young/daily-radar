@@ -118,7 +118,8 @@ daily-radar/
   要「国外论坛在吵什么」，遂改版）—— 每天 10 条，**AI 优先排序**。
   每条一张玻璃卡片：中文标题（意译）+ 「r/xx 日榜 #N · 评论 M」/「HN N 分 · 评论 M」+
   一句「在讨论什么」。**链接指向讨论串本身**，不是外部文章。
-  源：Reddit（r/LocalLLaMA、r/singularity、r/technology、r/programming）+ HN 首页。
+  源：Reddit（r/LocalLLaMA、r/MachineLearning、r/OpenAI、r/ClaudeAI、r/singularity、
+  r/technology、r/programming，2026-07-29 用户加了中间三个）+ HN 首页。
   两个实测硬约束：① Reddit 的 JSON 端点对脚本一律 403，**只有 `/.rss` 通**（Atom，按日榜
   排序但无分数字段，名次即热度）；② 限流很紧，连发必 429——请求间隔 ≥30 秒，429 等 60 秒
   重试一次，再挂就放弃该源/该帖。

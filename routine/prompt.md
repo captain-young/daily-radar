@@ -122,7 +122,7 @@ curl -s -H "Authorization: Bearer <<GH_PAT>>" \
 # Reddit 各社区日榜（Atom，已按当日热度排序；没有分数字段，名次就是热度）
 curl -s -A "daily-radar:v1.0 (personal tech digest)" \
   "https://www.reddit.com/r/LocalLLaMA/top/.rss?t=day"
-# 同样方式抓 r/singularity、r/technology、r/programming
+# 同样方式抓 r/MachineLearning、r/OpenAI、r/ClaudeAI、r/singularity、r/technology、r/programming
 # HN 首页（这个有分数和评论数）
 curl -s "https://hn.algolia.com/api/v1/search?tags=front_page&hitsPerPage=30"
 ```
