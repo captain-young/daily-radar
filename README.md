@@ -2,7 +2,7 @@
 
 每日 GitHub Trending + Product Hunt → 生成 H5 页面（GitHub Pages）→ 飞书推一条链接。
 
-GitHub 段是消费型（扫读今天出了什么新东西），Product Hunt 段是练习型（题目式：先给首屏图猜，折叠区翻答案），用来训练产品感觉。视觉是 Apple 液态玻璃风格。
+GitHub 段是消费型（扫读今天官方 Trending 上的热门 AI 项目，非 AI 已过滤），Product Hunt 段是练习型（题目式：先给首屏图猜，折叠区翻答案），用来训练产品感觉。视觉是 Apple 液态玻璃风格。
 
 ## 状态
 

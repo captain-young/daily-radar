@@ -410,7 +410,7 @@
   <nav class="tabs">
     <span class="thumb" aria-hidden="true"></span>
     <label for="tab-ph">Product Hunt <span class="n">1</span></label>
-    <label for="tab-gh">GitHub Trending <span class="n">5</span></label>
+    <label for="tab-gh">GitHub Trending <span class="n">3</span></label>
   </nav>
 
   <section class="pane pane-ph">
@@ -548,31 +548,7 @@
   </section>
 
   <section class="pane pane-gh">
-    <p class="pane-head">今天这一榜 AI 相关占三席——虚拟伴侣、多模型统一接口、编码 agent 工程系统；另外两席是把重型桌面软件搬进浏览器（3D 建筑编辑器），和榜上唯一的十五年老项目 Jenkins。</p>
-        <article class="repo">
-      <div class="repo-top">
-        <a class="repo-name" href="https://github.com/pascalorg/editor">pascalorg/editor</a>
-        <span class="delta">+341</span>
-      </div>
-      <p class="repo-meta">TypeScript · 总 19,091 · 建库 2025-10</p>
-      <dl class="repo-note">
-        <dt>项目定位</dt><dd>浏览器里的 3D 建筑编辑器，做完直接出链接分享。</dd>
-        <dt>核心功能</dt><dd>React Three Fiber + WebGPU 渲染。Turborepo monorepo 拆成四个可独立安装的 npm 包：<code>core</code>（节点 schema、Zustand 场景状态、空间查询、事件总线）、<code>viewer</code>（渲染运行时）、<code>editor</code>（编辑工具与 UI）、<code>nodes</code>（内置节点定义）。viewer 能单独嵌进自己的 React 应用。</dd>
-        <dt>值得关注</dt><dd>把渲染运行时和编辑器拆成独立发包，说明它想当的不只是一个工具，而是别人产品里的 3D 底座。直接对着 SketchUp 那类要装客户端的场景打。</dd>
-      </dl>
-    </article>
-    <article class="repo">
-      <div class="repo-top">
-        <a class="repo-name" href="https://github.com/jenkinsci/jenkins">jenkinsci/jenkins</a>
-        <span class="delta">+180</span>
-      </div>
-      <p class="repo-meta">Java · 总 26,164 · 建库 2010-11</p>
-      <dl class="repo-note">
-        <dt>项目定位</dt><dd>老牌自托管 CI/CD 服务器。</dd>
-        <dt>核心功能</dt><dd>流水线调度 + pipelines-as-code（Groovy），插件生态是它最难被替掉的部分。</dd>
-        <dt>值得关注</dt><dd>榜上唯一的十五年老项目。+180 对一个 26k star 的老库属于日常波动，看不出特别动作——<strong>我没查到它今天涨星的具体原因</strong>，这类老库上榜多半是发版或安全公告带量，要确认得自己去看 release 页。</dd>
-      </dl>
-    </article>
+    <p class="pane-head">只收 AI：本期三席——虚拟伴侣、多模型统一接口、编码 agent 工程系统。榜上的 3D 建筑编辑器和 Jenkins 属非 AI，已过滤。</p>
     <article class="repo">
       <div class="repo-top">
         <a class="repo-name" href="https://github.com/moeru-ai/airi">moeru-ai/airi</a>

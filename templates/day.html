@@ -11,7 +11,8 @@
   槽位：
     {{ISSUE}} {{DATE}} {{PH_DAY}}   期号 / 本期日期(北京) / PH 榜单日(PT)
     {{FAULT}}                       故障提示条，正常时空字符串
-    {{GITHUB_ROWS}}                 GitHub 段的行
+    {{GITHUB_ROWS}}                 GitHub 段的卡片（只放 AI 项目，筛选规则见 routine prompt 步骤 4）
+    {{GH_COUNT}}                    标签栏上的数字：本期实际收录的 AI 项目数
     {{PH_BRIEF}}                    PH 第 0 层「先看懂」
     {{PH_QUESTIONS}}                PH 四问
     {{SUNDAY_BLOCK}}                周日的同类对撞，其余日子空字符串
@@ -24,10 +25,11 @@
   上下排版会暗示先后和层级，让 GitHub 段变成「翻过去才能开始训练」的前言。
   标签页让两者平级，各自独立。默认落在 PRODUCT HUNT——那是这个项目存在的理由。
 
-  {{GH_SUMMARY}} —— 一到两句，说清今天这一榜的构成/规律（例：AI 相关占三席，
-    另外两席是把重型桌面软件搬进浏览器和唯一的十五年老项目）。不要写「值得开发者重点关注」。
+  {{GH_SUMMARY}} —— 一到两句：整页里 AI 占几席、本期收了什么（例：整页 25 个里 AI 相关
+    6 个，收前 5——两个 agent 框架、一个推理引擎…）。不足 5 个就说明只收到几个。
+    不要写「值得开发者重点关注」。
 
-  GITHUB_ROWS 每个项目一块，**三段式**：
+  GITHUB_ROWS 只放 AI 项目，每个项目一块，**三段式**：
     <article class="repo">
       <div class="repo-top">
         <a class="repo-name" href="URL">owner/name</a><span class="delta">+1,204</span>
@@ -509,7 +511,7 @@
   <nav class="tabs">
     <span class="thumb" aria-hidden="true"></span>
     <label for="tab-ph">Product Hunt <span class="n">1</span></label>
-    <label for="tab-gh">GitHub Trending <span class="n">5</span></label>
+    <label for="tab-gh">GitHub Trending <span class="n">{{GH_COUNT}}</span></label>
   </nav>
 
   <section class="pane pane-ph">

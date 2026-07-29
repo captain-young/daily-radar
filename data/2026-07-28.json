@@ -4,24 +4,6 @@
   "ph_day": "2026-07-28",
   "github": [
     {
-      "repo": "pascalorg/editor",
-      "lang": "TypeScript",
-      "stars_total": 19091,
-      "stars_today": 341,
-      "streak": 1,
-      "url": "https://github.com/pascalorg/editor",
-      "note": "浏览器里的 3D 建筑编辑器，做完直接出链接分享"
-    },
-    {
-      "repo": "jenkinsci/jenkins",
-      "lang": "Java",
-      "stars_total": 26164,
-      "stars_today": 180,
-      "streak": 1,
-      "url": "https://github.com/jenkinsci/jenkins",
-      "note": "老牌自托管 CI/CD 服务器"
-    },
-    {
       "repo": "moeru-ai/airi",
       "lang": "TypeScript",
       "stars_total": 45038,

@@ -162,15 +162,18 @@ backdrop-filter，提高背景不透明度补偿——背景是平滑固定渐�
 D=07-29 撞路径，routine 按新文件不带 sha 去 PUT 会 422）+ `data/2026-07-28.json`（评论原文
 未存档，`comments_raw` 留空注明）。期号从 2 续。
 
-### 一个待决事项：GitHub 段要不要留
+### GitHub 段：留，但只收 AI（2026-07-29 用户拍板）
 
-`github-trending-daily` 的云端 routine 仍在每天早上推 GitHub 日报。两边内容并非重复——
+`github-trending-daily` 的云端 routine 仍在每天早上推全量 GitHub 日报。两边内容并非重复——
 **GitHub Trending 的 24h 窗口是滚动的**，早上 09:00 和晚上 20:00 抓到的榜差别很大（实测同一天
-早上榜首是 `bradautomates/claude-video` +989，下午前五里根本没有它）。所以这是同一份榜的两个
-不同快照，不是同一份内容发两遍。
+早上榜首是 `bradautomates/claude-video` +989，下午前五里根本没有它）。
 
-但一天两次扫同一个榜是否有价值，由使用者判断。若判定为噪音，就砍掉本项目的 GitHub 段、
-只留 Product Hunt 训练，项目更聚焦。
+用户指定：本项目的 GitHub 段**只收 AI 项目**。规则（详见 routine prompt 步骤 4）：
+解析 Trending 整页（约 25 条）而不只前 5，筛「核心价值是 AI」的（只是带个 AI 功能的不算），
+按页面顺序取前 5；不足 5 个不凑数，为零就如实写「今天官方榜上没有 AI 相关项目」。
+标签栏数字改为槽位 `{{GH_COUNT}}`。
+
+这也让两边差异化更彻底：旧日报 = 早间全量榜前 5 快照，本项目 = 晚间榜的 AI 精选 + 三段式深读。
 
 PH 区分两层，**「先看懂，再判断」是整个设计的核心**：
 

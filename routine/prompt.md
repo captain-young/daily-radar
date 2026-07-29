@@ -76,18 +76,28 @@ curl -s -o /dev/null -w '%{url_effective}' -L "<website 字段>"
 读官网首页或 `/pricing`，判断**价值单位**：按人 / 按用量 / 按结果 / 一次性。
 **取不到就写「本期未取到官网定价页」，不要编。**
 
-## 步骤 4 · 抓 GitHub Trending
+## 步骤 4 · 抓 GitHub Trending，只收 AI 项目
 
 ```bash
 curl -s -A "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36" \
   "https://github.com/trending?since=daily"
 ```
 
-从原始 HTML 解析前 5 个。注意 `<h2 class="h3 lh-condensed">` 里的 `<a>` **先有 `data-hydro-click`
-才有 `href`**，正则别假设 `<a href` 紧挨着；总 star 在 `href=".../stargazers"` 之后、`</svg>` 之后。
-curl 失败或解析出 < 5 个时用 WebFetch 兜底。
+解析**整页全部条目**（约 25 条），不只前 5：owner/name、描述、语言、总 star、今日涨星。
+注意 `<h2 class="h3 lh-condensed">` 里的 `<a>` **先有 `data-hydro-click` 才有 `href`**，
+正则别假设 `<a href` 紧挨着；总 star 在 `href=".../stargazers"` 之后、`</svg>` 之后。
+curl 失败或整页解析出 < 10 条时用 WebFetch 兜底。
 
-每个项目写**一句**中文点评：它是什么、给谁用。不要复述 README，不要写「值得关注」这类空话。
+**AI 筛选（用户指定，2026-07-29）**：只收「核心价值是 AI」的项目——LLM、agent、
+模型训练/推理、AI 应用与工具链（eval、向量库、推理引擎、编码 agent 等）。
+判断依据是榜单页的描述，拿不准就打开 README 确认。只是「带了个 AI 功能」的不算
+（3D 编辑器内置 AI 助手 ≠ AI 项目）。
+
+按页面顺序取**前 5 个 AI 项目**，不足 5 个就发几个是几个，**不要拿非 AI 项目凑数**；
+一个都没有就在 GitHub 段如实写「今天官方榜上没有 AI 相关项目」。
+标签栏的 `{{GH_COUNT}}` 填实际收录数。
+
+每个收录项目的三段式点评按模板契约写——「核心功能」必须读过 README 再写。
 
 ## 步骤 5 · 读历史
 
@@ -253,7 +263,7 @@ curl -s https://raw.githubusercontent.com/captain-young/daily-radar/main/templat
 
 ```bash
 curl -s -X POST -H 'Content-Type: application/json' \
-  -d '{"msg_type":"text","content":{"text":"daily-radar 第 <期号> 期 · <D>\nGitHub 5 个 · PH 榜首「<产品名>」<票数>票\nhttps://captain-young.github.io/daily-radar/<D>/"}}' \
+  -d '{"msg_type":"text","content":{"text":"daily-radar 第 <期号> 期 · <D>\nGitHub AI 项目 <N> 个 · PH 榜首「<产品名>」<票数>票\nhttps://captain-young.github.io/daily-radar/<D>/"}}' \
   "<<FEISHU_WEBHOOK>>"
 ```
 
@@ -265,7 +275,8 @@ curl -s -X POST -H 'Content-Type: application/json' \
 
 | 情况 | 做法 |
 |------|------|
-| GitHub 解析出 < 5 个 | 发已拿到的，`{{FAULT}}` 填「今日 GitHub 段只解析到 N 个」 |
+| Trending 整页解析出 < 10 条 | 用已拿到的照常筛 AI，`{{FAULT}}` 填「今日 Trending 只解析到 N 条」 |
+| AI 项目不足 5 个 | 不是故障。发几个是几个，不要拿非 AI 项目凑数 |
 | PH API 报错 / token 失效 | GitHub 段照发，PH 段整块换成故障说明。**不要静默跳过** |
 | 定价没拿到 | ③ 的 `.more` 里明说未取到，不要编 |
 | 图分不出类型 | 宁可少放一张，也不要把问题叙事图放进第 0 层 |
