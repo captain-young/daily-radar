@@ -3,8 +3,62 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>daily-radar № 1 · 2026-07-29</title>
+<title>daily-radar № {{ISSUE}} · {{DATE}}</title>
 
+<!--
+  槽位（routine 填）：
+    {{ISSUE}}          期号，整数
+    {{DATE}}           本期日期 YYYY-MM-DD（北京）
+    {{PH_DAY}}         PH 榜单日 YYYY-MM-DD（PT）
+    {{FAULT}}          故障提示条，正常时填空字符串
+    {{GITHUB_ROWS}}    GitHub 段的行，见下方 markup 契约
+    {{PH_BLOCK}}       PH 段内容，见下方 markup 契约
+    {{SUNDAY_BLOCK}}   周日的同类对撞，其余日子填空字符串
+    {{ARCHIVE_LINKS}}  往期链接 <a href="../YYYY-MM-DD/">MM-DD</a>，空格分隔
+
+  markup 契约 —— GITHUB_ROWS 每个项目一块：
+    <article class="repo">
+      <div class="repo-top">
+        <a class="repo-name" href="URL">owner/name</a>
+        <span class="delta">+1,204</span>
+      </div>
+      <p class="repo-meta">TypeScript · 总 34.1k · <span class="streak">连续 3 天</span></p>
+      <p class="repo-note">一句中文点评。</p>
+    </article>
+    （streak 那个 span 只在连续 ≥2 天时出现；delta 是今日涨星，不带 ★）
+
+  markup 契约 —— PH_BLOCK：
+    <img class="hero" src="…&w=800" alt="Product Hunt 首屏图">
+    <p class="ph-meta"><span class="topics">SaaS · Developer Tools</span><span class="votes">580 票</span></p>
+    然后四个 <section class="q">…</section>，每个都是**两层**：
+    <section class="q">
+      <p class="q-text"><span class="q-n">①</span>它堵的是哪两个动作之间的缝？</p>
+      <input type="checkbox" id="r1" class="reveal">
+      <div class="answer">
+        <p class="redact"><span class="w">结论</span><span class="w">短句</span></p>
+        <div class="more">
+          引文、旁证、分析、图片 —— 解密前整块 display:none
+          <p class="quote">…</p>
+          <img class="evidence" src="…" alt="…">
+        </div>
+      </div>
+      <label for="r1" class="reveal-btn">解密</label>
+    </section>
+    id 用 r1…r4，周日对撞块用 r5。
+
+    **只有结论放 .redact，其余一律放 .more。** 涂黑只挡住结论、把引文和图片留在外面，
+    等于白给答案——实测 ② 的品牌封面图印着 tagline，解密前就能看到，整题作废。
+
+    .hero 必须是**产品界面截图**，不能是带 logo + 标语的品牌封面图——封面图会直接泄露
+    tagline，把整个「先猜」机制废掉。品牌封面图放进 ② 的 .answer 里当「首图」那层的证据：
+      <img class="evidence" src="…&w=800" alt="品牌封面图">
+
+    涂黑规则：.redact 里每段包一个 <span class="w">。
+      英文——按空格切词，span 之间保留真实空格
+      中文——按标点切成短句，**标点写在 span 外面**（标点可见，天然把条子分开），
+             span 之间不要加空格，否则解密后中文里会多出一串空格
+    不需要涂黑的说明性文字直接写在 .answer 里、不加 .redact。
+-->
 
 <style>
   :root {
@@ -191,118 +245,24 @@
 
   <header class="masthead">
     <h1 class="wordmark">DAILY RADAR</h1>
-    <p class="issueline">№ 1　·　2026-07-29　·　PH 榜单日 2026-07-28 (PT)</p>
-    
+    <p class="issueline">№ {{ISSUE}}　·　{{DATE}}　·　PH 榜单日 {{PH_DAY}} (PT)</p>
+    {{FAULT}}
   </header>
 
   <section>
     <h2 class="zone-head"><span class="cn">一</span>GITHUB TRENDING<span class="mode">扫读</span></h2>
-        <article class="repo">
-      <div class="repo-top">
-        <a class="repo-name" href="https://github.com/pascalorg/editor">pascalorg/editor</a>
-        <span class="delta">+341</span>
-      </div>
-      <p class="repo-meta">TypeScript · 总 19,091</p>
-      <p class="repo-note">［示例点评占位，验证排版用］</p>
-    </article>
-    <article class="repo">
-      <div class="repo-top">
-        <a class="repo-name" href="https://github.com/jenkinsci/jenkins">jenkinsci/jenkins</a>
-        <span class="delta">+180</span>
-      </div>
-      <p class="repo-meta">Java · 总 26,164</p>
-      <p class="repo-note">［示例点评占位，验证排版用］</p>
-    </article>
-    <article class="repo">
-      <div class="repo-top">
-        <a class="repo-name" href="https://github.com/moeru-ai/airi">moeru-ai/airi</a>
-        <span class="delta">+797</span>
-      </div>
-      <p class="repo-meta">TypeScript · 总 45,038</p>
-      <p class="repo-note">［示例点评占位，验证排版用］</p>
-    </article>
-    <article class="repo">
-      <div class="repo-top">
-        <a class="repo-name" href="https://github.com/andrewyng/aisuite">andrewyng/aisuite</a>
-        <span class="delta">+62</span>
-      </div>
-      <p class="repo-meta">Python · 总 15,773</p>
-      <p class="repo-note">［示例点评占位，验证排版用］</p>
-    </article>
-    <article class="repo">
-      <div class="repo-top">
-        <a class="repo-name" href="https://github.com/affaan-m/ECC">affaan-m/ECC</a>
-        <span class="delta">+636</span>
-      </div>
-      <p class="repo-meta">JavaScript · 总 235,121</p>
-      <p class="repo-note">［示例点评占位，验证排版用］</p>
-    </article>
+    {{GITHUB_ROWS}}
   </section>
 
   <section class="drill">
     <h2 class="zone-head"><span class="cn">二</span>PRODUCT HUNT<span class="mode">先猜，再解密</span></h2>
-        <img class="hero" src="https://ph-files.imgix.net/5666270e-9a5f-47d5-9a8f-cec13c15e089.png?auto=format&w=800" alt="Product Hunt 首屏图">
-    <p class="ph-meta"><span class="topics">SaaS · Developer Tools · Artificial Intelligence</span><span class="votes">580 票</span></p>
-    <p class="q-text" style="margin-bottom:1.5rem">先别往下翻。看着上面这张图，回答四个问题，再一个一个解密。</p>
-
-<section class="q">
-      <p class="q-text"><span class="q-n">①</span>它堵的是哪两个动作之间的缝？</p>
-      <input type="checkbox" id="r1" class="reveal">
-      <div class="answer">
-        <p class="redact"><span class="w">测试环境里 eval 全部通过</span>，<span class="w">产品上了生产就崩</span>——<span class="w">中间那段没人看着的空档</span>。</p>
-        <div class="more">
-          <p class="quote">maker 原话：do you actually know what your agents are doing in production right now？并引了 Gartner「2027 年 40%+ agentic AI 项目会被砍掉」。</p>
-        </div>
-      </div>
-      <label for="r1" class="reveal-btn">解密</label>
-    </section>
-<section class="q">
-      <p class="q-text"><span class="q-n">②</span>标题 / 首评 / 首图讲的是同一句话吗？</p>
-      <input type="checkbox" id="r2" class="reveal">
-      <div class="answer">
-        <p>launch tagline：<strong class="redact"><span class="w">Evaluate</span> <span class="w">your</span> <span class="w">AI</span> <span class="w">Agents</span> <span class="w">in</span> <span class="w">real-time</span></strong></p>
-        <p class="redact"><span class="w">对齐</span>。<span class="w">三层都压在 real-time 这一个差异点上</span>。</p>
-        <div class="more">
-          <p>首评划界句：<em>observe, evaluate, act, all inside the same run</em>——潜台词是放弃做纯 observability 平台。</p>
-          <p>品牌封面图（「首图」那一层的证据）：</p>
-          <img class="evidence" src="https://ph-files.imgix.net/a3db6429-c30c-4462-a6ff-d3896ad6d2c5.png?auto=format&w=800" alt="品牌封面图">
-        </div>
-      </div>
-      <label for="r2" class="reveal-btn">解密</label>
-    </section>
-<section class="q">
-      <p class="q-text"><span class="q-n">③</span>它按什么收钱？</p>
-      <input type="checkbox" id="r3" class="reveal">
-      <div class="answer">
-        <p class="redact"><span class="w">按用量</span>。<span class="w">价值单位是 agent 运行次数</span>。</p>
-        <div class="more">
-          <p>证据：首评送「1,000,000 free agent steps」——用 step 当免费额度单位，等于宣布价值随运行次数线性增长。</p>
-        </div>
-      </div>
-      <label for="r3" class="reveal-btn">解密</label>
-    </section>
-<section class="q">
-      <p class="q-text"><span class="q-n">④</span>评论区谁在用自己的数字追问？根基质疑是什么？</p>
-      <input type="checkbox" id="r4" class="reveal">
-      <div class="answer">
-        <p class="redact"><span class="w">购买信号是带自己失败率数字的追问</span>；<span class="w">根基质疑是</span>「<span class="w">谁来评估评估器</span>」。</p>
-        <div class="more">
-          <p><strong>购买信号</strong>：</p>
-          <p class="quote">Abdullah：我的 agent 三次里有一次报成功，但页面其实根本没更新。你能不能校验外部副作用，而不是只给运行记录打分？</p>
-          <p>他已经在自己系统上试用过一遍，才报得出「三次里一次」这个数。</p>
-          <p><strong>根基质疑</strong>：</p>
-          <p class="quote">Flavio：你有没有把每次判定绑定到具体的 evaluator 版本和它用的证据？</p>
-          <p>评估器自己变了的时候，怎么区分是 agent 退化还是评估退化——所有 AI 评估类产品都绕不过的根本难题。</p>
-        </div>
-      </div>
-      <label for="r4" class="reveal-btn">解密</label>
-    </section>
-    
+    {{PH_BLOCK}}
+    {{SUNDAY_BLOCK}}
   </section>
 
   <footer class="foot">
     <p>猜完了写一句预测，回复在飞书那条消息底下：<strong>「我认为它 6 个月后还在／死了，因为___」</strong>。30 天后往上翻，看命中率。</p>
-    <p class="archive">往期　<a href="#">07-28</a> <a href="#">07-27</a></p>
+    <p class="archive">往期　{{ARCHIVE_LINKS}}</p>
   </footer>
 
 </div>

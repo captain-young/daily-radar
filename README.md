@@ -6,7 +6,14 @@ GitHub 段是消费型（扫读今天出了什么新东西），Product Hunt 段
 
 ## 状态
 
-设计中。当前仓库只有占位页，用于验证 GitHub Pages 发布链路。
+设计完成，routine 未创建。根页面是一期**真实数据的样张**（2026-07-28 PH 榜首 Prefactor +
+当日 GitHub Trending 前 5，GitHub 段的点评是排版占位），用来验证「猜 → 解密」的手感。
+
+- 设计文档：`docs/2026-07-29-daily-radar-design.md`
+- routine prompt：`routine/prompt.md`（密钥是占位符，真实值只在 routine 配置里）
+- 页面模板：`templates/day.html`
+
+差一个飞书 webhook URL 就能建 routine。
 
 ## 与 github-trending-daily 的关系
 
