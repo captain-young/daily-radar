@@ -63,7 +63,9 @@ curl -s -X POST https://api.producthunt.com/v2/api/graphql \
 
 - `comments[].body` 是 **HTML**，引用前剥标签并转义，不能裸插
 - `website` 是 PH 跳转链（`producthunt.com/r/XXXX`），不是官网
-- 图片 URL 一律追加 `&w=800`
+- **图片一律出两个 URL**：页面里的 `src` 用 `<url>&w=800`，外层 `<a class="zoom" href>` 用
+  **不带 `w` 参数的原图**。实测原图 267KB、`w=800` 27.8KB、`w=1600` 77.3KB——内联用小图省流量，
+  点开看原图。控制台截图的小字在手机上不放大根本读不清，而第 0 层全靠看清界面
 
 ## 步骤 3 · 跟一跳拿真实官网，找定价
 

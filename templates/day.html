@@ -33,9 +33,17 @@
       <p><span class="k">给谁用</span>目标用户</p>
     </div>
     <div class="gallery">
-      <figure><img src="…&w=800" alt=""><figcaption>这张在演什么</figcaption></figure>
+      <figure>
+        <a class="zoom" href="原图URL(不带 &w=)" target="_blank" rel="noopener"><img src="…&w=800" alt=""></a>
+        <figcaption>这张在演什么</figcaption>
+      </figure>
       × 3-4 张
     </div>
+
+    **PH 段的每张图都必须用 `<a class="zoom">` 包起来**，`src` 用 `&w=800`（省流量），
+    `href` 用**不带 `w` 参数的原图**（实测原图 267KB vs w=800 的 27.8KB，差 10 倍）。
+    控制台截图的小字在手机上不放大读不清，而第 0 层全靠看清界面。
+    `.evidence` 那些图同样要包。
     <p class="ph-meta"><span class="topics">SaaS · Developer Tools</span><span class="votes">580 票</span></p>
 
   PH_QUESTIONS —— 四个 <section class="q">，每个三段：题面材料 / 涂黑的判定 / .more 里的展开
@@ -173,6 +181,17 @@
     display: block; width: 100%; height: auto;
     border: 1px solid var(--rule); border-radius: 2px;
   }
+  /* 图都用 a.zoom 包起来指向原图——控制台截图的小字在手机上必须放大才读得清，
+     交给浏览器原生的双击/捏合缩放，比自己搭 lightbox 可靠 */
+  a.zoom {
+    display: block; cursor: zoom-in;
+    -webkit-tap-highlight-color: transparent;
+  }
+  a.zoom:focus-visible { outline: 2px solid var(--signal); outline-offset: 2px; }
+  .hint {
+    margin: -.5rem 0 1rem;
+    font: 400 .7rem/1.6 var(--mono); color: var(--muted);
+  }
   .gallery figcaption {
     margin-top: .4rem; font: 400 .75rem/1.5 var(--mono); color: var(--muted);
   }
@@ -267,6 +286,7 @@
     <h2 class="zone-head"><span class="cn">二</span>PRODUCT HUNT<span class="mode">先判断，再对答案</span></h2>
 
     <p class="sub">0 · 先看懂</p>
+    <p class="hint">图都可以点开看原图</p>
     {{PH_BRIEF}}
 
     <p class="sub">1 · 四问</p>
