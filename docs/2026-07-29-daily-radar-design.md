@@ -38,7 +38,7 @@ routine 的配置里。三个密钥：
 |--------|------|------------------------|
 | `<<PH_TOKEN>>` | PH developer token，不过期 | `ph-developer-token` |
 | `<<GH_PAT>>` | GitHub fine-grained PAT，仅 `daily-radar` 的 Contents: RW | `daily-radar-gh-pat` |
-| `<<FEISHU_WEBHOOK>>` | 飞书自定义机器人 webhook URL | 待提供 |
+| `<<FEISHU_WEBHOOK>>` | 飞书自定义机器人 webhook URL | `daily-radar-feishu-webhook` |
 
 ### 2. PH 日榜边界与夏令时
 
@@ -82,10 +82,11 @@ UTC-7）下边界是 **07:00 UTC**；冬令时（PST，UTC-8）会变成 **08:00
       ├─ 2. curl github.com/trending?since=daily → 解析 5 个项目
       ├─ 3. PH GraphQL 取 D 当天 order:VOTES 榜首 → tagline/media/comments/topics
       ├─ 4. 跟一跳 website 拿真实官网 → 读定价页找价值单位
-      ├─ 5. GET contents/data/ 读历史 → GitHub 项目连续上榜天数；周日取本周同品类
-      ├─ 6. 生成 HTML：GET contents/templates/day.html 填槽位
-      ├─ 7. PUT contents ×3：data/D.json、D/index.html、index.html
-      └─ 8. curl POST 飞书 webhook → 一条消息带链接
+      ├─ 5. GET contents/data/ 读历史 → 期号、streak、热议去重、归档日期表
+      ├─ 6. Reddit RSS ×7 + HN → 选 10 条热议，逐帖抓评论区
+      ├─ 7. 生成 HTML：GET templates/day.html 填槽位
+      ├─ 8. PUT contents ×4：data/D.json、D/index.html、index.html、archive/index.html
+      └─ 9. curl POST 飞书 webhook → 一条消息带链接
 ```
 
 ### 仓库结构
@@ -295,6 +296,13 @@ PH 区分两层，**「先看懂，再判断」是整个设计的核心**：
 - 停掉 `github-trending-daily` 的旧 routine（先并行观察）
 - Cloudflare Pages 私有化（页面公开可接受，PH 和 GitHub 内容本身是公开的）
 
-## 待用户提供
+## routine 创建方式（2026-07-29 已上线）
 
-- 飞书自定义机器人的 webhook URL（关键词建议设 `daily-radar` 或 `雷达`，消息正文带上）
+- 触发器：claude.ai remote trigger `trig_0168fxMjyeienMPjpK2RrSGf`，cron `0 12 * * *`（UTC）
+  = 每天 20:00 北京，模型 claude-sonnet-5
+- **触发器里只装一条短引导 + 三个真实密钥**，运行时 `curl raw.githubusercontent.com/.../routine/prompt.md`
+  拉最新手册、替换占位符后执行——改 prompt 只推仓库，不用动 routine 配置。
+  拉取失败时不凭记忆干活，直接飞书报错并结束
+- 曾尝试把 10KB 完整 prompt 内联进触发器，创建请求会被截断——短引导方案因此而来
+- 首个自动运行：2026-07-30 20:02（北京），D=2026-07-29。**故意没做 run-now 测试**：
+  当晚触发的话 D=07-28，会以重跑模式覆盖手工打磨的第 1 期样张
