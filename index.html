@@ -116,12 +116,43 @@
     display: block; width: 100%; height: auto;
     border: 1px solid var(--rule); border-radius: 2px;
   }
-  a.zoom {
+  /* 点图开站内浮层，不跳走——跳走会丢掉滚动位置和已解密的状态。
+     用 checkbox + label，和解密同一套机制，不需要 JS */
+  label.zoom {
     display: block; cursor: zoom-in;
     -webkit-tap-highlight-color: transparent;
   }
-  a.zoom:focus-visible { outline: 2px solid var(--signal); outline-offset: 2px; }
-  /* 图片本身可点，但再给一个明确的文字入口——文字链在任何环境里都点得动 */
+  .lb-toggle { position: absolute; width: 1px; height: 1px; opacity: 0; }
+  .lb { display: none; }
+  /* 必须用相邻兄弟 + 而不是 ~：.lb 全都是 .gallery 的同级子元素，
+     用 ~ 会一次显示后面所有浮层，最后一个盖在最上面，点第一张图却看到第三张 */
+  .lb-toggle:checked + .lb {
+    display: block;
+    position: fixed; inset: 0; z-index: 50;
+    background: #0B0D0EF2;
+  }
+  /* 浮层里图片按 1600px 原始宽度铺开，可以拖着看细节——这才是「放大」，
+     只做 fit-to-screen 在手机上跟内联一样大，等于没放大 */
+  .lb-scroll {
+    position: absolute; inset: 3rem 0 0; overflow: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .lb-scroll img { display: block; width: auto; max-width: none; height: auto; }
+  .lb-bar {
+    position: absolute; top: 0; left: 0; right: 0; height: 3rem;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 1rem; gap: 1rem;
+    background: #0B0D0E; color: #E6E4DC;
+    font: 600 .75rem/1 var(--mono); letter-spacing: .06em;
+  }
+  .lb-bar .x { cursor: pointer; -webkit-tap-highlight-color: transparent; }
+  .lb-bar .tip { font-weight: 400; opacity: .6; letter-spacing: 0; }
+  .lb-bar a { color: #7FB8A4; text-decoration: none; border-bottom: 1px solid #7FB8A4; }
+  body:has(.lb-toggle:checked) { overflow: hidden; }
+  /* 键盘走 caption 里的 .zoomlink（真 <a>，原生可聚焦）；
+     图片上的 label 是鼠标/触屏入口，不做焦点样式 */
+
+  /* 文字入口兜底：浮层万一在某个内置浏览器里失灵，这条直接开原图 */
   .zoomlink {
     white-space: nowrap; color: var(--signal); text-decoration: none;
     border-bottom: 1px solid var(--signal);
@@ -264,15 +295,42 @@
     <h2 class="zone-head"><span class="cn">二</span>PRODUCT HUNT<span class="mode">先判断，再对答案</span></h2>
 
     <p class="sub">0 · 先看懂</p>
-    <p class="hint">图和 caption 末尾的「原图 ↗」都能点开看原图</p>
+    <p class="hint">点图开浮层看细节，不离开页面</p>
         <div class="brief">
       <p><span class="k">它是什么</span>AI agent 的线上质检台。agent 每跑一次，它就按你自己定义的标准打分（LLM 当裁判、技术校验、质量指标），分数不对就自动拦下来或转人工。</p>
       <p><span class="k">给谁用</span>已经把 agent 放到生产环境、面对真实客户的工程团队，不限技术栈。</p>
     </div>
     <div class="gallery">
-      <figure><a class="zoom" href="https://ph-files.imgix.net/66f2a38e-2654-4946-b774-a8d8f02afdfe.png?auto=format"><img src="https://ph-files.imgix.net/66f2a38e-2654-4946-b774-a8d8f02afdfe.png?auto=format&w=800" alt=""></a><figcaption>控制台：左栏是这家保险公司挂着的 6 个 agent，右边是其中 Claims Review Agent 的风险分布（127 低 / 33 中 / 67 高 / 128 critical）和 24 小时活动量　<a class="zoomlink" href="https://ph-files.imgix.net/66f2a38e-2654-4946-b774-a8d8f02afdfe.png?auto=format">原图 ↗</a></figcaption></figure>
-      <figure><a class="zoom" href="https://ph-files.imgix.net/5666270e-9a5f-47d5-9a8f-cec13c15e089.png?auto=format"><img src="https://ph-files.imgix.net/5666270e-9a5f-47d5-9a8f-cec13c15e089.png?auto=format&w=800" alt=""></a><figcaption>单次运行的逐条时间线：每次工具调用、每句对话都标了时间和风险等级　<a class="zoomlink" href="https://ph-files.imgix.net/5666270e-9a5f-47d5-9a8f-cec13c15e089.png?auto=format">原图 ↗</a></figcaption></figure>
-      <figure><a class="zoom" href="https://ph-files.imgix.net/8825e809-65dc-490e-9702-8190c678a613.png?auto=format"><img src="https://ph-files.imgix.net/8825e809-65dc-490e-9702-8190c678a613.png?auto=format&w=800" alt=""></a><figcaption>评分侧：这次运行风险分 108，判为 Critical；右边汇总成功率 75%、典型耗时 8m25s、24 小时内失败 3 次　<a class="zoomlink" href="https://ph-files.imgix.net/8825e809-65dc-490e-9702-8190c678a613.png?auto=format">原图 ↗</a></figcaption></figure>
+      <figure><label class="zoom" for="z1"><img src="https://ph-files.imgix.net/66f2a38e-2654-4946-b774-a8d8f02afdfe.png?auto=format&w=800" alt=""></label><figcaption>控制台：左栏是这家保险公司挂着的 6 个 agent，右边是其中 Claims Review Agent 的风险分布（127 低 / 33 中 / 67 高 / 128 critical）和 24 小时活动量　<a class="zoomlink" href="https://ph-files.imgix.net/66f2a38e-2654-4946-b774-a8d8f02afdfe.png?auto=format">原图 ↗</a></figcaption></figure>
+      <input type="checkbox" id="z1" class="lb-toggle">
+      <div class="lb">
+        <div class="lb-bar">
+          <label class="x" for="z1">✕ 关闭</label>
+          <span class="tip">拖动查看细节</span>
+          <a href="https://ph-files.imgix.net/66f2a38e-2654-4946-b774-a8d8f02afdfe.png?auto=format">原图 ↗</a>
+        </div>
+        <div class="lb-scroll"><img src="https://ph-files.imgix.net/66f2a38e-2654-4946-b774-a8d8f02afdfe.png?auto=format&w=1600" alt=""></div>
+      </div>
+      <figure><label class="zoom" for="z2"><img src="https://ph-files.imgix.net/5666270e-9a5f-47d5-9a8f-cec13c15e089.png?auto=format&w=800" alt=""></label><figcaption>单次运行的逐条时间线：每次工具调用、每句对话都标了时间和风险等级　<a class="zoomlink" href="https://ph-files.imgix.net/5666270e-9a5f-47d5-9a8f-cec13c15e089.png?auto=format">原图 ↗</a></figcaption></figure>
+      <input type="checkbox" id="z2" class="lb-toggle">
+      <div class="lb">
+        <div class="lb-bar">
+          <label class="x" for="z2">✕ 关闭</label>
+          <span class="tip">拖动查看细节</span>
+          <a href="https://ph-files.imgix.net/5666270e-9a5f-47d5-9a8f-cec13c15e089.png?auto=format">原图 ↗</a>
+        </div>
+        <div class="lb-scroll"><img src="https://ph-files.imgix.net/5666270e-9a5f-47d5-9a8f-cec13c15e089.png?auto=format&w=1600" alt=""></div>
+      </div>
+      <figure><label class="zoom" for="z3"><img src="https://ph-files.imgix.net/8825e809-65dc-490e-9702-8190c678a613.png?auto=format&w=800" alt=""></label><figcaption>评分侧：这次运行风险分 108，判为 Critical；右边汇总成功率 75%、典型耗时 8m25s、24 小时内失败 3 次　<a class="zoomlink" href="https://ph-files.imgix.net/8825e809-65dc-490e-9702-8190c678a613.png?auto=format">原图 ↗</a></figcaption></figure>
+      <input type="checkbox" id="z3" class="lb-toggle">
+      <div class="lb">
+        <div class="lb-bar">
+          <label class="x" for="z3">✕ 关闭</label>
+          <span class="tip">拖动查看细节</span>
+          <a href="https://ph-files.imgix.net/8825e809-65dc-490e-9702-8190c678a613.png?auto=format">原图 ↗</a>
+        </div>
+        <div class="lb-scroll"><img src="https://ph-files.imgix.net/8825e809-65dc-490e-9702-8190c678a613.png?auto=format&w=1600" alt=""></div>
+      </div>
     </div>
     <p class="ph-meta"><span class="topics">SaaS · Developer Tools · Artificial Intelligence</span><span class="votes">580 票</span></p>
 
@@ -287,7 +345,9 @@
         <p class="redact"><span class="w">你的 eval 集只测了你自己挑的那些输入</span>，<span class="w">抽样只看了 1%</span>，<span class="w">真正的失败藏在没人看过的那些运行里</span>。</p>
         <div class="more">
           <p>他专门做了一张三栏对比图来讲这件事：</p>
-          <a class="zoom" href="https://ph-files.imgix.net/e43c0263-e8df-4697-a2b2-7817d04a2d57.png?auto=format"><img class="evidence" src="https://ph-files.imgix.net/e43c0263-e8df-4697-a2b2-7817d04a2d57.png?auto=format&w=800" alt="THE PROBLEM 对比图"></a>
+          <label class="zoom" for="z4"><img class="evidence" src="https://ph-files.imgix.net/e43c0263-e8df-4697-a2b2-7817d04a2d57.png?auto=format&w=800" alt="THE PROBLEM 对比图"></label>
+          <input type="checkbox" id="z4" class="lb-toggle">
+          <div class="lb"><div class="lb-bar"><label class="x" for="z4">✕ 关闭</label><span class="tip">拖动查看细节</span><a href="https://ph-files.imgix.net/e43c0263-e8df-4697-a2b2-7817d04a2d57.png?auto=format">原图 ↗</a></div><div class="lb-scroll"><img src="https://ph-files.imgix.net/e43c0263-e8df-4697-a2b2-7817d04a2d57.png?auto=format&w=1600" alt=""></div></div>
           <p style="margin:.3rem 0 .6rem"><a class="zoomlink" href="https://ph-files.imgix.net/e43c0263-e8df-4697-a2b2-7817d04a2d57.png?auto=format">原图 ↗</a></p>
           <p class="quote">An eval set scores the inputs you chose. Sampling scores a fraction of the rest. Production failures live in the runs nobody looked at.</p>
           <p>还搬了外部数字加压：Gartner 预测 2027 年 40%+ 的 agentic AI 项目会被砍掉。</p>
@@ -304,7 +364,9 @@
         <p><strong>第二层 · 首评里的划界句</strong></p>
         <p class="quote">observe, evaluate, act, all inside the same run</p>
         <p><strong>第三层 · 首图</strong></p>
-        <a class="zoom" href="https://ph-files.imgix.net/a3db6429-c30c-4462-a6ff-d3896ad6d2c5.png?auto=format"><img class="evidence" style="margin-top:0" src="https://ph-files.imgix.net/a3db6429-c30c-4462-a6ff-d3896ad6d2c5.png?auto=format&w=800" alt="品牌封面图"></a>
+        <label class="zoom" for="z5"><img class="evidence" src="https://ph-files.imgix.net/a3db6429-c30c-4462-a6ff-d3896ad6d2c5.png?auto=format&w=800" alt="品牌封面图"></label>
+          <input type="checkbox" id="z5" class="lb-toggle">
+          <div class="lb"><div class="lb-bar"><label class="x" for="z5">✕ 关闭</label><span class="tip">拖动查看细节</span><a href="https://ph-files.imgix.net/a3db6429-c30c-4462-a6ff-d3896ad6d2c5.png?auto=format">原图 ↗</a></div><div class="lb-scroll"><img src="https://ph-files.imgix.net/a3db6429-c30c-4462-a6ff-d3896ad6d2c5.png?auto=format&w=1600" alt=""></div></div>
           <p style="margin:.3rem 0 .6rem"><a class="zoomlink" href="https://ph-files.imgix.net/a3db6429-c30c-4462-a6ff-d3896ad6d2c5.png?auto=format">原图 ↗</a></p>
       </div>
       <input type="checkbox" id="r2" class="reveal">
