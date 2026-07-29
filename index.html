@@ -101,7 +101,14 @@
   }
   .repo-meta { margin: .2rem 0 0; font: 400 .75rem/1.6 var(--mono); color: var(--muted); }
   .streak { color: var(--signal); }
-  .repo-note { margin: .4rem 0 0; font-size: .9375rem; }
+  .repo-note { margin: .6rem 0 0; font-size: .9375rem; }
+  .repo-note dt {
+    font: 600 .7rem/1.8 var(--mono);
+    letter-spacing: .1em; color: var(--muted);
+    text-transform: uppercase;
+  }
+  .repo-note dd { margin: 0 0 .5rem; }
+  .repo-note dd:last-child { margin-bottom: 0; }
 
   /* ── Product Hunt ───────────────────── */
   .drill {
@@ -405,14 +412,18 @@
   </section>
 
   <section class="pane pane-gh">
-    <p class="pane-head">今天涨得最快的五个，扫一眼就行。</p>
+    <p class="pane-head">今天这一榜 AI 相关占三席——虚拟伴侣、多模型统一接口、编码 agent 工程系统；另外两席是把重型桌面软件搬进浏览器（3D 建筑编辑器），和榜上唯一的十五年老项目 Jenkins。</p>
         <article class="repo">
       <div class="repo-top">
         <a class="repo-name" href="https://github.com/pascalorg/editor">pascalorg/editor</a>
         <span class="delta">+341</span>
       </div>
       <p class="repo-meta">TypeScript · 总 19,091 · 建库 2025-10</p>
-      <p class="repo-note">浏览器里做 3D 建筑设计，做完直接出链接分享。冲的是 SketchUp 那类要装客户端的场景。</p>
+      <dl class="repo-note">
+        <dt>项目定位</dt><dd>浏览器里的 3D 建筑编辑器，做完直接出链接分享。</dd>
+        <dt>核心功能</dt><dd>React Three Fiber + WebGPU 渲染。Turborepo monorepo 拆成四个可独立安装的 npm 包：<code>core</code>（节点 schema、Zustand 场景状态、空间查询、事件总线）、<code>viewer</code>（渲染运行时）、<code>editor</code>（编辑工具与 UI）、<code>nodes</code>（内置节点定义）。viewer 能单独嵌进自己的 React 应用。</dd>
+        <dt>值得关注</dt><dd>把渲染运行时和编辑器拆成独立发包，说明它想当的不只是一个工具，而是别人产品里的 3D 底座。直接对着 SketchUp 那类要装客户端的场景打。</dd>
+      </dl>
     </article>
     <article class="repo">
       <div class="repo-top">
@@ -420,7 +431,11 @@
         <span class="delta">+180</span>
       </div>
       <p class="repo-meta">Java · 总 26,164 · 建库 2010-11</p>
-      <p class="repo-note">老牌 CI/CD 服务器，2010 年的项目。自己机器上跑流水线调度，插件生态是它最难被替掉的部分。</p>
+      <dl class="repo-note">
+        <dt>项目定位</dt><dd>老牌自托管 CI/CD 服务器。</dd>
+        <dt>核心功能</dt><dd>流水线调度 + pipelines-as-code（Groovy），插件生态是它最难被替掉的部分。</dd>
+        <dt>值得关注</dt><dd>榜上唯一的十五年老项目。+180 对一个 26k star 的老库属于日常波动，看不出特别动作——<strong>我没查到它今天涨星的具体原因</strong>，这类老库上榜多半是发版或安全公告带量，要确认得自己去看 release 页。</dd>
+      </dl>
     </article>
     <article class="repo">
       <div class="repo-top">
@@ -428,7 +443,11 @@
         <span class="delta">+797</span>
       </div>
       <p class="repo-meta">TypeScript · 总 45,038 · 建库 2024-12</p>
-      <p class="repo-note">自托管的 AI 虚拟伙伴：Live2D/VRM 形象加实时语音，还能自己去玩 Minecraft 和 Factorio。仓库简介里写的目标是对标 Neuro-sama。</p>
+      <dl class="repo-note">
+        <dt>项目定位</dt><dd>自托管的 AI 虚拟伴侣框架，README 明写目标是 re-creating Neuro-sama。</dd>
+        <dt>核心功能</dt><dd>实时语音对话；VRM / Live2D 形象；能自己去玩 Minecraft 和 Factorio；Web / macOS / Windows 三端都有安装包；文档做了 8 种语言。</dd>
+        <dt>值得关注</dt><dd>自托管意味着数据不出本地，这是它对着云端 AI 陪伴产品打的差异点。三端安装包加 8 语言文档说明它在认真做分发，不是玩票仓库。</dd>
+      </dl>
     </article>
     <article class="repo">
       <div class="repo-top">
@@ -436,7 +455,11 @@
         <span class="delta">+62</span>
       </div>
       <p class="repo-meta">Python · 总 15,773 · 建库 2024-06</p>
-      <p class="repo-note">一层统一接口把各家大模型 API 抹平，换供应商只改一个字符串。Andrew Ng 的项目。</p>
+      <dl class="repo-note">
+        <dt>项目定位</dt><dd>统一多家大模型 API 的 Python 库，Andrew Ng 的项目。</dd>
+        <dt>核心功能</dt><dd>两层结构。下层 Chat Completions API 用 OpenAI 风格接口抹平 OpenAI / Anthropic / Google / Mistral / HuggingFace / AWS / Cohere / Ollama / OpenRouter，换供应商只改一个字符串；上层 Agents API 挂 Python 函数当工具、跑多轮循环、接现成 toolkit（files / git / shell）或任意 MCP server，并用 tool policy 管控。</dd>
+        <dt>值得关注</dt><dd>它的桌面产品 <strong>OpenWorker 已经拆到独立仓库</strong>，README 里标注本仓库的 <code>platform/</code> 只是快照、将来会删。等于 aisuite 正在把自己收回成纯底层库、把应用层剥出去——这个动作比 star 数值得看。</dd>
+      </dl>
     </article>
     <article class="repo">
       <div class="repo-top">
@@ -444,7 +467,11 @@
         <span class="delta">+636</span>
       </div>
       <p class="repo-meta">JavaScript · 总 235,121 · 建库 2026-01</p>
-      <p class="repo-note">给 Claude Code / Codex / Cursor 这类编码 agent 配 skills、记忆和安全策略的框架。<strong>建库半年 23.5 万星、3.6 万 fork</strong>——这个体量在 GitHub 上属最头部那几个，和它 6 个月的年龄对不上，值得自己点进去看看是真需求还是另有原因。</p>
+      <dl class="repo-note">
+        <dt>项目定位</dt><dd>给编码 agent（Claude Code / Codex / Cursor 等 7 个 harness）加一套工程系统。</dd>
+        <dt>核心功能</dt><dd>让 agent 先规划再动手、改完跑测试验证、换个干净上下文自我 review、记住要点、把重复干成的活沉淀为可复用 skill 和 workflow。npm 包 <code>ecc-universal</code> / <code>ecc-agentshield</code> 加一个 GitHub App；OSS 部分 MIT 永久免费，ECC Pro 是给私有仓库的托管服务，$19/seat/月。</dd>
+        <dt>值得关注</dt><dd>两处反常值得先想清楚再往 agent 里装：① 建库半年 23.5 万星、3.6 万 fork，这个体量在 GitHub 上属最头部那几个，和 6 个月的年龄对不上；② README 顶部专门挂了一条警告，说只能从官方渠道安装、第三方镜像可能带恶意代码——一个半年新库需要写这种声明，本身就是信号。</dd>
+      </dl>
     </article>
   </section>
 

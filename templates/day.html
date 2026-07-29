@@ -22,17 +22,34 @@
   上下排版会暗示先后和层级，让 GitHub 段变成「翻过去才能开始训练」的前言。
   标签页让两者平级，各自独立。默认落在 PRODUCT HUNT——那是这个项目存在的理由。
 
-  GITHUB_ROWS 每个项目一块：
+  {{GH_SUMMARY}} —— 一到两句，说清今天这一榜的构成/规律（例：AI 相关占三席，
+    另外两席是把重型桌面软件搬进浏览器和唯一的十五年老项目）。不要写「值得开发者重点关注」。
+
+  GITHUB_ROWS 每个项目一块，**三段式**：
     <article class="repo">
       <div class="repo-top">
         <a class="repo-name" href="URL">owner/name</a><span class="delta">+1,204</span>
       </div>
       <p class="repo-meta">TypeScript · 总 34.1k · 建库 2024-12 · <span class="streak">连续 3 天</span></p>
-      <p class="repo-note">一句中文点评。</p>
+      <dl class="repo-note">
+        <dt>项目定位</dt><dd>一句话说清它是什么、给谁用</dd>
+        <dt>核心功能</dt><dd>**具体到技术栈和能力清单**，必须来自 README</dd>
+        <dt>值得关注</dt><dd>这个项目上有什么别人不会注意到的东西</dd>
+      </dl>
     </article>
-    点评要能让人判断「要不要点进去」：它是什么、给谁用。**不写「值得关注」这类空话，
-    不复述 README**。数据反常时直接说出来（例：半年 23.5 万星、3.6 万 fork，增速属头部量级），
-    这比任何形容词都有用。streak 只在连续 ≥2 天时出现。
+    streak 只在连续 ≥2 天时出现。
+
+    「核心功能」必须**读过 README 再写**，具体到技术选型和能力清单——
+    「基于 Tauri + MapLibre + DuckDB-WASM，支持 3D 可视化、SQL 空间分析」这种密度才算合格，
+    「功能强大、生态丰富」这种一律不要。
+
+    「值得关注」写**从 README 里挖出来、扫榜看不到的东西**。三个真实例子：
+      · aisuite 的桌面产品 OpenWorker 已拆到独立仓库，README 标注 `platform/` 将来会删——
+        等于它正在把自己收回成纯底层库
+      · ECC 建库半年 23.5 万星 3.6 万 fork，和 6 个月年龄对不上；README 顶部还挂着
+        「只从官方渠道安装，第三方镜像可能带恶意代码」的警告
+      · Jenkins 是榜上唯一的十五年老项目，+180 对 26k star 的老库是日常波动，
+        看不出特别动作——**没查清就说没查清，不要替它编一个上榜理由**
 
   PH_BRIEF —— 第 0 层，全部公开，**一个字都不涂黑**：
     <div class="brief">
@@ -181,7 +198,14 @@
   }
   .repo-meta { margin: .2rem 0 0; font: 400 .75rem/1.6 var(--mono); color: var(--muted); }
   .streak { color: var(--signal); }
-  .repo-note { margin: .4rem 0 0; font-size: .9375rem; }
+  .repo-note { margin: .6rem 0 0; font-size: .9375rem; }
+  .repo-note dt {
+    font: 600 .7rem/1.8 var(--mono);
+    letter-spacing: .1em; color: var(--muted);
+    text-transform: uppercase;
+  }
+  .repo-note dd { margin: 0 0 .5rem; }
+  .repo-note dd:last-child { margin-bottom: 0; }
 
   /* ── Product Hunt ───────────────────── */
   .drill {
@@ -363,7 +387,7 @@
   </section>
 
   <section class="pane pane-gh">
-    <p class="pane-head">今天涨得最快的五个，扫一眼就行。</p>
+    <p class="pane-head">{{GH_SUMMARY}}</p>
     {{GITHUB_ROWS}}
   </section>
 
