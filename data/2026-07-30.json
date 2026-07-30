@@ -1,0 +1,58 @@
+{
+  "issue": 2,
+  "date": "2026-07-30",
+  "ph_day": null,
+  "fault": "Product Hunt API（api.producthunt.com）与论坛数据源（Reddit、hn.algolia.com、news.ycombinator.com）本次运行均在网络出口层被拦截（非限流，是基础设施策略拒绝 CONNECT），已确认非临时性、重试无效。PH 段与热议段本期整块跳过，未编造任何数据。ph_day 留空：determin D 所需的 PH GraphQL 查询本身无法发出。归档路径本期使用发布日 2026-07-30 代替 D。",
+  "github": [
+    {
+      "repo": "moeru-ai/airi",
+      "lang": "TypeScript",
+      "stars_total": 45713,
+      "stars_today": 682,
+      "streak": 2,
+      "url": "https://github.com/moeru-ai/airi",
+      "note": "开源自托管 AI 虚拟伴侣/数字生命框架，目标是复刻 Neuro-sama；基于 Vue.js/TypeScript + WebGPU/WebAudio/WebAssembly 构建，桌面端用 Electron 并可调用 CUDA/Metal 加速；接入 Ollama、OpenAI 兼容 API 等多家 LLM，多供应商语音合成（ElevenLabs/Azure/Kokoro 等），支持 Live2D/VRM 模型驱动，可玩 Minecraft 和 Factorio（WIP）。值得关注：项目坚持 Web 优先架构，连 PWA 移动端都做了，还孵化出 MCP Launcher（定位「MCP 版的 Ollama」）这样的周边子项目。"
+    },
+    {
+      "repo": "affaan-m/ECC",
+      "lang": "JavaScript",
+      "stars_total": 235958,
+      "stars_today": 857,
+      "streak": 2,
+      "url": "https://github.com/affaan-m/ECC",
+      "note": "给 Claude Code / Codex / Kimi Code 等编码 agent 挂载工程化工作流层：67 个专职 agent、281 个 skills、94 个命令 shim，覆盖 plan→test→implement→review→verify→remember→improve 全流程，自带 AgentShield 扫描 prompt/hook/MCP 配置/权限/密钥。值得关注：README 顶部持续挂着「只从官方渠道安装，第三方镜像可能带恶意代码」的安全警告，而这个库半年内涨到 23.6 万星、3.6 万 fork——增速与项目年龄的对应关系没有查实，如实说没查清，不替它编理由。"
+    },
+    {
+      "repo": "huggingface/speech-to-speech",
+      "lang": "Python",
+      "stars_total": 8188,
+      "stars_today": 827,
+      "streak": 1,
+      "url": "https://github.com/huggingface/speech-to-speech",
+      "note": "低延迟、全模块化的语音 agent 流水线：VAD → STT → LLM → TTS，对外暴露 OpenAI Realtime 兼容 WebSocket API，每个组件可替换；默认用 Parakeet TDT 做本地 STT、Qwen3-TTS 做本地语音输出，LLM 槽兼容 OpenAI 协议，可接 HF Inference Providers 或本地 vLLM / llama.cpp。值得关注：这不是 demo 仓库，README 明确写它已经是数千台 Hugging Face Reachy Mini 机器人的生产对话后端。"
+    },
+    {
+      "repo": "1jehuang/jcode",
+      "lang": "Rust",
+      "stars_total": 13848,
+      "stars_today": 640,
+      "streak": 1,
+      "url": "https://github.com/1jehuang/jcode",
+      "note": "对标 Claude Code / Cursor Agent 的编码 agent CLI，主打多会话并行下的资源效率；agent memory 做成图谱，按语义漂移/固定轮数/会话结束触发提取并存入 memory graph，同时提供显式记忆检索工具和跨会话 RAG 搜索；side panel 可渲染 mermaid 图或当 diff 查看器；agent 可自主生成 swarm，把主 agent 变成协调者、子 agent 当 worker。值得关注：README 直接放了对 Claude Code、Cursor Agent 的实测延迟与内存对比表（例如声称单会话 RAM 比 Claude Code 低 21.5 倍），是主动对标竞品打榜的定位，不是笼统宣称「更快更轻」。"
+    },
+    {
+      "repo": "deepfakes/faceswap",
+      "lang": "Python",
+      "stars_total": 56652,
+      "stars_today": 166,
+      "streak": 1,
+      "url": "https://github.com/deepfakes/faceswap",
+      "note": "用深度学习做人脸替换的开源工具，十年老项目仍在维护；核心是 Extract（抽取人脸）→ Train（训练模型）→ Convert（合成输出）三段式流水线，配 GUI 操作，README 里专门有一节「关于机器学习」科普神经网络原理。值得关注：README 开篇是给 Patreon/PayPal 支持者的通知，还有一整节「Manifesto」专门声明「FaceSwap 有合乎伦理的用途」——一个换脸工具主动做伦理免责声明，说明团队长期在应对滥用争议。"
+    }
+  ],
+  "gh_scan_total": 17,
+  "gh_ai_total": 12,
+  "producthunt": null,
+  "runners_up": [],
+  "forum": []
+}
