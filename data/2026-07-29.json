@@ -1,0 +1,259 @@
+{
+  "issue": 3,
+  "date": "2026-07-30",
+  "ph_day": "2026-07-29",
+  "fault": "本次运行中 GitHub Trending 直接抓取（github.com）、Product Hunt 官网跳转与图片 CDN（www.producthunt.com / ph-files.imgix.net）、以及测试用的任意第三方站点均被本环境的网络出口策略拒绝 CONNECT（403 policy denial，非限流）。GitHub Trending 已用 WebFetch 兜底，抓到 14 条（完整榜单本应约 25 条）。PH 官网定价与全部产品截图本期未能取到，第 0 层图库、②的封面图对比与题面配图均从略，仅基于 PH API 返回的文字数据完成四问，未编造任何图片说明或定价数字。",
+  "gh_scan_total": 14,
+  "gh_ai_total": 6,
+  "github": [
+    {
+      "repo": "huggingface/speech-to-speech",
+      "lang": "Python",
+      "stars_total": 8299,
+      "stars_today": 627,
+      "streak": 1,
+      "url": "https://github.com/huggingface/speech-to-speech",
+      "note": "低延迟、模块化的语音 agent 流水线，对外暴露 OpenAI Realtime 兼容 WebSocket API。 VAD → STT → LLM → TTS 四段式流水线，每个环节可独立替换；默认本地跑 STT/TTS 模型，LLM 槽位兼容 OpenAI 协议，可接 HF Inference Providers 或本地 vLLM / llama.cpp。"
+    },
+    {
+      "repo": "microsoft/AI-For-Beginners",
+      "lang": "Jupyter Notebook",
+      "stars_total": 53425,
+      "stars_today": 115,
+      "streak": 1,
+      "url": "https://github.com/microsoft/AI-For-Beginners",
+      "note": "面向零基础的 12 周 24 课 AI 入门课程，配 Jupyter Notebook 实操。 覆盖神经网络、计算机视觉、NLP、AI 伦理，用 PyTorch/TensorFlow 写实操 lab，配测验，翻译超过 50 种语言。"
+    },
+    {
+      "repo": "different-ai/openwork",
+      "lang": "TypeScript",
+      "stars_total": 18406,
+      "stars_today": 916,
+      "streak": 1,
+      "url": "https://github.com/different-ai/openwork",
+      "note": "让多个 AI agent（Claude Code / Cursor / Codex 等）共享、复用同一套技能和已连接服务的桌面应用。 只暴露 search_capabilities 和 execute_capability 两个工具，agent 借此调用 Google Workspace / Microsoft 365 等已连接服务；面向团队的 OpenWork Den 负责统一管理成员权限、模型供给和技能发布策略。"
+    },
+    {
+      "repo": "mvanhorn/last30days-skill",
+      "lang": "Python",
+      "stars_total": 55294,
+      "stars_today": 377,
+      "streak": 1,
+      "url": "https://github.com/mvanhorn/last30days-skill",
+      "note": "给 AI agent 用的一个「调研技能」：跨 Reddit / X / YouTube / HN / Polymarket 等平台抓取热度数据，汇总成有引用来源的调研摘要。 按互动量（点赞、播放、预测市场赔率）排序而非编辑推荐；自动解析相关账号、subreddit、话题标签，多源并发查询、去重合并同一事件的不同报道；Reddit/HN/Polymarket/GitHub 部分不需要 API key 就能直接用。"
+    },
+    {
+      "repo": "ChromeDevTools/chrome-devtools-mcp",
+      "lang": "TypeScript",
+      "stars_total": 47914,
+      "stars_today": 73,
+      "streak": 1,
+      "url": "https://github.com/ChromeDevTools/chrome-devtools-mcp",
+      "note": "给 AI coding agent 用的 Chrome DevTools：一个 MCP server，让 agent 能操作和检查一个真实运行的 Chrome。 基于 Puppeteer 做自动化操作，用 Chrome DevTools trace 做性能分析，另外提供网络请求检查、console 消息追踪等调试能力。"
+    }
+  ],
+  "forum": [
+    {
+      "title": "AI 头部创业公司几乎不发论文了",
+      "url": "https://news.ycombinator.com/item?id=49103285",
+      "source": "559 分 · 评论 291",
+      "summary": "评论区吵的是这算不算忘恩负义——不少人指出如今的 AI 浪潮本就是站在 Google 当年公开发表的 Transformer 论文上做起来的，现在却不再回馈社区，也有人反驳说这只是「守门人不满别人不用再过闸」；还有认真读原文的人指出，文章点名的其实是 OpenAI、Anthropic、Hugging Face 这几家还在坚持发论文，标题本身有点找茬。"
+    },
+    {
+      "title": "专钓 LLM 的蜜罐网站",
+      "url": "https://news.ycombinator.com/item?id=49104117",
+      "source": "342 分 · 评论 94",
+      "summary": "站点故意放诱导性文字，专门等着访问它的 AI agent 上钩去执行奇怪指令（比如「下单做变身手术」），已经有人贴出被骗 agent 的真实对话记录当乐子看；评论区也有人较真问「这凭什么算蜜罐」，没有统一答案。"
+    },
+    {
+      "title": "生产力幻觉",
+      "url": "https://news.ycombinator.com/item?id=49104335",
+      "source": "305 分 · 评论 135",
+      "summary": "文章说「把某个技能塞进你的 agent 工作流就能天翻地覆」这种鼓吹更像一种爱好者自嗨（拿改装车排气管作类比）；评论区分成两派——一部分人共鸣说这跟宗教式加班文化是一路货，另一部分人反驳说自己确实靠 AI 把积压任务清得快多了，不能说是幻觉。"
+    },
+    {
+      "title": "一个同时管理 Claude Code / Codex / OpenCode 的 Tmux 终端工具",
+      "url": "https://news.ycombinator.com/item?id=49107749",
+      "source": "58 分 · 评论 40",
+      "summary": "评论区最热闹的话题是「这跟 agent-deck / Superlogical / Herdr 这些已有的同类工具有什么区别」——这类「agent 会话管理器」最近扎堆冒出来，好几个人留言说自己也在做差不多的东西。"
+    },
+    {
+      "title": "GPT-5.6 Sol 帮自己优化了推理效率",
+      "url": "https://www.reddit.com/r/singularity/comments/1va9qu0/gpt56_sol_helped_optimize_its_own_inference/",
+      "source": "r/singularity 日榜 #1 · 评论 159",
+      "summary": "评论区讨论这是不是意味着此前说的「AI 实习生」式递归自我提升（RSI）已经不是科幻；有人担心效率提升会不会指数级复合下去，也有人从能耗物理下限的角度泼冷水，说提升迟早会撞墙变慢。"
+    },
+    {
+      "title": "Lilian Weng 回归 OpenAI 做递归自我提升研究",
+      "url": "https://www.reddit.com/r/OpenAI/comments/1va3zfe/lilian_weng_returns_to_openai_for_recursive/",
+      "source": "r/OpenAI 日榜 #5 · 评论 1",
+      "summary": "帖子本身信息量有限，评论也只有一条，提到她此前离职/休假的说法是健康原因，回归本身没有更多细节展开——只写帖子在说什么，没编评论区的观点。"
+    },
+    {
+      "title": "又拿「想想孩子」当理由对付开源 AI",
+      "url": "https://www.reddit.com/r/LocalLLaMA/comments/1vapsbz/think_of_the_children_another_excuse_for_them_to/",
+      "source": "r/LocalLLaMA 日榜 #3 · 评论 190",
+      "summary": "帖子源头是 Hugging Face 被曝滥用于生成儿童相关不良内容的报道；评论区两极——一部分人说互联网本就有人拿来干违法的事，不能因此把整个开源 AI 都禁了，也有人贴梗图说「这套说辞从 90 年代就开始讲了」。"
+    },
+    {
+      "title": "买张 5090 是为了省 API 费，结果攒成了迷你数据中心",
+      "url": "https://www.reddit.com/r/LocalLLaMA/comments/1vacf09/bought_a_5090_to_escape_api_fees_ended_up/",
+      "source": "r/LocalLLaMA 日榜 #7 · 评论 188",
+      "summary": "评论区全是同好在晒装备——有人说自己也是先买一张 5090 跑 27B 模型本地微调，后来嫌显存不够又加了两张 RTX 6000 Pro；还有人安利小众推理框架能让多张卡各自跑不同模型，但也有人吐槽对方官网只谈 AI 成本焦虑，不谈具体怎么解决。"
+    },
+    {
+      "title": "一个专门给模型「安全性」（而非能力）排名的榜单",
+      "url": "https://www.reddit.com/r/MachineLearning/comments/1vaargb/ai_security_leaderboard_benchmarking_model/",
+      "source": "r/MachineLearning 日榜 #4 · 评论 2",
+      "summary": "作者（far.ai 团队）现身说做这个是因为市面上模型能力榜单一大堆，但安全性排名基本是空白；评论区有人质疑数字是不是编的，作者回应说团队和域名（far.ai）是真的，暗示确实投入了不小的测试成本。"
+    },
+    {
+      "title": "这张图总结了我用 Opus 5 对比 Fable 5 的体验",
+      "url": "https://www.reddit.com/r/ClaudeAI/comments/1va3521/this_sums_up_my_experince_with_opus_5_vs_fable_5/",
+      "source": "r/ClaudeAI 日榜 #7 · 评论 54",
+      "summary": "帖子本身像是梗图对比，评论区意外跑题变成「人肉鉴定楼主是不是用 AI 写的这条帖子」的整活现场；认真讨论的部分里有人说自己拿 Opus 5 跑一个 17 步的大任务，两天才跑到第 16 步，中途会自己发现 bug 返工——「实现能力强但特别话痨」。"
+    }
+  ],
+  "producthunt": {
+    "id": "1200627",
+    "name": "Prelint",
+    "slug": "prelint",
+    "tagline": "Prevent product drift in AI-written code",
+    "votes": 562,
+    "topics": [
+      "Software Engineering",
+      "Developer Tools",
+      "Artificial Intelligence"
+    ],
+    "url": "https://www.producthunt.com/products/prelint",
+    "real_website": "本期未取到（跳转域名与图片 CDN 均被网络出口策略拦截；首评中提到 prelint.com，但直连该域名同样被拒绝，未能核实）",
+    "what_it_is": "盯着 AI 编码 agent 产出代码的审查工具：每次改动都拿去跟团队的 ADR、文档、以往的技术决定做比对，发现违背已定决定就在合并前标出来。",
+    "who": "用 AI coding agent 大量写代码、想守住架构和产品决策不被 agent 悄悄推翻的研发团队。",
+    "gallery": [],
+    "problem_image": null,
+    "cover_image": null,
+    "framing": "他把「代码审查」框成了「产品决策正在被悄悄篡改」的一场进行中的事故——重点不是代码写得对不对，是团队正在失去对自己产品的控制权。",
+    "consistency": "两层能对上的都对齐，没有互相打架的地方——但这次只能核对两层，封面图那层缺失，不能算进这次的判断。",
+    "pricing": "用量制的 credits——但一个月多少钱、一次审查消耗多少 credits，官网定价页这次没能拿到，不确定。",
+    "comments_verdict": "买家信号在 #4、#5、#12——都带着自己踩过的具体场景；根基质疑在 #3——挑的是「没人重新核查的条目反而被信得最狠」这个致命点；带 congrats 的几条都是噪音，跳过不用读。",
+    "comments_raw": [
+      {
+        "n": 1,
+        "body": "Congrats on a successful launch!",
+        "kind": "noise"
+      },
+      {
+        "n": 2,
+        "body": "product drift is the real silent killer with ai code 👀 how do you keep false positves low?",
+        "kind": "scope"
+      },
+      {
+        "n": 3,
+        "body": "The decision ledger is the right object, and it inherits the failure mode of every artifact that becomes authoritative: the entries nobody re-checks are the ones everybody trusts most. […] So: does an entry ever get demoted, and what evidence demotes it?",
+        "kind": "root_doubt"
+      },
+      {
+        "n": 4,
+        "body": "\"Good code that quietly builds the wrong product\" is uncomfortably specific to something I have sitting in my own guidelines file right now […] Question: when Prelint flags a decision, does it also catch pre-existing drift already merged, or only new changes in the current PR?",
+        "kind": "buy_signal"
+      },
+      {
+        "n": 5,
+        "body": "Super interesting. I'm one person shipping with Claude Code daily. […] Two from this month. A task in my tracker carried an explicit \"do not do X without first verifying Y\" warning. I wrote the checklist for that exact task without reading its notes […] So my question: does it handle a document contradicting the artifact it describes?",
+        "kind": "buy_signal"
+      },
+      {
+        "n": 6,
+        "body": "AI-generated code will only become more common, so governance tools like Prelint are going to be must-have!",
+        "kind": "empathy"
+      },
+      {
+        "n": 7,
+        "body": "Congrats on shipping. Whats the roadmap looking like?",
+        "kind": "noise"
+      },
+      {
+        "n": 8,
+        "body": "Congrats Wojtek. Did you build this out of your own frustration or what inspired to think of solving this problem?",
+        "kind": "noise"
+      },
+      {
+        "n": 9,
+        "body": "Are you primarily targeting product and dev teams?",
+        "kind": "scope"
+      },
+      {
+        "n": 10,
+        "body": "Congratulations. Does Prelint suggest the closest approved design pattern when it detects a violation?",
+        "kind": "scope"
+      },
+      {
+        "n": 11,
+        "body": "When you build with AI, product consistency tends to erode gradually. Tools like Prelint can help stop that before it becomes expensive. Congrats on the launch.",
+        "kind": "empathy"
+      },
+      {
+        "n": 12,
+        "body": "the \"decision ledger vs check code against docs\" framing is what actually clicks for me. i keep a section in my own CLAUDE.md that's a manual, extremely low-tech version of this […] question on an existing repo: does the ledger backfill decisions from git history, or does it only start learning from the point you connect it?",
+        "kind": "buy_signal"
+      },
+      {
+        "n": 13,
+        "body": "Prelint is interesting because it seems to be focusing on the product intent. […] catching it soon from drifting by a tool is a great idea indeed!!",
+        "kind": "empathy"
+      },
+      {
+        "n": 14,
+        "body": "Being a SaaS founder, I love this idea. Preventing product drift feels just as important as preventing bugs. 👏",
+        "kind": "empathy"
+      },
+      {
+        "n": 15,
+        "body": "Congrats on the launch! I feel like the opposite is often the case where the ADR/docs etc are out of date and stale. How do you trust the materials it is basing the drift detection on?",
+        "kind": "root_doubt"
+      },
+      {
+        "n": 16,
+        "body": "Congrats on the launch guys! What kind of integrations do you guys have?",
+        "kind": "noise"
+      },
+      {
+        "n": 17,
+        "body": "When Prelint flags a conflict, can you jump straight to the exact source and version behind that decision? That would make it easier to tell a real conflict from stale context.",
+        "kind": "scope"
+      },
+      {
+        "n": 18,
+        "body": "AI can generate code quickly, but making sure it stays aligned with product decisions is the harder problem. Probably the first product on PH which is tackling this issue.",
+        "kind": "empathy"
+      },
+      {
+        "n": 19,
+        "body": "The interesting bet here isn't catching bugs. It's catching code that works but quietly contradicts a decision the team made six months ago, and nobody has a linter for that. How much ADR discipline does a team need before Prelint has enough to check against?",
+        "kind": "scope"
+      }
+    ]
+  },
+  "runners_up": [
+    {
+      "name": "SoundGate Guitar",
+      "tagline": "AI Music Tutor that gives real-time feedback on your playing",
+      "votes": 437,
+      "topics": [
+        "Music",
+        "Education",
+        "Artificial Intelligence"
+      ]
+    },
+    {
+      "name": "Denovo",
+      "tagline": "Turn your vibe-coded app into paying customers",
+      "votes": 338,
+      "topics": [
+        "Sales",
+        "Marketing",
+        "Software Engineering"
+      ]
+    }
+  ]
+}
