@@ -5,6 +5,10 @@
 > 本机备份在 keychain：`ph-developer-token`、`daily-radar-gh-pat`、`daily-radar-feishu-webhook`。
 >
 > cron：`0 12 * * *`（UTC）= 每天 20:00 Asia/Shanghai
+>
+> routine 配置已挂 sources（2026-08-01）：会话启动时本仓库已 checkout 在工作目录，
+> 读历史/模板走本地文件，发布走 `git push`。**云端沙箱的网络策略挡 `api.github.com`、
+> `www.producthunt.com`、`captain-young.github.io`（实测 2026-07-31），不要依赖这些域名。**
 
 ---
 
@@ -66,6 +70,8 @@ curl -s -X POST https://api.producthunt.com/v2/api/graphql \
 - **图片一律出两个 URL**：页面里的 `src` 用 `<url>&w=800`，外层 `<a class="zoom" href>` 用
   **不带 `w` 参数的原图**。实测原图 267KB、`w=800` 27.8KB、`w=1600` 77.3KB——内联用小图省流量，
   点开看原图。控制台截图的小字在手机上不放大根本读不清，而第 0 层全靠看清界面
+- **图片只拼 URL，不要在沙箱里访问 CDN 验证**——PH 图片 CDN 对沙箱是挡的，但读者的浏览器
+  能正常加载。CDN 访问不通 ≠ 图片不可用，照常放进页面
 
 ## 步骤 3 · 跟一跳拿真实官网，找定价
 
@@ -74,7 +80,8 @@ curl -s -o /dev/null -w '%{url_effective}' -L "<website 字段>"
 ```
 
 读官网首页或 `/pricing`，判断**价值单位**：按人 / 按用量 / 按结果 / 一次性。
-**取不到就写「本期未取到官网定价页」，不要编。**
+`www.producthunt.com` 的跳转链对沙箱是挡的——curl 不通就换 **WebFetch** 跟这一跳、读定价页。
+**都取不到就写「本期未取到官网定价页」，不要编。**
 
 ## 步骤 4 · 抓 GitHub Trending，只收 AI 项目
 
@@ -101,11 +108,14 @@ curl 失败或整页解析出 < 10 条时用 WebFetch 兜底。
 
 ## 步骤 5 · 读历史
 
+仓库已 checkout 在工作目录，历史直接读本地（**不要走 `api.github.com`，沙箱挡它**）：
+
 ```bash
-curl -s -H "Authorization: Bearer <<GH_PAT>>" \
-  -H "Accept: application/vnd.github+json" \
-  https://api.github.com/repos/captain-young/daily-radar/contents/data
+ls data/
 ```
+
+找不到 checkout（目录里没有 `data/` 和 `templates/`）就是环境异常：向飞书 webhook 发一条
+`daily-radar 今日 routine 异常：仓库未挂载` 后结束，不要试图绕路。
 
 - 文件数 + 1 = 本期**期号**
 - **记下全部文件名的日期列表**（再加上今天的 D）——步骤 8 重建归档日历页要用
@@ -145,10 +155,7 @@ curl -s "https://hn.algolia.com/api/v1/search?tags=front_page&hitsPerPage=30"
 
 ## 步骤 7 · 生成页面
 
-```bash
-curl -s https://raw.githubusercontent.com/captain-young/daily-radar/main/templates/day.html
-```
-
+模板读本地 `templates/day.html`（checkout 里就有，不用 curl）。
 模板顶部注释里有全部槽位和 markup 契约，严格照它生成，不要改 CSS 和结构。
 
 **收尾两件必做**（都踩过）：① 剥掉模板顶部那段注释；② **全文**检查没有残留 `{{...}}`——
@@ -243,30 +250,28 @@ PH 的 gallery 通常混着三种图，各有归处：
 
 ## 步骤 8 · 发布
 
-四次 `PUT contents`。**覆盖已有文件必须带 `sha`，否则 422**；新文件不带 `sha`。
+在 checkout 里直接写四个文件，一次 git 提交推送。
+**不要用 Contents API（`api.github.com` 被沙箱挡，实测 2026-07-31）。**
+
+- `<D>/index.html`（当期归档）
+- `data/<D>.json`
+- `index.html`（根页 = 最新一期）
+- `archive/index.html`（归档日历页，重建）
 
 **同日重跑保护**：如果 `data/<D>.json` 已存在，说明这一期已经发过——本次是重跑。
-此时期号沿用已存在文件里的 `issue` 值（不要 +1），所有 PUT 都先 GET 拿 `sha` 走覆盖，
-不要按新文件处理。
+期号沿用已存在文件里的 `issue` 值（不要 +1），四个文件直接覆盖。
 
 ```bash
-B64=$(base64 -w0 page.html)      # 云端是 Linux，用 -w0
-
-# 1) 当期归档（新文件，无 sha）：contents/<D>/index.html
-# 2) 数据（新文件，无 sha）    ：contents/data/<D>.json
-# 3) 根页最新一期（已存在）    ：先 GET 拿 sha，再带上 PUT
-SHA=$(curl -s -H "Authorization: Bearer <<GH_PAT>>" \
-  https://api.github.com/repos/captain-young/daily-radar/contents/index.html \
-  | grep -o '"sha":"[^"]*"' | head -1 | cut -d'"' -f4)
-# 4) 归档日历页（已存在）      ：同样先 GET contents/archive/index.html 拿 sha 再 PUT
+git add "<D>/index.html" "data/<D>.json" index.html archive/index.html
+git commit -m "daily-radar 第 <期号> 期 · <D>"
+git push
 ```
 
-归档日历页的生成：
+- push 被拒（non-fast-forward）：`git pull --rebase` 后再推一次
+- push 鉴权失败：改推 `https://captain-young:<<GH_PAT>>@github.com/captain-young/daily-radar.git`
+- 再失败按错误处理表发飞书故障说明，不要发打不开的链接
 
-```bash
-curl -s https://raw.githubusercontent.com/captain-young/daily-radar/main/templates/archive.html
-```
-
+归档日历页模板读本地 `templates/archive.html`。
 按模板顶部契约，用步骤 5 记下的日期列表画月历——新月在前、周一开头、
 首刊到最新之间的断更日标 `miss`、链接绝对路径。收尾和日报页一样：
 剥掉契约注释、全文查 `{{...}}` 残留。
@@ -317,8 +322,9 @@ curl -s -X POST -H 'Content-Type: application/json' \
 | PH API 报错 / token 失效 | GitHub 段照发，PH 段整块换成故障说明。**不要静默跳过** |
 | 定价没拿到 | ③ 的 `.more` 里明说未取到，不要编 |
 | 图分不出类型 | 宁可少放一张，也不要把问题叙事图放进第 0 层 |
-| `PUT contents` 失败 | 飞书消息里直接说页面没更新，**不要发打不开的链接** |
-| 只有归档页 PUT 失败 | 日报照常发飞书，正文末尾加一句「归档页未更新」 |
+| `git push` 失败（rebase、PAT 兜底都试过） | 飞书消息里直接说页面没更新，**不要发打不开的链接** |
+| 只有归档页生成失败 | 其余三个文件照常提交推送，正文末尾加一句「归档页未更新」 |
+| 仓库没挂载进会话 | 发飞书说明后结束，不要绕路走 API |
 | Reddit 整个被限流/挡 | 只用 HN 照常选，`{{FAULT}}` 注明「今日 Reddit 未取到」 |
 | 单帖评论区抓不到 | topic-sum 只写帖子本身在说什么，不编评论区观点 |
 | 所有论坛源全挂 | 热议段整块换故障说明，`{{FAULT}}` 注明。**不要静默跳过** |
