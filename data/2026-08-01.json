@@ -1,0 +1,279 @@
+{
+  "issue": 4,
+  "date": "2026-08-03",
+  "ph_day": "2026-08-01",
+  "fault": "本次运行中 Product Hunt 图片 CDN（ph-files.imgix.net）与官网跳转链（www.producthunt.com/r/…、nudgeforme.com）均被本环境网络出口策略拒绝访问（403/连接被拒），已用 WebFetch/WebSearch 兜底跟官网，但仍未取到定价页与产品截图。第 0 层图库、②的封面图对比、题面配图均从略，③ 的定价判定如实写「未取到」，均未编造任何数据。GitHub Trending 直接 curl 被拦（403），已用 WebFetch 兜底抓到该页前 15 条。",
+  "gh_scan_total": 15,
+  "gh_ai_total": 10,
+  "github": [
+    {
+      "repo": "microsoft/AI-For-Beginners",
+      "lang": "Jupyter Notebook",
+      "stars_total": 59177,
+      "stars_today": 2629,
+      "streak": 1,
+      "url": "https://github.com/microsoft/AI-For-Beginners",
+      "note": "12 周 24 课 AI 入门课程，配 Jupyter Notebook 实操"
+    },
+    {
+      "repo": "lyogavin/airllm",
+      "lang": "Jupyter Notebook",
+      "stars_total": 25732,
+      "stars_today": 819,
+      "streak": 1,
+      "url": "https://github.com/lyogavin/airllm",
+      "note": "让 70B 模型在 4GB 显存上跑推理的引擎"
+    },
+    {
+      "repo": "different-ai/openwork",
+      "lang": "TypeScript",
+      "stars_total": 20355,
+      "stars_today": 916,
+      "streak": 1,
+      "url": "https://github.com/different-ai/openwork",
+      "note": "对标 Claude Cowork 的多 agent 共享技能桌面应用"
+    },
+    {
+      "repo": "microsoft/generative-ai-for-beginners",
+      "lang": "Jupyter Notebook",
+      "stars_total": 114822,
+      "stars_today": 588,
+      "streak": 1,
+      "url": "https://github.com/microsoft/generative-ai-for-beginners",
+      "note": "聚焦生成式 AI/LLM 的 21 课课程"
+    },
+    {
+      "repo": "Panniantong/Agent-Reach",
+      "lang": "Python",
+      "stars_total": 64763,
+      "stars_today": 659,
+      "streak": 1,
+      "url": "https://github.com/Panniantong/Agent-Reach",
+      "note": "给 agent 用的跨平台全网读/搜工具"
+    }
+  ],
+  "forum": [
+    {
+      "title": "卡帕西那道「鹈鹕」评测题，又被吵了一遍",
+      "url": "https://news.ycombinator.com/item?id=49140998",
+      "source": "Hacker News",
+      "rank": null,
+      "comments": 344,
+      "summary": "评论区两派：一派觉得是烧 token 的花活，一派认真讨论指数级进步；有人批评卡帕西在替 Anthropic 打广告，也有人聊真正落地的制造业设计场景。"
+    },
+    {
+      "title": "llama.cpp 给 DeepSeek V4 Flash 加了 MTP/DSpark 支持，但没人测出效果",
+      "url": "https://www.reddit.com/r/LocalLLaMA/comments/1vdhgq9/llamacpp_just_added_mtp_dspark_support_for/",
+      "source": "r/LocalLLaMA",
+      "rank": 3,
+      "comments": 112,
+      "summary": "评论指出 GGUF 还没打包 drafter 模块，「已支持 DSpark」的说法是照抄 DeepSeek 原版卡片；实测者反馈开启参数后没有速度差异。"
+    },
+    {
+      "title": "把 Kimi K3 塞进一颗 8GB 内存的 CPU 里",
+      "url": "https://www.reddit.com/r/LocalLLaMA/comments/1vd874t/i_pushed_kimi_k3_onto_one_cpu_with_8_gb_of_ram/",
+      "source": "r/LocalLLaMA",
+      "rank": 2,
+      "comments": 115,
+      "summary": "讨论跑偏成晒装备——手机跑大模型的动图和各型号手机对比，调性是「能跑但慢到只能看乐子」。"
+    },
+    {
+      "title": "一个未发布的 OpenAI 模型解开了十个数学和理论难题",
+      "url": "https://www.reddit.com/r/OpenAI/comments/1vdrwt1/an_unreleased_openai_model_has_solved_10_major_open_problems_in/",
+      "source": "r/OpenAI",
+      "rank": 2,
+      "comments": 52,
+      "summary": "争论现实意义还是纯炫技，有人拿 AlphaTensor 先例泼冷水，也有人列出纠错码进展的具体收益，讨论延伸到用 AI 做人体模拟。"
+    },
+    {
+      "title": "Claude Code 突然吐出了 Kimi K2 的输出，吓坏一票人",
+      "url": "https://www.reddit.com/r/ClaudeAI/comments/1vdbtzy/claude_code_just_randomly_spat_out_kimi_k2_thinking/",
+      "source": "r/ClaudeAI",
+      "rank": 2,
+      "comments": 90,
+      "summary": "自动生成的 TL;DR：共识是 Claude 没被附体，只是在讨论 Kimi；两种解释是本地文件混入 model card，或训练数据泄漏导致的记忆碎片。"
+    },
+    {
+      "title": "把 Claude 的记忆文件夹改造成一个能查询的数据库",
+      "url": "https://www.reddit.com/r/ClaudeAI/comments/1vdggl8/claude_code_kept_rereading_my_memory_folder_and/",
+      "source": "r/ClaudeAI",
+      "rank": 8,
+      "comments": 22,
+      "summary": "认可 B 树式索引+按需加载叶子文件的思路，但有人提醒这套不变式是靠 Claude 自己凭感觉维持的，长会话里容易跑偏。"
+    },
+    {
+      "title": "Claude 纯代码搭出一片能走进去的丛林，没用一个美术素材",
+      "url": "https://www.reddit.com/r/singularity/comments/1vdcv0q/claude_built_a_walkable_jungle_without_any_assets/",
+      "source": "r/singularity",
+      "rank": 4,
+      "comments": 151,
+      "summary": "讨论跑偏到 AI 用第一人称复数代词算不算有问题，也有人笑「12000 行手写代码」这个说法明显是 AI 生成的。"
+    },
+    {
+      "title": "NeurIPS 2026：提交 rebuttal 后，审稿人和 AC 集体消失",
+      "url": "https://www.reddit.com/r/MachineLearning/comments/1vdu92a/neurips_2026_acs_and_reviewers_have_disappeared_d/",
+      "source": "r/MachineLearning",
+      "rank": 2,
+      "comments": 27,
+      "summary": "同行吐苦水：熬夜写完 rebuttal 后没人理，也有人的 AC 主动催动了第二个 reviewer；猜测明显要接收的论文反而被往后拖。"
+    },
+    {
+      "title": "田纳西州的女孩们把 Grok 和 Stability AI 告上法庭，告的是 AI 换脸",
+      "url": "https://www.reddit.com/r/technology/comments/1vd8w5e/tennessee_girls_take_grok_stability_ai_to_court/",
+      "source": "r/technology",
+      "rank": 7,
+      "comments": 49,
+      "summary": "讨论没围着案情本身，被带到欧盟 AI 法案当天生效、以及对欧盟可能报复性加关税的政治话题上。"
+    },
+    {
+      "title": "我的私人 AI 测试题：画一只带「哈布斯堡下巴」的青蛙",
+      "url": "https://news.ycombinator.com/item?id=49147622",
+      "source": "Hacker News",
+      "rank": null,
+      "comments": 48,
+      "summary": "认为这个测试比鹈鹕骑车更巧妙，因为对应一个王室近亲结婚的遗传特征；Opus 5 的结果被认为最接近真实，作者提到网站被流量抱死。"
+    }
+  ],
+  "producthunt": {
+    "id": "1190808_nudgeforme_placeholder",
+    "name": "NudgeForMe",
+    "slug": "nudgeforme",
+    "tagline": "AI follow-up agent for missed email opportunities",
+    "votes": 325,
+    "topics": [
+      "Email",
+      "Productivity",
+      "Artificial Intelligence"
+    ],
+    "url": "https://www.producthunt.com/products/nudgeforme",
+    "real_website": "https://nudgeforme.com/",
+    "what_it_is": "一个扫过你自己发件箱里的历史邮件、找出「你等着对方回复但对方一直没回」的那些对话，并直接在你自己的邮箱里生成跟进草稿的工具。草稿默认不自动发送，发不发你自己挑。",
+    "who": "靠邮件跟进销售线索、合作意向或客户对话的人和团队。",
+    "gallery": [],
+    "problem_image": null,
+    "cover_image": null,
+    "framing": "他把「一个提醒你回邮件的小功能」框成了「你的销售管道正在悄悄流失，而你毫不知情」。",
+    "consistency": "能核对的两层（tagline 与首评划界句）是一致的；封面图本期未取到，不能算进三层核对。",
+    "pricing": "价值单位和计费方式本期都未取到，不编。",
+    "comments_verdict": "购买信号在 #6；根基质疑在 #14（发送前是否重新核实）和 #17（邮件内容是否留存）；congrats 类均为噪音。",
+    "comments_raw": [
+      {
+        "n": 1,
+        "body": "@victoria_dash Hi, congrats on the launch! I upvoted it. also I found an issue, is there an email address where I can report it?",
+        "kind": "noise"
+      },
+      {
+        "n": 2,
+        "body": "I appreciate products that solve a problem people already have instead of creating another workflow. Scanning existing email threads for missed opportunities is a practical idea, especially for founders, sales teams, and recruiters who rely on timely follow-ups. Great work!",
+        "kind": "empathy"
+      },
+      {
+        "n": 3,
+        "body": "#1 well earned — draft-first mode is the right call, thats revenue you already earned",
+        "kind": "empathy"
+      },
+      {
+        "n": 4,
+        "body": "Ooh this is nice. Follow ups are a huge case for AI!",
+        "kind": "noise"
+      },
+      {
+        "n": 5,
+        "body": "Anything the Snoooz team creates you can count on being top quality and probably the best support you've ever received for a product. I've been with them for over a year and @victoria_dash is an absolute super star.",
+        "kind": "empathy"
+      },
+      {
+        "n": 6,
+        "body": "Great product. I have already implemented this into my daily use. It found 2 two deals I neglected to follow up on. Just paid for itself in the first week.",
+        "kind": "buy_signal"
+      },
+      {
+        "n": 7,
+        "body": "Bruh gets access to my mailbox? So I am not only giving away data to them but also their AI providers? Interesting.",
+        "kind": "root_doubt"
+      },
+      {
+        "n": 8,
+        "body": "How accurate are the followup suggestions and can user customize the type of reminders they want?",
+        "kind": "scope"
+      },
+      {
+        "n": 9,
+        "body": "Does it look at the conversation context or mainly the time since the last reply?",
+        "kind": "scope"
+      },
+      {
+        "n": 10,
+        "body": "Congratulations on the launch. This looks very interesting. I'm going to sign up for it soon.",
+        "kind": "noise"
+      },
+      {
+        "n": 11,
+        "body": "The tone matching is the part everyone's asking about, but I'd worry more about false positives, threads that look unanswered but weren't actually waiting on anything. How does it tell that kind of silence apart from someone actually going quiet on you?",
+        "kind": "root_doubt"
+      },
+      {
+        "n": 12,
+        "body": "So, basically this app will also ready my OTPs and Sensitive Codes in my mail box I guess?",
+        "kind": "root_doubt"
+      },
+      {
+        "n": 13,
+        "body": "This looks built for warm threads, and what I'd worry about is someone pointing it at a cold list. No reply is the normal case there. I keep cold sending on a separate warmed domain for that reason, so does it tell a quiet thread apart from one that was never warm?",
+        "kind": "root_doubt"
+      },
+      {
+        "n": 14,
+        "body": "Draft mode protects you at draft time. The risk lives at send time. Sending \\u201cjust checking in\\u201d to someone who already replied elsewhere is worse than never following up. Does it re-check anything at the moment you press send, or is the decision made when the draft is written?",
+        "kind": "root_doubt"
+      },
+      {
+        "n": 15,
+        "body": "I have a question, right now draft mode is auto enabled with Gemini specially if you are using google workspace, so what is differentiator?",
+        "kind": "scope"
+      },
+      {
+        "n": 16,
+        "body": "Starting in draft mode instead of auto-send is the detail that'd make me actually trust this with real leads.",
+        "kind": "empathy"
+      },
+      {
+        "n": 17,
+        "body": "the detection quality questions in here are all good ones, but the thing I haven't seen asked yet is what happens to the actual email content once it's scanned — is that content processed and then discarded, or retained/logged anywhere on your end?",
+        "kind": "root_doubt"
+      },
+      {
+        "n": 18,
+        "body": "Follow-up is the cheapest revenue sitting in most inboxes and almost nobody does it consistently. Nice to see someone build for that specific gap instead of another inbox rewrite.",
+        "kind": "empathy"
+      },
+      {
+        "n": 19,
+        "body": "Love the idea. One question though — how does NudgeForMe decide which conversations actually need a follow-up versus threads that are intentionally left unanswered?",
+        "kind": "scope"
+      }
+    ]
+  },
+  "runners_up": [
+    {
+      "name": "DeepSeek-V4-Flash-0731",
+      "tagline": "Frontier agent intelligence at Flash prices",
+      "votes": 325,
+      "topics": [
+        "API",
+        "Open Source",
+        "Artificial Intelligence"
+      ]
+    },
+    {
+      "name": "Port22",
+      "tagline": "Claude Code, Codex & more on your phone",
+      "votes": 264,
+      "topics": [
+        "iOS",
+        "Developer Tools",
+        "Artificial Intelligence"
+      ]
+    }
+  ]
+}
