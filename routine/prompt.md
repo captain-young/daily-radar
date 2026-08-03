@@ -6,9 +6,10 @@
 >
 > cron：`0 12 * * *`（UTC）= 每天 20:00 Asia/Shanghai
 >
-> routine 配置已挂 sources（2026-08-01）：会话启动时本仓库已 checkout 在工作目录，
-> 读历史/模板走本地文件，发布走 `git push`。**云端沙箱的网络策略挡 `api.github.com`、
-> `www.producthunt.com`、`captain-young.github.io`（实测 2026-07-31），不要依赖这些域名。**
+> 云端沙箱没有仓库挂载，开工第一步用 PAT clone（实测 2026-08-03：PAT 直连 git 读写都通，
+> 不依赖账号绑定）。**沙箱出网策略不稳定**：`api.github.com` 时通时不通（7-30/31 被挡、
+> 8-3 通）、`www.producthunt.com` 和 `captain-young.github.io` 被挡、curl `github.com`
+> 页面可能 400——所以读写仓库统一走 git，抓网页优先 WebFetch，不要依赖这些域名的 curl。
 
 ---
 
@@ -24,6 +25,19 @@
 仓库：`captain-young/daily-radar`，页面根地址 `https://captain-young.github.io/daily-radar/`
 
 ---
+
+## 步骤 0 · clone 仓库
+
+```bash
+git clone --depth 1 "https://captain-young:<<GH_PAT>>@github.com/captain-young/daily-radar.git" radar
+cd radar
+git config user.name "daily-radar bot"
+git config user.email "daily-radar@users.noreply.github.com"
+```
+
+后面的读历史（步骤 5）、读模板（步骤 7/8）、发布（步骤 8）全在这个 clone 里做。
+clone 失败重试一次；还失败就向飞书 webhook 发
+`daily-radar 今日 routine 异常：仓库 clone 失败` 后结束，不要绕路走 API。
 
 ## 步骤 1 · 确定 PH 榜单日 D
 
@@ -93,7 +107,8 @@ curl -s -A "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36" 
 解析**整页全部条目**（约 25 条），不只前 5：owner/name、描述、语言、总 star、今日涨星。
 注意 `<h2 class="h3 lh-condensed">` 里的 `<a>` **先有 `data-hydro-click` 才有 `href`**，
 正则别假设 `<a href` 紧挨着；总 star 在 `href=".../stargazers"` 之后、`</svg>` 之后。
-curl 失败或整页解析出 < 10 条时用 WebFetch 兜底。
+沙箱里 curl `github.com` 页面常直接 400（实测 2026-08-03），失败或整页解析出 < 10 条
+就用 WebFetch 抓同一 URL，不要反复调 curl 参数。
 
 **AI 筛选（用户指定，2026-07-29）**：只收「核心价值是 AI」的项目——LLM、agent、
 模型训练/推理、AI 应用与工具链（eval、向量库、推理引擎、编码 agent 等）。
@@ -108,14 +123,11 @@ curl 失败或整页解析出 < 10 条时用 WebFetch 兜底。
 
 ## 步骤 5 · 读历史
 
-仓库已 checkout 在工作目录，历史直接读本地（**不要走 `api.github.com`，沙箱挡它**）：
+在步骤 0 的 clone 里直接读本地（**不要走 `api.github.com`，时通时不通**）：
 
 ```bash
 ls data/
 ```
-
-找不到 checkout（目录里没有 `data/` 和 `templates/`）就是环境异常：向飞书 webhook 发一条
-`daily-radar 今日 routine 异常：仓库未挂载` 后结束，不要试图绕路。
 
 - 文件数 + 1 = 本期**期号**
 - **记下全部文件名的日期列表**（再加上今天的 D）——步骤 8 重建归档日历页要用
@@ -155,7 +167,7 @@ curl -s "https://hn.algolia.com/api/v1/search?tags=front_page&hitsPerPage=30"
 
 ## 步骤 7 · 生成页面
 
-模板读本地 `templates/day.html`（checkout 里就有，不用 curl）。
+模板读本地 `templates/day.html`（clone 里就有，不用 curl）。
 模板顶部注释里有全部槽位和 markup 契约，严格照它生成，不要改 CSS 和结构。
 
 **收尾两件必做**（都踩过）：① 剥掉模板顶部那段注释；② **全文**检查没有残留 `{{...}}`——
@@ -250,8 +262,8 @@ PH 的 gallery 通常混着三种图，各有归处：
 
 ## 步骤 8 · 发布
 
-在 checkout 里直接写四个文件，一次 git 提交推送。
-**不要用 Contents API（`api.github.com` 被沙箱挡，实测 2026-07-31）。**
+在步骤 0 的 clone 里直接写四个文件，一次 git 提交推送。
+**不要用 Contents API（`api.github.com` 时通时不通，git 才是稳的）。**
 
 - `<D>/index.html`（当期归档）
 - `data/<D>.json`
@@ -268,7 +280,6 @@ git push
 ```
 
 - push 被拒（non-fast-forward）：`git pull --rebase` 后再推一次
-- push 鉴权失败：改推 `https://captain-young:<<GH_PAT>>@github.com/captain-young/daily-radar.git`
 - 再失败按错误处理表发飞书故障说明，不要发打不开的链接
 
 归档日历页模板读本地 `templates/archive.html`。
@@ -324,7 +335,7 @@ curl -s -X POST -H 'Content-Type: application/json' \
 | 图分不出类型 | 宁可少放一张，也不要把问题叙事图放进第 0 层 |
 | `git push` 失败（rebase、PAT 兜底都试过） | 飞书消息里直接说页面没更新，**不要发打不开的链接** |
 | 只有归档页生成失败 | 其余三个文件照常提交推送，正文末尾加一句「归档页未更新」 |
-| 仓库没挂载进会话 | 发飞书说明后结束，不要绕路走 API |
+| 仓库 clone 失败（重试一次后） | 发飞书说明后结束，不要绕路走 API |
 | Reddit 整个被限流/挡 | 只用 HN 照常选，`{{FAULT}}` 注明「今日 Reddit 未取到」 |
 | 单帖评论区抓不到 | topic-sum 只写帖子本身在说什么，不编评论区观点 |
 | 所有论坛源全挂 | 热议段整块换故障说明，`{{FAULT}}` 注明。**不要静默跳过** |
