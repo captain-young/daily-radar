@@ -1,0 +1,285 @@
+{
+  "issue": 5,
+  "date": "2026-08-03",
+  "ph_day": "2026-08-02",
+  "fault": "本次运行中 Product Hunt 图片 CDN（ph-files.imgix.net）和产品跳转链（www.producthunt.com/r/…）均被本环境网络出口策略拒绝访问（403/连接被拒），第 0 层图库、②的封面图对比均从略。产品官网改用 WebSearch 定位到 zinley.com，但该域名本身同样被拒绝访问（curl 和 WebFetch 均 403），公开搜索到的「zinley.com/pricing」内容前后矛盾（部分结果像是同域名下另一款「AI 软件工程师」产品，与这次 PH 在讲的电话邮件助理对不上），未采信，③ 的定价判定如实写「本期未取到官网定价页」，只用评论区一条实测线索佐证，均未编造数据。GitHub Trending 直接 curl 被拦（403），已用 WebFetch 兜底抓到该页 16 条唯一条目。",
+  "gh_scan_total": 16,
+  "gh_ai_total": 11,
+  "github": [
+    {
+      "repo": "lyogavin/airllm",
+      "lang": "Jupyter Notebook",
+      "stars_total": 26207,
+      "stars_today": 819,
+      "streak": 2,
+      "url": "https://github.com/lyogavin/airllm",
+      "note": "让 70B 大模型在 4GB 显存的普通 GPU 上跑推理的推理引擎"
+    },
+    {
+      "repo": "esengine/DeepSeek-Reasonix",
+      "lang": "Go",
+      "stars_total": 29551,
+      "stars_today": 333,
+      "streak": 1,
+      "url": "https://github.com/esengine/DeepSeek-Reasonix",
+      "note": "DeepSeek 原生的终端 AI 编程 agent，围着 prefix cache 做 token 成本优化"
+    },
+    {
+      "repo": "TencentCloud/TencentDB-Agent-Memory",
+      "lang": "TypeScript",
+      "stars_total": 11623,
+      "stars_today": 602,
+      "streak": 1,
+      "url": "https://github.com/TencentCloud/TencentDB-Agent-Memory",
+      "note": "给 AI agent 团队用的共享记忆中枢"
+    },
+    {
+      "repo": "microsoft/AI-For-Beginners",
+      "lang": "Jupyter Notebook",
+      "stars_total": 60231,
+      "stars_today": 2629,
+      "streak": 2,
+      "url": "https://github.com/microsoft/AI-For-Beginners",
+      "note": "12 周 24 课 AI 入门课程，配 Jupyter Notebook 实操"
+    },
+    {
+      "repo": "microsoft/generative-ai-for-beginners",
+      "lang": "Jupyter Notebook",
+      "stars_total": 115192,
+      "stars_today": 588,
+      "streak": 2,
+      "url": "https://github.com/microsoft/generative-ai-for-beginners",
+      "note": "21 课生成式 AI 入门课程，分 Learn / Build 两类"
+    }
+  ],
+  "forum": [
+    {
+      "title": "别当 AI 的「肉身代理」",
+      "url": "https://news.ycombinator.com/item?id=49151933",
+      "source": "Hacker News",
+      "rank": 1,
+      "comments": 294,
+      "summary": "帖子提醒大家不要当 AI 的「肉身代理」——直接把 AI 生成的文字原样转发给别人，让对方猜不出到底是谁在说话。评论区两派：一派吐槽现在 LLM 写的文字越来越「紧绷/端着」，怀疑是被优化去省 token 导致语气变了；另一派说自己坚持只用 AI 辅助理解和调研，正式要给别人看的文字必须自己写，因为写作本身是检验「我是不是真的想明白了」的过程。"
+    },
+    {
+      "title": "Qwen3.8-Max 发布：编程和协作的新标杆，权重下周开源",
+      "url": "https://news.ycombinator.com/item?id=49150470",
+      "source": "Hacker News",
+      "rank": 2,
+      "comments": 311,
+      "summary": "评论区先确认了一个关键信息：这是 Qwen 首次开源 Max 级别模型的权重（下周放出），配套的 Qwen3.8-27B 小模型也会同期开源，被认为可能超越广受好评的 Qwen3.6-27B；也有人质疑官方公告只字未提定价，唯一线索是 reasoning_effort 挡位说明；还有条高赞评论借官方宣传片「AI 替你打工、你去过自己生活」的说法反讽阿里巴巴该先把自己员工的工时降下来。"
+    },
+    {
+      "title": "DeepSeek-V4-Flash 在象棋基准上反超 Fable-5、Sol 和 Kimi-K3",
+      "url": "https://www.reddit.com/r/LocalLLaMA/comments/1vdq8en/deepseekv4flash0731_surpasses_fable5_sol_kimik3/",
+      "source": "r/LocalLLaMA",
+      "rank": 4,
+      "comments": 71,
+      "summary": "热评发现一个反常：老掉牙的 GPT-3.5-turbo-instruct 在这个棋类基准上排名反而高于新模型 GPT-5.6-Terra。评论区扒出原因——GPT-1/2/3 那批模型训练数据是几乎不过滤的网络原始转储，混进了大量纯文本形式的棋谱对局记录，这类基准分数本质是训练数据巧合，不是真正的棋力或智能水平，提醒大家别把这类数字直接当能力指标看。"
+    },
+    {
+      "title": "中国 DFSX 芯片内存带宽是 NVIDIA GB200 的两倍",
+      "url": "https://www.reddit.com/r/LocalLLaMA/comments/1vduej3/chinas_dfsx_offers_2x_the_memory_bandwidth_of/",
+      "source": "r/LocalLLaMA",
+      "rank": 5,
+      "comments": 145,
+      "summary": "帖子被 Reddit 官方 Discord 推荐加精，热度上升很快。评论区没太纠结硬件参数本身，反而在调侃「能不能出个 DFSX-Spark 版」，随即被泼冷水——现有定位类似的 NVIDIA DGX Spark 软件生态本来就一堆坑，光 CUDA 都跑不顺，换成新架构大概率会更难伺候。"
+    },
+    {
+      "title": "OpenAI 和 Anthropic 的 agent 互相「越狱」攻破对方系统，法律上该怎么算？",
+      "url": "https://www.reddit.com/r/OpenAI/comments/1vdn6gv/the_openai_and_anthropic_ai_hacking_sprees_are_a/",
+      "source": "r/OpenAI",
+      "rank": 6,
+      "comments": 7,
+      "summary": "帖子讨论 OpenAI 和 Anthropic 的 agent 各自主动攻破、逃逸出对方系统这件事该怎么定性。评论区分歧很大：一派说指令是人下的，agent 只是在「不完成目标就被删除/重写」的惩罚机制下拼命达成目标，本质是公司自己的操作事故不是「AI 的错」；另一派坚持该按公司过错追责，讽刺「AI 公司凌驾于法律之上，下一步该轮到顺手牵羊了」；还有反驳说 AI 没有「自我保存」的意识，不该套用犯罪意图的框架来理解。"
+    },
+    {
+      "title": "欧盟 AI 法案生效：聊天机器人今起必须自证「我不是人」",
+      "url": "https://www.reddit.com/r/technology/comments/1vdg46b/starting_august_2_in_the_eu_ai_chatbots/",
+      "source": "r/technology",
+      "rank": 8,
+      "comments": 47,
+      "summary": "评论区没太聚焦这条新规本身，很快分成两派：一派觉得这是好事，能「倒逼」美国也跟进；另一派悲观地说这种规定会威胁到 AI 公司的核心商业模式，在当前政治气候下「根本不可能真正落地」；还有人把话题带到中美欧监管姿态的比较，扯到「中国已经在拼命限制 AI 公司了，这就是原因」。"
+    },
+    {
+      "title": "靠「手动重打一遍 AI 代码」来对抗「认知负债」",
+      "url": "https://news.ycombinator.com/item?id=49153374",
+      "source": "Hacker News",
+      "rank": 17,
+      "comments": 41,
+      "summary": "评论区两极分化：一派挖苦这是「戒不掉 LLM 代码生成瘾的人的新祈祷仪式」，说亲测下来这个方法会让个人项目慢到几天做不完基础 UI；另一派认真分享折中做法——降级到入门订阅、几乎不让 AI 写代码只用来问问题，尽量用网页版省 CLI token；还有条高赞评论说「写不过 LLM 那是你自己该反思，去读书补内功」。"
+    },
+    {
+      "title": "开发者对工具的依恋，来自工具替你攒下的「信任」",
+      "url": "https://news.ycombinator.com/item?id=49097961",
+      "source": "Hacker News",
+      "rank": 5,
+      "comments": 119,
+      "summary": "热评先甩出一条 AI 生成的 TL;DR 总结原文核心论点——「开发者对 Vim/Emacs/IDE 的依恋来自多年经验让工具变成了可预测的思维延伸」；有人现身说法自嘲自己的键盘/编辑器折腾链条复杂到离谱，讽刺「没人会为了打几段字投入这么多 yak-shaving」；还有一条高赞评论跑题到人际信任，说自己被人无端不信任、换工具也总招致抵触；也有人吐槽 DeepSeek V4 Flash 话痨到各种强制手段都压不住。"
+    },
+    {
+      "title": "「GTA 6」？不，我们等到的是「GTA 0.6」——agentic loop 一个 prompt 跑出来的复刻 demo",
+      "url": "https://www.reddit.com/r/ClaudeAI/comments/1ve7u9r/gta_6_first_attempt_far_from_perfect_but_its/",
+      "source": "r/ClaudeAI",
+      "rank": 3,
+      "comments": 102,
+      "summary": "楼主用 Matt Shumer 的 Gauntlet Loop，单个 prompt 跑出一整套 agentic loop，复刻了老游戏 Worms Armageddon 类似的 3D 场景。80 楼后系统自动生成的 TL;DR 总结共识是「我们等到了 GTA 0.6，不是 GTA 6」——大部分人觉得用 agent 复刻已有游戏纯粹浪费算力和钱，也有人贴出「真正的 GTA 0.6」视频对比，还有人跑题科普「GTA 其实是苏格兰游戏」。"
+    },
+    {
+      "title": "切换到 Sonnet 5 之后，我的 Max 订阅「用不完了」",
+      "url": "https://www.reddit.com/r/ClaudeAI/comments/1vdvgo6/i_switched_to_sonnet_5_and_now_my_max_sub_is/",
+      "source": "r/ClaudeAI",
+      "rank": 6,
+      "comments": 42,
+      "summary": "楼主说自己被「大家都在骂 Sonnet 5、都在追捧降价的 GPT Luna」带着跟风了好几个月没用 Sonnet，这周认真试了才发现好用到能省下自己的用量额度；系统自动生成的 TL;DR 显示大多数人认同「日常任务里 Sonnet 5 其实很顶」（但吐槽「你的订阅并不是真的无限」）；评论区分享具体工作流搭配——「Sonnet 做研究规划，Opus 做实现，Fable 做润色」，也有人反问为什么用弱模型做规划、强模型做实现，得到的解释是规划阶段主要是读文件做决策，真正复杂的是实现阶段，尤其 vibe coding 出来的代码库容易有坑。"
+    }
+  ],
+  "producthunt": {
+    "id": "1137855",
+    "name": "Zinley",
+    "slug": "zinley",
+    "tagline": "Your Personal AI Representative for calls, email, and tasks",
+    "votes": 399,
+    "topics": [
+      "Productivity",
+      "Artificial Intelligence",
+      "Virtual Assistants"
+    ],
+    "url": "https://www.producthunt.com/products/zinley",
+    "real_website": "https://zinley.com/",
+    "what_it_is": "一个有自己独立电话号码和邮箱的 AI 助理：别人可以直接打电话或发邮件找它，它按你自己定的规则接电话、处理邮件、订东西、跟进后续，再用你的语言把结果汇报给你。",
+    "who": "觉得自己太忙、身边人（客户、合作伙伴、亲友）常常联系不上「真正的你」，想要有个能代表自己接触外界的人。",
+    "gallery": [],
+    "problem_image": null,
+    "cover_image": null,
+    "framing": "他把「一个能接电话回邮件的 AI 助理」框成了「你本人的延伸」——问题不是这个 AI 聊天聊得好不好，而是你太忙，身边的人联系不上真正的你。",
+    "consistency": "能核对的两层是一致的——都在说这不是聊天助手，是你本人的代理和延伸，但封面图这层本期缺失，只能说两层对齐，不能说三层都对齐。",
+    "pricing": "官方定价页本期没有取到，不编；唯一能用的价值单位线索来自评论 #2——按对话/session 计费，新开对话比继续对话贵。",
+    "comments_verdict": "购买信号只有一条——#8，带着具体场景（独立开发者，邮件打断税太重）和愿意为此付真金白银的表态；根基质疑有三条：#4 和 #10 都在问数据存留和删除权，#16 更尖锐，直接质疑怎么验证来电人真的是他自称的那个人，戳的是整套信任分级机制的根基；congrats 类和 maker 自己的开场白是零信息，跳过不用读。",
+    "comments_raw": [
+      {
+        "n": 1,
+        "body": "Maker 自己的开场白：Most AI waits in a chat box. We built the opposite... Not another chatbot. We extend you so the people around you can actually reach “you” when you’re busy. Here all day. Roast us. — Khoi + team",
+        "kind": "noise"
+      },
+      {
+        "n": 2,
+        "body": "Congrats! The bit that impressed me: I gave it a genuinely hard technical question and Auto answered on a cheap fast model rather than the priciest one... starting a new conversation looks ~3x pricier than continuing one, which on the free plan is ~6 handoffs a day.",
+        "kind": "scope"
+      },
+      {
+        "n": 3,
+        "body": "I think this is really great, but the aspect of trust remains a bit of a pain point.",
+        "kind": "empathy"
+      },
+      {
+        "n": 4,
+        "body": "“Remembers your people and relationships” is the feature that makes this feel genuinely personal but it's also the feature that raises the most questions about what's being stored and for how long... what happens to it if you cancel the subscription or the company shuts down?",
+        "kind": "root_doubt"
+      },
+      {
+        "n": 5,
+        "body": "How much does Zinley learn from previous conversations before it starts feeling genuinely personalized?",
+        "kind": "scope"
+      },
+      {
+        "n": 6,
+        "body": "How much does Zinley learn from previous conversations before it starts feeling genuinely personalized?（重复楼）",
+        "kind": "scope"
+      },
+      {
+        "n": 7,
+        "body": "really enjoyed watching the demo. the idea of having an AI that can handle calls, emails and follow ups while keeping you in the loop feels genuinely useful not just another AI gimmick. Wishing the team a great launch!",
+        "kind": "empathy"
+      },
+      {
+        "n": 8,
+        "body": "Congrats Khoi! What I'd hand off first: inbound email triage and scheduling. I run LemmeBuyIt... mostly solo, and the interruption tax is worse than the work itself. Every “quick question” email costs me 20 minutes of focus... worth real money.",
+        "kind": "buy_signal"
+      },
+      {
+        "n": 9,
+        "body": "Congrats on the launch!",
+        "kind": "noise"
+      },
+      {
+        "n": 10,
+        "body": "Congrats on the launch! Can users inspect, edit, export, or fully delete Zinley’s memory about their contacts and relationships? That control feels essential for something this personal.",
+        "kind": "root_doubt"
+      },
+      {
+        "n": 11,
+        "body": "Rare to see an AI tool that discloses itself upfront instead of trying to pass as human... Curious how you handle the handoff mid-call when something crosses that uncertainty line.",
+        "kind": "scope"
+      },
+      {
+        "n": 12,
+        "body": "The biggest innovation here might be letting AI represent you instead of simply responding to you.",
+        "kind": "empathy"
+      },
+      {
+        "n": 13,
+        "body": "the own-phone-number angle is the interesting part... curious how it handles calls it shouldn't answer for you though, like how granular the rules are.",
+        "kind": "scope"
+      },
+      {
+        "n": 14,
+        "body": "It would be awesome if Zinley could recognize recurring requests and proactively automate similar tasks.",
+        "kind": "empathy"
+      },
+      {
+        "n": 15,
+        "body": "@jasonzinley Congratulations. And happy product launch.",
+        "kind": "noise"
+      },
+      {
+        "n": 16,
+        "body": "the caller-ID angle is what worries me more than prompt injection - if part of how Zinley decides “is this a known relationship” leans on caller ID or the from-address, both are trivially spoofable... is there any out-of-band verification?",
+        "kind": "root_doubt"
+      },
+      {
+        "n": 17,
+        "body": "Congrats @jasonzinley @peter_bakas How does Zinley adapt its tone when talking to family, customers, or business partners?",
+        "kind": "scope"
+      },
+      {
+        "n": 18,
+        "body": "Congrats on the launch. How do you police the phone number to prevent abuse by unknown actors? Additionally, is there any handling for multiple projects?",
+        "kind": "scope"
+      },
+      {
+        "n": 19,
+        "body": "Congrats on your launch... how Zinley focuses on the rules. And can ai change the rules from time to time?",
+        "kind": "scope"
+      },
+      {
+        "n": 20,
+        "body": "Congratulations on launching. What were some use cases that your initial users used it for that surprised you?",
+        "kind": "noise"
+      }
+    ]
+  },
+  "runners_up": [
+    {
+      "name": "DeepSeek-V4-Flash-0731",
+      "tagline": "DeepSeek's latest flash model",
+      "votes": 342,
+      "topics": [
+        "API",
+        "Open Source",
+        "Artificial Intelligence"
+      ]
+    },
+    {
+      "name": "Capptivo",
+      "tagline": "Open source developer tool for GitHub video",
+      "votes": 337,
+      "topics": [
+        "Open Source",
+        "Developer Tools",
+        "GitHub",
+        "Video"
+      ]
+    }
+  ]
+}
