@@ -1,0 +1,298 @@
+{
+  "issue": 6,
+  "date": "2026-08-04",
+  "ph_day": "2026-08-03",
+  "fault": "本次运行中 Product Hunt 图片 CDN（ph-files.imgix.net）与 AgentSky 官网定价页（agentsky.dev/pricing）均被本环境网络出口策略拒绝访问（403/连接失败），第 0 层图库、②的封面图对照、③的官网定价证据本期从略；③ 的价值单位判断改用 WebSearch 搜到的 agentsky.dev 定价摘要与 maker 自己在评论区的表态作为依据，已如实标注来源，未编造数字。GitHub Trending 直接 curl 被拦，已用 WebFetch 兜底抓到该页 18 条唯一条目（未到 25 条整页，但远超 10 条的故障阈值）。",
+  "gh_scan_total": 18,
+  "gh_ai_total": 9,
+  "github": [
+    {
+      "repo": "TencentCloud/TencentDB-Agent-Memory",
+      "lang": "TypeScript",
+      "stars_total": 12668,
+      "stars_today": 1090,
+      "streak": 2,
+      "url": "https://github.com/TencentCloud/TencentDB-Agent-Memory",
+      "position": "面向 OpenClaw / Hermes 等 agent 网关的记忆插件，让 agent 记住你的 SOP、项目背景和习惯用法，不用每次重新解释。",
+      "feature": "基于 Node.js(>=22.16) 的 npm 插件包，架构分两块——「符号短期记忆」把冗长工具日志压缩成 Mermaid 状态图（配 node_id 可回溯原文），「分层长期记忆」把碎片对话蒸馏成 L0 对话 → L1 原子事实 → L2 场景 → L3 人设四层语义金字塔，双层存储：底层进数据库保全文检索，顶层存成人可读 Markdown。",
+      "notable": "README 给出了实测基准而不是空口号——接入 OpenClaw 后，WideSearch 通过率从 33% 提到 50%（token 反而降 61.38%），SWE-bench 从 58.4% 提到 64.2%，PersonaMem 准确率从 48% 冲到 76%，且强调这些数字是连续多轮长任务下测出来的，不是单轮孤立测试。"
+    },
+    {
+      "repo": "obra/superpowers",
+      "lang": "Shell",
+      "stars_total": 266035,
+      "stars_today": 617,
+      "streak": 1,
+      "url": "https://github.com/obra/superpowers",
+      "position": "给编码 agent 用的一整套软件开发方法论——技能包 + 一些启动指令，确保 agent 真的会用这些技能。",
+      "feature": "落地为「先问清楚你到底想干嘛 → 拆成可读分片的 spec → 写出连初级工程师都能照做的实施计划（强调红绿 TDD、YAGNI、DRY）→ subagent 驱动开发，agent 之间互相检查」的完整流程；同一套技能包分别可装进 9 种不同的编码 agent 宿主（Claude Code 官方插件市场、Antigravity、Codex App/CLI、Cursor、Factory Droid、Gemini CLI、GitHub Copilot CLI、Kimi Code、OpenCode），装哪个都要单独装一次。",
+      "notable": "一个「方法论/技能包」类项目做到 26.6 万星，比同期上榜的多数代码库都大得多；README 里还留了一行「企业客户可付费获得商业支持」的联系方式（sales@primeradiant.com）——一个开源方法论包背后已经在做企业化变现。"
+    },
+    {
+      "repo": "microsoft/generative-ai-for-beginners",
+      "lang": "Jupyter Notebook",
+      "stars_total": 115979,
+      "stars_today": 775,
+      "streak": 3,
+      "url": "https://github.com/microsoft/generative-ai-for-beginners",
+      "position": "微软出品的 21 课生成式 AI 入门课程，Python 和 TypeScript 双语言代码示例。",
+      "feature": "每课配视频导读 + README 图文讲解 + 双语言代码示例，支持接 Azure OpenAI、Microsoft Foundry Models、OpenAI API 或完全离线的 Foundry Local 四种运行方式；仓库通过 GitHub Action（co-op-translator）自动维护 50 多种语言翻译，不用人工同步。",
+      "notable": "README 里提醒「GitHub Models 集成将于 2026 年 7 月底停止服务，请改用 Microsoft Foundry Models」——课程内容在跟着上游产品变化实时维护，不是发布后就不再更新的静态教程；仓库还专门给出 sparse-checkout 命令跳过 50 多种语言翻译，只 clone 英文减少下载体积。"
+    },
+    {
+      "repo": "lyogavin/airllm",
+      "lang": "Jupyter Notebook",
+      "stars_total": 27907,
+      "stars_today": 1085,
+      "streak": 3,
+      "url": "https://github.com/lyogavin/airllm",
+      "position": "让消费级显卡跑超大模型推理的 Python 库，不用量化、蒸馏或剪枝。",
+      "feature": "逐层加载策略——把模型按层拆开存到磁盘，推理时只加载当前层，配合可选的 block-wise 量化压缩（最高提速 3 倍，精度损失很小）；对外统一走 HuggingFace 风格的 AutoModel.from_pretrained 一行代码接口，覆盖 Llama、Qwen、DeepSeek、Gemma、Phi-4 等主流开源模型。",
+      "notable": "本周（2026/07）刚加上对 Kimi K3（2.8T 参数，目前最大的开源权重模型）的支持——靠「稀疏 MoE 模型一次只流式加载 token 实际路由到的那个专家，而不是整层加载」，把 K3 塞进单卡 3.72GB 显存里跑起来，这正是这次上榜的直接原因；但也带了新坑：K3 的模型代码强制要求 flash-attention，而 CUDA 13 目前还没有预编译好的 flash-attn 轮子，得退回 CUDA 12。"
+    },
+    {
+      "repo": "livekit/agents",
+      "lang": "Python",
+      "stars_total": 12213,
+      "stars_today": 148,
+      "streak": 1,
+      "url": "https://github.com/livekit/agents",
+      "position": "搭建实时、可编程语音/多模态 AI agent 的 Python 框架，跑在服务端。",
+      "feature": "STT/LLM/TTS/Realtime API 可自由混搭插件生态；内置任务调度和 dispatch API 对接终端用户；基于 LiveKit 自家 WebRTC 技术栈，原生支持电话接入（SIP 呼入呼出）；原生 MCP 支持，一行代码接入 MCP server 提供的工具。",
+      "notable": "框架自带「测试框架 + judge」——不只是帮你搭 agent，还内置了用 judge 给 agent 表现打分的评测工具链；README 专门给 AI 编码助手准备了配套的 MCP 文档服务器和技能包（livekit/agent-skills），教编码 agent「如何用这个框架搭语音应用」的架构最佳实践，而不只是查 API。"
+    }
+  ],
+  "forum": [
+    {
+      "title": "大模型放大的是懂行人的能力",
+      "url": "https://news.ycombinator.com/item?id=49161518",
+      "source": "Hacker News",
+      "rank": 1,
+      "comments": 421,
+      "points": 998,
+      "summary": "评论区普遍认同——LLM 更像放大器而非平替，不懂架构/领域知识就指挥不好 agent；有人举例数学研究员给 Anthropic 内部模型的提示词本身就极其专业；也有人调侃现在带 agent 干活的体验更像带一个 junior dev，你得先会当 team lead。"
+    },
+    {
+      "title": "OpenAI 回应苹果诉讼：「苹果搞错了」",
+      "url": "https://www.reddit.com/r/OpenAI/comments/1vf1ugm/openai_apple_is_getting_this_wrong/",
+      "source": "r/OpenAI",
+      "rank": 4,
+      "comments": 39,
+      "summary": "评论区扒出一个尴尬细节——OpenAI 法务团队解释此前发错邮件是因为「搞混了两个亚裔姓氏」，被网友群嘲这套说辞本身就带着刻板印象；也有人质疑作为证据的那段 iMessage 记录时间线前后对不上。"
+    },
+    {
+      "title": "MiniMax H3 在 ComfyUI 首发支持：开放权重、原生音频、2K 视频",
+      "url": "https://news.ycombinator.com/item?id=49155629",
+      "source": "Hacker News",
+      "rank": 3,
+      "comments": 87,
+      "points": 301,
+      "summary": "有人实测后直接删掉了 LTX2 和 WAN 的模型文件夹，认为这是当前开源视频生成的一次代际飞跃；技术讨论聚焦显存优化——总显存从全精度 123.6GB 压到最小档 42.5GB，配合动态显存卸载；也有人吐槽画面「好是好，但美学上千篇一律」。"
+    },
+    {
+      "title": "更小、更快、更安全：怎么规模化跑 Kimi 和 GLM",
+      "url": "https://news.ycombinator.com/item?id=49158581",
+      "source": "Hacker News",
+      "rank": 4,
+      "comments": 58,
+      "points": 225,
+      "summary": "评论区对文章的营销腔表示反感，但认可其难得公开谈 KV 缓存量化——有人早就怀疑云厂商在悄悄量化模型的同时却大肆宣传「未量化权重」；争议点在于官方博客用小上下文任务做基准测试，掩盖了量化带来的效果损失，也没把量化情况写进模型页面的显著位置。"
+    },
+    {
+      "title": "难以置信，我在自己家里的电脑上跑起了 DeepSeek-V4-Flash-0731",
+      "url": "https://www.reddit.com/r/LocalLLaMA/comments/1vehn87/i_cannot_believe_ive_got_deepseekv4flash0731_a/",
+      "source": "r/LocalLLaMA",
+      "rank": 3,
+      "comments": 190,
+      "summary": "第一反应是惊叹——20 个月前还只能靠昂贵云端跑这类模型，现在 24GB 显存 + 普通 Windows PC 就能跑（虽然慢如「粥」）；但很快有人拆穿「普通配置」的说法——楼主其实还配了 96GB 内存，24GB 显存本身也不便宜（一张 3090 现在要 1200-1700 美元）；也有人分享 DDR5 内存降价让本地大模型更可行的经验。"
+    },
+    {
+      "title": "让 Claude 审 Codex 的代码，通过率从 71.6% 冲到 89.7%",
+      "url": "https://www.reddit.com/r/ClaudeAI/comments/1vf4apv/claude_reviewing_codexs_code_lifted_the_pass_rate/",
+      "source": "r/ClaudeAI",
+      "rank": 3,
+      "comments": 41,
+      "summary": "热评补上了标题没提的另一半——反过来让 Codex 审 Claude 的代码，通过率反而从 91.4% 掉到 82.8%，Claude 自我审查则维持 91.4% 不变；真正的结论是「别让 Codex 审 Claude」，不是「互审都好」，因为 Claude 起草的代码基线本来就比 Codex 高。评论区也在分享自己的双 agent 审查工作流。"
+    },
+    {
+      "title": "马斯克：下一步是彻底扔掉「源代码」，让 AI 直接生成高效二进制",
+      "url": "https://www.reddit.com/r/singularity/comments/1veslal/elon_musk_the_next_step_is_getting_rid_of_source/",
+      "source": "r/singularity",
+      "rank": 2,
+      "comments": 196,
+      "summary": "评论区几乎一边倒地泼冷水——有人类比说人类当年放弃手写汇编，是因为编译器提供的是「确定性、可复现」的翻译，不透明的 AI 生成二进制完全谈不上这点；也有对马斯克技术判断力的直接群嘲；小部分人认真讨论了用固定随机种子让这件事「确定性化」的可能性，但承认技术还没到那一步。"
+    },
+    {
+      "title": "Show HN：4.3GB 内存的 Mac 上跑 80B 参数 Qwen，iPhone 上跑 35B",
+      "url": "https://news.ycombinator.com/item?id=49158333",
+      "source": "Hacker News",
+      "rank": 8,
+      "comments": 88,
+      "points": 201,
+      "summary": "评论区分两派——一派质疑「磁盘置换」方案治标不治本，解码速度好看但没算上 prefill 瓶颈，处理万级 token 上下文可能要半小时，还加速磨损硬盘；另一派认为这正是技术进步的必经之路；也有人分享把 Mac RAM 缓存调大后确实能跑更大模型且提速的实测经验。"
+    },
+    {
+      "title": "一个价值 20 万美元的 macOS 真漏洞，因苹果漏洞赏金邮箱被 AI 水贴淹没而未处理",
+      "url": "https://www.reddit.com/r/technology/comments/1vem7fn/a_real_macos_flaw_worth_200k_went_unreported/",
+      "source": "r/technology",
+      "rank": 6,
+      "comments": 32,
+      "summary": "热评推翻了标题的叙事——另一篇报道显示，提交这个漏洞的安全公司去年全年才提交 8 个漏洞，三周内突然暴增到 50 个，苹果对单个提交者的数量上限只是「按预期生效」；评论区还提到苹果自己也在用 AI 找漏洞，已联系这家公司；也有人建议给赏金提交设押金门槛，让 AI 水贴不再划算。"
+    },
+    {
+      "title": "LLM 生成的同行评审，问题出在哪",
+      "url": "https://www.reddit.com/r/MachineLearning/comments/1vf4zjz/the_downsides_of_llmgenerated_peer_reviews_d/",
+      "source": "r/MachineLearning",
+      "rank": 4,
+      "comments": 4,
+      "summary": "楼主结合自己用 LLM 辅助审稿、也收到过明显 AI 代写审稿意见的经历，指出一个反复出现的毛病——LLM 特别擅长挑「没控制的变量」这类看着专业实则吹毛求疵的问题；评论区调侃这篇讨论本身「读起来也很像 LLM 写的」，还有人半开玩笑说这个观察够格单独写成一篇论文。"
+    }
+  ],
+  "producthunt": {
+    "id": "1211254",
+    "name": "AgentSky",
+    "slug": "agentsky",
+    "tagline": "Any harness, any LLM — cloud-hosted agents on demand.",
+    "votes": 445,
+    "topics": [
+      "SaaS",
+      "Developer Tools",
+      "Artificial Intelligence"
+    ],
+    "url": "https://www.producthunt.com/products/agentsky",
+    "real_website": "https://agentsky.dev/",
+    "what_it_is": "一个把 AI agent 长时间跑在云端的托管服务：选一个 harness（Claude Code、Codex、Hermes 或 OpenClaw）和一个模型，一键在云端沙箱里跑起一个能持续存活的 agent，全程带历史记录和状态快照，还能通过 WhatsApp、iMessage、Telegram、Slack、网页、CLI 或 API 联系它。",
+    "who": "需要长时间跑 agent 任务、又不想自己搭建沙箱、恢复机制和多渠道对接这套基础设施的开发者和团队。",
+    "gallery": [],
+    "problem_image": null,
+    "cover_image": null,
+    "framing": "他把「跑一个 agent 需要的全套基础设施」框成了「你早就该省下自己搭这些」的问题——不是能不能生成代码，而是一旦要长期挂在线上、扛得住重启、接得住五六个聊天渠道，工程量比想象大得多。",
+    "consistency": "能核对的两层是一致的——tagline 和 maker 首评都在说「持久跑着、多渠道能联系到」的同一件事；封面图这层本期因 CDN 被挡缺失，不能说三层都对齐，只能说能核对的两层没打架。",
+    "pricing": "官网定价页本期没有取到（403 被挡），不编；价值单位来自 WebSearch 搜到的 agentsky.dev 定价摘要（每个 agent 起价 $3/月 + 用量）与 maker 自己在评论区的表态——「停着的 agent 不收费，只有它在干活时才收费」，即按「在线且活跃的时长」计费，而不是按坐席或调用次数。",
+    "comments_verdict": "购买信号只有一条——#9，带着自己真实的使用场景（会在手机上临时纠偏正在跑的 coding agent，形容现在这套是「duct tape」缝起来的）；根基质疑有两条：#11 直接质问「状态恢复只是尽力而为、没法防止竞态条件」这句话本身，戳的是可靠性到底有没有兑现；#17 追问「agent 挂起(parked)但还占着存储/快照的部分算不算免费」，戳的正是「parked 免费」这个卖点有没有例外。其余大多是「congrats + 一个功能小问题」，信息量低，跳过。",
+    "comments_raw": [
+      {
+        "n": 1,
+        "body": "Maker 自己的开场白：production-ready AI agents require far more infrastructure than most people expect... AgentSky does that plumbing for you.",
+        "kind": "noise"
+      },
+      {
+        "n": 2,
+        "body": "host any agent reach everywhere is a clean pitch 👏 #1 well deserved",
+        "kind": "noise"
+      },
+      {
+        "n": 3,
+        "body": "The cross-channel part is the most compelling to me... Curious how you think about audit logs for those handoffs over time.",
+        "kind": "scope"
+      },
+      {
+        "n": 4,
+        "body": "Congrats on this launch! Amazing product!",
+        "kind": "noise"
+      },
+      {
+        "n": 5,
+        "body": "How do the evals work on model comps?",
+        "kind": "scope"
+      },
+      {
+        "n": 6,
+        "body": "I like that you're not tying users to a single model. Being able to switch between different agents while keeping the workflow consistent is a nice approach.",
+        "kind": "empathy"
+      },
+      {
+        "n": 7,
+        "body": "Hey Product Hunt community — Thanks for the overwhelming interest and questions! We're doing a live workalong session...",
+        "kind": "noise"
+      },
+      {
+        "n": 8,
+        "body": "I like that AgentSky puts different models and agent tools in one place... I'd still like to see more real examples before using it for a bigger project.",
+        "kind": "scope"
+      },
+      {
+        "n": 9,
+        "body": "Congrats Darren! The channels part is what sells it for me. I correct my coding agent from the phone mid-run all the time, and that flow is usually held together with duct tape. Curious: when a WhatsApp message lands while the agent is mid-task, does it interrupt the run or queue until the current step finishes?",
+        "kind": "buy_signal"
+      },
+      {
+        "n": 10,
+        "body": "Congratulations on the launch! I like the idea and after reading comments i like that context is shared between agents and channels as well as you don't pay if the agent is not used. I would like to try it next days with some of my tasks.",
+        "kind": "empathy"
+      },
+      {
+        "n": 11,
+        "body": "Saying state restore is best effort and cannot prevent a race condition is rare on a launch day. You mentioned wanting idempotent agent replies in your own layer. Where do you think that line sits between the infra and the product on top, Darren?",
+        "kind": "root_doubt"
+      },
+      {
+        "n": 12,
+        "body": "Reaching a long running agent from WhatsApp or iMessage instead of yet another dashboard feels like how normal people would actually use this. What does recovery look like when an agent goes sideways, can I roll back to any earlier snapshot?",
+        "kind": "scope"
+      },
+      {
+        "n": 13,
+        "body": "Can AgentSky automatically scale when multiple users start interacting with the same agent? how do you handle sudden spikes in agent sessions?",
+        "kind": "scope"
+      },
+      {
+        "n": 14,
+        "body": "If you had to recommend one harness for someone building their first long-running agent, which one would you suggest, and why?",
+        "kind": "noise"
+      },
+      {
+        "n": 15,
+        "body": "congrats! can developers choose different LLM models for the same harness? how quickly can you switch models without changing the agent configuration?",
+        "kind": "scope"
+      },
+      {
+        "n": 16,
+        "body": "I like that agents stay available across WhatsApp, Slack, and the web. Meeting users where they already work makes a lot of sense.",
+        "kind": "empathy"
+      },
+      {
+        "n": 17,
+        "body": "how does pricing work when an agent is parked but still maintaining its state? is there any cost for storage, snapshots or backups while it is inactive?",
+        "kind": "root_doubt"
+      },
+      {
+        "n": 18,
+        "body": "Congrats on the launch! How does AgentSky handle failed or partially completed tasks? can an agent resume from its previous state instead of starting over?",
+        "kind": "scope"
+      },
+      {
+        "n": 19,
+        "body": "what runtime or channel are you most excited to add next? are you prioritizing integrations based on community requests or technical demand?",
+        "kind": "noise"
+      },
+      {
+        "n": 20,
+        "body": "Congrats on the launch! What does the developer API expose compared with the CLI? can teams programmatically create, pause, resume and manage agents?",
+        "kind": "scope"
+      }
+    ]
+  },
+  "runners_up": [
+    {
+      "name": "Ctruh Studio",
+      "tagline": "Create interactive 3D and XR experiences without coding",
+      "votes": 411,
+      "topics": [
+        "Artificial Intelligence",
+        "Augmented Reality",
+        "No-Code"
+      ]
+    },
+    {
+      "name": "Airtop for Google Ads Automation",
+      "tagline": "Build campaigns, optimize spend, and create reports.",
+      "votes": 299,
+      "topics": [
+        "Marketing",
+        "Advertising",
+        "Artificial Intelligence"
+      ]
+    }
+  ]
+}
